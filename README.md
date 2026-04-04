@@ -63,9 +63,6 @@ Aigenesis is a production-ready React application for the insurance and risk man
 ### Installation
 
 ```bash
-# Navigate to implementation directory
-cd implementation
-
 # Install dependencies
 npm install
 
