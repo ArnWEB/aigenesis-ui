@@ -21,7 +21,7 @@ const SIDEBAR_ITEMS: Record<string, SidebarItem[]> = {
   admin: [
     { id: "dashboard", label: "Dashboard", path: "/dashboard", icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></svg> },
     { id: "users", label: "Users", path: "/admin/users", icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>, badge: 7 },
-    { id: "governance", label: "Governance", path: "/admin/governance", icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> },
+    { id: "knowledge", label: "Knowledge Refresher", path: "/admin/governance", icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg> },
     { id: "settings", label: "Settings", path: "/admin/settings", icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg> },
   ],
   executors: [
@@ -86,7 +86,7 @@ export function DashboardLayout({ children }: LayoutProps) {
       {/* Top Header */}
       <header className="fixed top-0 left-0 right-0 h-16 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/15 z-30 flex items-center justify-between px-4 lg:px-8">
         <div className="flex items-center gap-4 lg:gap-12">
-          {/* Mobile menu button */}
+          {/* Mobile menu button - toggles sidebar on mobile */}
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden p-2 rounded-lg hover:bg-surface-variant/50"
@@ -185,16 +185,31 @@ export function DashboardLayout({ children }: LayoutProps) {
         </div>
       </header>
 
+      {/* Mobile overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-10 lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+      
       {/* Sidebar - Fixed width */}
       <aside className={cn(
-        "fixed left-0 top-16 bottom-0 bg-surface-container border-r border-outline-variant/15 z-20 flex flex-col py-8 transition-all duration-300 lg:flex",
-        isSidebarCollapsed ? "w-20 items-center -translate-x-full lg:translate-x-0" : "w-64 -translate-x-full lg:translate-x-0"
+        "fixed left-0 top-16 bottom-0 bg-surface-container border-r border-outline-variant/15 z-20 flex flex-col py-8 transition-all duration-300",
+        isSidebarCollapsed ? "w-20 items-center -translate-x-full lg:translate-x-0" : "w-64 -translate-x-full lg:translate-x-0",
+        isMobileMenuOpen && "translate-x-0 w-64"
       )}>
         <button
-          onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+          onClick={() => {
+            if (window.innerWidth < 1024) {
+              setIsMobileMenuOpen(false);
+            } else {
+              setIsSidebarCollapsed(!isSidebarCollapsed);
+            }
+          }}
           className={cn(
-            "absolute -right-3 top-6 w-6 h-6 rounded-full bg-surface-container-high border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all duration-200 z-10 hidden lg:flex",
-            isSidebarCollapsed && "rotate-180"
+            "absolute -right-3 top-6 w-6 h-6 rounded-full bg-surface-container-high border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all duration-200 z-10",
+            isSidebarCollapsed ? "lg:rotate-180" : "lg:block hidden"
           )}
         >
           <svg className="w-4 h-4 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -214,7 +229,7 @@ export function DashboardLayout({ children }: LayoutProps) {
         
         <nav className={cn(
           "flex flex-col gap-2",
-          isSidebarCollapsed ? "items-center w-full" : "items-start w-full px-4"
+          (isSidebarCollapsed && !isMobileMenuOpen) ? "items-center w-full" : "items-start w-full px-4"
         )}>
           {sidebarItems.map((item) => {
             const isActive = location.pathname === item.path;
@@ -222,12 +237,13 @@ export function DashboardLayout({ children }: LayoutProps) {
               <Link
                 key={item.id}
                 to={item.path}
+                onClick={() => setIsMobileMenuOpen(false)}
                 className={cn(
                   "relative flex items-center gap-3 py-3 w-full transition-all duration-300 ease-in-out rounded-lg",
                   isActive
                     ? "text-primary bg-surface-container-high/50"
                     : "text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/30",
-                  isSidebarCollapsed && "justify-center px-0"
+                  (isSidebarCollapsed && !isMobileMenuOpen) && "justify-center px-0"
                 )}
               >
                 <div className="relative flex-shrink-0">
@@ -238,7 +254,7 @@ export function DashboardLayout({ children }: LayoutProps) {
                     </span>
                   )}
                 </div>
-                {!isSidebarCollapsed && (
+                {(isMobileMenuOpen || !isSidebarCollapsed) && (
                   <span className="font-label text-sm">
                     {item.label}
                   </span>
@@ -250,19 +266,19 @@ export function DashboardLayout({ children }: LayoutProps) {
         
         <div className={cn(
           "mt-auto flex flex-col gap-6 pb-4",
-          isSidebarCollapsed ? "items-center" : "items-start px-4 w-full"
+          (isSidebarCollapsed && !isMobileMenuOpen) ? "items-center" : "items-start px-4 w-full"
         )}>
           <button
             onClick={handleLogout}
             className={cn(
               "flex items-center gap-3 py-3 w-full text-on-surface-variant hover:text-error hover:bg-error/10 transition-all duration-300 ease-in-out rounded-lg",
-              isSidebarCollapsed && "justify-center px-0"
+              (isSidebarCollapsed && !isMobileMenuOpen) && "justify-center px-0"
             )}
           >
             <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
-            {!isSidebarCollapsed && <span className="font-label text-sm">Logout</span>}
+            {(isMobileMenuOpen || !isSidebarCollapsed) && <span className="font-label text-sm">Logout</span>}
           </button>
         </div>
       </aside>
@@ -270,7 +286,8 @@ export function DashboardLayout({ children }: LayoutProps) {
       {/* Main Content */}
       <main className={cn(
         "pt-16 min-h-screen transition-all duration-300 lg:pl-20 pl-0",
-        !isSidebarCollapsed && "lg:pl-64"
+        !isSidebarCollapsed && "lg:pl-64",
+        isMobileMenuOpen && "lg:pl-0 pl-0"
       )}>
         <div className="p-4 lg:p-6 pt-4 lg:pt-6">
           {children}
