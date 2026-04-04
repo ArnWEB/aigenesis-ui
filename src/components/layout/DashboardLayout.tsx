@@ -66,7 +66,8 @@ export function DashboardLayout({ children }: LayoutProps) {
   const { user, isAuthenticated, logout } = useAuthContext();
   const location = useLocation();
   const navigate = useNavigate();
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const persona = user?.persona || "executors";
   const sidebarItems = SIDEBAR_ITEMS[persona] || SIDEBAR_ITEMS.executors;
@@ -83,20 +84,30 @@ export function DashboardLayout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Top Header */}
-      <header className="fixed top-0 left-0 right-0 h-16 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/15 z-30 flex items-center justify-between px-6 lg:px-8">
-        <div className="flex items-center gap-12">
+      <header className="fixed top-0 left-0 right-0 h-16 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/15 z-30 flex items-center justify-between px-4 lg:px-8">
+        <div className="flex items-center gap-4 lg:gap-12">
+          {/* Mobile menu button */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 rounded-lg hover:bg-surface-variant/50"
+          >
+            <svg className="w-6 h-6 text-on-surface" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+            </svg>
+          </button>
+          
           <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-dim rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(93,95,239,0.3)]">
-              <svg className="w-6 h-6 text-on-primary-container" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-primary to-primary-dim rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(93,95,239,0.3)]">
+              <svg className="w-5 lg:w-6 h-5 lg:h-6 text-on-primary-container" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <span className="text-2xl font-headline font-bold bg-gradient-to-r from-primary to-primary-dim bg-clip-text text-transparent tracking-tight hidden md:block">
+            <span className="text-xl lg:text-2xl font-headline font-bold bg-gradient-to-r from-primary to-primary-dim bg-clip-text text-transparent tracking-tight hidden sm:block">
               Aigenesis AI
             </span>
           </Link>
           
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-8">
             <Link to="/dashboard" className="text-primary border-b-2 border-primary pb-1 text-sm font-medium">Dashboard</Link>
             <Link to="/claims" className="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium">Claims</Link>
             <Link to="/policies" className="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium">Policies</Link>
@@ -104,8 +115,8 @@ export function DashboardLayout({ children }: LayoutProps) {
           </nav>
         </div>
         
-        <div className="flex items-center gap-6">
-          <div className="relative hidden sm:block">
+        <div className="flex items-center gap-2 lg:gap-6">
+          <div className="relative hidden md:block">
             <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
@@ -174,15 +185,15 @@ export function DashboardLayout({ children }: LayoutProps) {
         </div>
       </header>
 
-      {/* Sidebar - Fixed 80px width like reference */}
+      {/* Sidebar - Fixed width */}
       <aside className={cn(
-        "fixed left-0 top-16 bottom-0 bg-surface-container border-r border-outline-variant/15 z-20 flex flex-col py-8 transition-all duration-300",
-        isSidebarCollapsed ? "w-20 items-center" : "w-64"
+        "fixed left-0 top-16 bottom-0 bg-surface-container border-r border-outline-variant/15 z-20 flex flex-col py-8 transition-all duration-300 lg:flex",
+        isSidebarCollapsed ? "w-20 items-center -translate-x-full lg:translate-x-0" : "w-64 -translate-x-full lg:translate-x-0"
       )}>
         <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
           className={cn(
-            "absolute -right-3 top-6 w-6 h-6 rounded-full bg-surface-container-high border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all duration-200 z-10",
+            "absolute -right-3 top-6 w-6 h-6 rounded-full bg-surface-container-high border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all duration-200 z-10 hidden lg:flex",
             isSidebarCollapsed && "rotate-180"
           )}
         >
@@ -258,10 +269,10 @@ export function DashboardLayout({ children }: LayoutProps) {
 
       {/* Main Content */}
       <main className={cn(
-        "pt-16 min-h-screen transition-all duration-300",
-        isSidebarCollapsed ? "pl-20" : "pl-64"
+        "pt-16 min-h-screen transition-all duration-300 lg:pl-20 pl-0",
+        !isSidebarCollapsed && "lg:pl-64"
       )}>
-        <div className="p-6 pt-6">
+        <div className="p-4 lg:p-6 pt-4 lg:pt-6">
           {children}
         </div>
       </main>

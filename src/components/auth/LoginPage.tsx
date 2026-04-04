@@ -161,7 +161,7 @@ export function LoginPage() {
               {loginMethod === "email" ? (
                 <form onSubmit={handleEmailLogin} className="space-y-5 lg:space-y-6">
                   {/* Email Input with User Dropdown */}
-                  <div className="relative">
+                  <div className="relative space-y-3">
                     <Input
                       label="Email Address"
                       type="email"
@@ -171,21 +171,25 @@ export function LoginPage() {
                       disabled={isLoading}
                       icon={<Mail className="w-4 h-4" />}
                     />
-                    {/* Sample User Dropdown for Demo */}
-                    <div className="relative mt-2">
+                    {/* Sample User Dropdown - below email input */}
+                    <div className="relative">
                       <button
                         type="button"
                         onClick={() => setShowUserDropdown(!showUserDropdown)}
-                        className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+                        className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1 w-full justify-end"
                       >
-                        <span>Select sample user</span>
+                        <span>Use sample user</span>
                         <svg className={`w-3 h-3 transition-transform ${showUserDropdown ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </button>
                       {showUserDropdown && (
                         <div className="absolute top-full left-0 right-0 mt-2 bg-surface-container border border-outline-variant/30 rounded-lg shadow-xl z-20 max-h-60 overflow-y-auto">
-                          {sampleUsers.map((user) => (
+                          {[...sampleUsers].sort((a, b) => {
+                            if (a.role === "admin") return -1;
+                            if (b.role === "admin") return 1;
+                            return 0;
+                          }).map((user) => (
                             <button
                               key={user.id}
                               type="button"

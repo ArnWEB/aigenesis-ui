@@ -118,41 +118,41 @@ export function DashboardPage() {
             <p className="text-on-surface-variant mt-1">Real-time performance analytics and platform governance.</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <GlassPanel className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-on-surface-variant uppercase tracking-wider">Documents Processed</span>
               </div>
-              <p className="text-2xl font-headline font-bold text-on-surface">24,891</p>
+              <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">24,891</p>
               <p className="text-[10px] text-tertiary mt-1">+12% from last sync</p>
             </GlassPanel>
             <GlassPanel className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-on-surface-variant uppercase tracking-wider">Vectors Indexed</span>
               </div>
-              <p className="text-2xl font-headline font-bold text-on-surface">1.2M</p>
+              <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">1.2M</p>
               <p className="text-[10px] text-primary mt-1">+8% from last sync</p>
             </GlassPanel>
             <GlassPanel className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-on-surface-variant uppercase tracking-wider">Avg. Processing Time</span>
               </div>
-              <p className="text-2xl font-headline font-bold text-on-surface">2.4s</p>
+              <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">2.4s</p>
               <p className="text-[10px] text-secondary mt-1">-15% faster</p>
             </GlassPanel>
             <GlassPanel className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-on-surface-variant uppercase tracking-wider">Error Rate</span>
               </div>
-              <p className="text-2xl font-headline font-bold text-on-surface">0.02%</p>
+              <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">0.02%</p>
               <p className="text-[10px] text-tertiary mt-1">Within acceptable range</p>
             </GlassPanel>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <GlassPanel className="lg:col-span-2 p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+            <GlassPanel className="lg:col-span-2 p-4 lg:p-6">
               <h3 className="text-lg font-headline font-semibold text-on-surface mb-4">Ingestion Trend (Last 7 Days)</h3>
-              <div className="flex items-end justify-between h-40 gap-2">
+              <div className="flex items-end justify-between h-32 lg:h-40 gap-2">
                 {[{day:"Mon",value:65},{day:"Tue",value:78},{day:"Wed",value:82},{day:"Thu",value:71},{day:"Fri",value:89},{day:"Sat",value:45},{day:"Sun",value:38}].map((item,idx) => (
                   <div key={idx} className="flex-1 flex flex-col items-center gap-2">
                     <div className="w-full bg-gradient-to-t from-primary to-primary/50 rounded-t" style={{height:`${item.value}%`}} />
@@ -161,7 +161,7 @@ export function DashboardPage() {
                 ))}
               </div>
             </GlassPanel>
-            <GlassPanel className="p-6">
+            <GlassPanel className="p-4 lg:p-6">
               <h3 className="text-lg font-headline font-semibold text-on-surface mb-4">Source Distribution</h3>
               <div className="space-y-3">
                 {[{source:"SharePoint",p:42,c:"bg-primary"},{source:"Google Drive",p:28,c:"bg-secondary"},{source:"Azure Blob",p:18,c:"bg-tertiary"},{source:"Internal SQL",p:8,c:"bg-error"},{source:"Local Files",p:4,c:"bg-on-surface-variant"}].map((item,idx) => (
@@ -335,7 +335,7 @@ export function DashboardPage() {
             <h1 className="text-3xl font-headline font-bold text-on-surface">{roleConfig.title}</h1>
             <p className="text-on-surface-variant mt-1">{roleConfig.subtitle}</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
             {roleConfig.metrics.map((metric, idx) => (
               <GlassPanel key={idx} className={cn("p-6", colorClasses[metric.color as keyof typeof colorClasses])}>
                 <p className="text-[10px] font-label uppercase tracking-widest text-on-surface-variant mb-2">{metric.label}</p>
@@ -346,7 +346,7 @@ export function DashboardPage() {
               </GlassPanel>
             ))}
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
             <GlassPanel className="lg:col-span-2 p-6">
               <h3 className="text-lg font-headline font-semibold text-on-surface mb-4">Recent Activity</h3>
               <div className="space-y-4">
