@@ -98,7 +98,7 @@ export function DashboardLayout({ children }: LayoutProps) {
 
           <Link to="/dashboard" className="flex items-center gap-2">
             <img src="/aigenesis.png" alt="Aigenesis" className="h-10 w-auto lg:h-10" />
-            <span className="text-xl lg:text-2xl font-headline font-bold bg-gradient-to-r from-primary to-primary-dim bg-clip-text text-transparent tracking-tight hidden sm:block">
+            <span className="text-xl lg:text-2xl font-headline font-bold text-primary tracking-tight hidden sm:block">
               Aigenesis
             </span>
           </Link>
