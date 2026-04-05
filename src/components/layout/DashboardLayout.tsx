@@ -105,9 +105,6 @@ export function DashboardLayout({ children }: LayoutProps) {
 
           <nav className="hidden lg:flex items-center gap-8">
             <Link to="/dashboard" className="text-primary border-b-2 border-primary pb-1 text-sm font-medium">Dashboard</Link>
-            <Link to="/claims" className="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium">Claims</Link>
-            <Link to="/policies" className="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium">Policies</Link>
-            <Link to="/analytics" className="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium">Insights</Link>
           </nav>
         </div>
 
