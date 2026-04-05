@@ -1,6 +1,11 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useAuthContext } from "@/context/AuthContext";
+import { sendChatMessageStream, generateSessionId, loadSessionsFromStorage, saveSessionsToStorage } from "@/services/chatApi";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 export interface ChatMessage {
   id: string;
@@ -16,13 +21,21 @@ export interface ChatSession {
   messages: ChatMessage[];
   createdAt: Date;
   updatedAt: Date;
-  metadata?: Record<string, unknown>;
+  metadata?: {
+    langflowSessionId?: string;
+  };
 }
 
 interface ChatDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   className?: string;
+}
+
+interface ToastState {
+  show: boolean;
+  message: string;
+  type: "success" | "error";
 }
 
 const AI_PERSONAS = {
@@ -70,27 +83,69 @@ const AI_PERSONAS = {
   },
 } as const;
 
+function createDefaultSession(): ChatSession {
+  return {
+    id: `session-${Date.now()}`,
+    title: "New Conversation",
+    messages: [],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    metadata: {
+      langflowSessionId: generateSessionId(),
+    },
+  };
+}
+
 export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
   const { user } = useAuthContext();
-  const [sessions, setSessions] = useState<ChatSession[]>([
-    {
-      id: "default",
-      title: "New Conversation",
-      messages: [],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ]);
-  const [activeSessionId, setActiveSessionId] = useState("default");
+  const [sessions, setSessions] = useState<ChatSession[]>([createDefaultSession()]);
+  const [activeSessionId, setActiveSessionId] = useState<string>("");
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [toast, setToast] = useState<ToastState>({ show: false, message: "", type: "error" });
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const persona = user?.persona 
     ? AI_PERSONAS[user.persona as keyof typeof AI_PERSONAS] 
     : AI_PERSONAS.executors;
 
   const activeSession = sessions.find((s) => s.id === activeSessionId) || sessions[0];
+
+  const showToast = useCallback((message: string, type: "success" | "error" = "error") => {
+    setToast({ show: true, message, type });
+    setTimeout(() => setToast({ show: false, message: "", type: "error" }), 4000);
+  }, []);
+
+  useEffect(() => {
+    if (user?.id) {
+      const stored = loadSessionsFromStorage(user.id);
+      if (stored && stored.length > 0) {
+        setSessions(stored);
+        setActiveSessionId(stored[0].id);
+      } else {
+        const newSession = createDefaultSession();
+        setSessions([newSession]);
+        setActiveSessionId(newSession.id);
+      }
+    }
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (user?.id && sessions.length > 0) {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+      saveTimeoutRef.current = setTimeout(() => {
+        saveSessionsToStorage(user.id, sessions);
+      }, 500);
+    }
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+    };
+  }, [sessions, user?.id]);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -100,55 +155,26 @@ export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
     scrollToBottom();
   }, [activeSession.messages, scrollToBottom]);
 
-  const generateResponse = useCallback(async (_message: string): Promise<string> => {
-    // Simulate AI response delay
-    await new Promise((resolve) => setTimeout(resolve, 1000 + Math.random() * 1000));
-    
-    const responses: Record<string, string[]> = {
-      executors: [
-        "Analyzing enterprise risk metrics... Total exposure is within acceptable parameters.",
-        "Portfolio performance update: GWP increased by 12.4% this quarter. Combined ratio at 91.4%.",
-        "AI efficiency analysis: Underwriting department shows 42% time reduction per policy.",
-      ],
-      underwriter: [
-        "Risk assessment complete. Financial risk score: 88%. Recommendation: Review liability cap.",
-        "Market trend analysis: Logistics sector shows +14% volatility. Consider adjusted premium.",
-        "Policy comparison: Premium deviation detected at +0.05%. Within acceptable range.",
-      ],
-      adjudicator: [
-        "Claims analysis: #CLM-8902 shows anomalous damage pattern. Confidence: 98.4%.",
-        "Fraud probability detected: 82%. Metadata mismatch found in uploaded photos.",
-        "AI insight: Damage pattern inconsistent with reported multi-car collision.",
-      ],
-      "customer-service": [
-        "Customer ticket #AX-2041: Drone dispatched to collision site. ETA: 4 minutes.",
-        "Policy query processed. Account #AE-7728 shows full replacement coverage.",
-        "Client approval pending for tow destination: Southside Collision Center.",
-      ],
-      operations: [
-        "Compute cluster status: US-EAST at 45%, EU-WEST at 82% (heavy load).",
-        "Active agents: 1,204 across all regions. Throughput optimal.",
-        "API latency: 14ms. Within acceptable parameters.",
-      ],
-      "customer-agent": [
-        "Field verification: 65% of workflow complete. Policy documentation: 20%.",
-        "Incident #AX-2041: Damage assessment 85% complete. Write-off likely.",
-        "CSAT score: 4.9/5. Target: 4.8. Performance optimal.",
-      ],
-    };
-
-    const roleResponses = responses[user?.persona || "executors"];
-    return roleResponses[Math.floor(Math.random() * roleResponses.length)];
-  }, [user?.persona]);
-
   const handleSendMessage = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isTyping) return;
+    if (!user?.email) {
+      showToast("User not authenticated. Please log in again.");
+      return;
+    }
+
+    const currentSession = sessions.find((s) => s.id === activeSessionId) || sessions[0];
+    const sessionId = currentSession.metadata?.langflowSessionId || generateSessionId();
+
+    const userInput = input.trim();
+
+    setInput("");
+    setIsTyping(true);
 
     const newUserMessage: ChatMessage = {
       id: `msg-${Date.now()}`,
       role: "user",
-      content: input.trim(),
+      content: userInput,
       timestamp: new Date(),
     };
 
@@ -158,54 +184,105 @@ export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
           ? {
               ...session,
               messages: [...session.messages, newUserMessage],
+              title: session.messages.length === 0 ? userInput.slice(0, 30) + (userInput.length > 30 ? "..." : "") : session.title,
+              updatedAt: new Date(),
+              metadata: {
+                ...session.metadata,
+                langflowSessionId: sessionId,
+              },
+            }
+          : session
+      )
+    );
+
+    const assistantMessageId = `msg-${Date.now() + 1}`;
+    const placeholderMessage: ChatMessage = {
+      id: assistantMessageId,
+      role: "assistant",
+      content: "",
+      timestamp: new Date(),
+      metadata: {
+        persona: user?.persona,
+      },
+    };
+
+    setSessions((prev) =>
+      prev.map((session) =>
+        session.id === activeSessionId
+          ? {
+              ...session,
+              messages: [...session.messages, placeholderMessage],
               updatedAt: new Date(),
             }
           : session
       )
     );
-    setInput("");
-    setIsTyping(true);
 
     try {
-      const response = await generateResponse(input.trim());
-      const assistantMessage: ChatMessage = {
-        id: `msg-${Date.now() + 1}`,
-        role: "assistant",
-        content: response,
-        timestamp: new Date(),
-        metadata: {
-          persona: user?.persona,
-          confidence: Math.random() * 10 + 90,
-        },
-      };
-
+      // Get the session messages to send full history to Langflow
+      const currentSessionForApi = sessions.find((s) => s.id === activeSessionId) || sessions[0];
+      const sessionMessages = [...currentSessionForApi.messages, newUserMessage];
+      
+      await sendChatMessageStream(user.email, sessionMessages, sessionId, (chunk, isComplete) => {
+        setSessions((prev) =>
+          prev.map((session) =>
+            session.id === activeSessionId
+              ? {
+                  ...session,
+                  messages: session.messages.map((msg) =>
+                    msg.id === assistantMessageId
+                      ? { ...msg, content: chunk }
+                      : msg
+                  ),
+                }
+              : session
+          )
+        );
+        
+        if (isComplete) {
+          setIsTyping(false);
+        }
+      });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to get response";
+      showToast(errorMessage);
       setSessions((prev) =>
         prev.map((session) =>
           session.id === activeSessionId
             ? {
                 ...session,
-                messages: [...session.messages, assistantMessage],
-                updatedAt: new Date(),
+                messages: session.messages.filter((msg) => msg.id !== assistantMessageId),
               }
             : session
         )
       );
-    } finally {
       setIsTyping(false);
     }
-  }, [input, isTyping, activeSessionId, generateResponse, user?.persona]);
+  }, [input, isTyping, activeSessionId, sessions, user, showToast]);
 
   const handleNewChat = useCallback(() => {
-    const newSession: ChatSession = {
-      id: `session-${Date.now()}`,
-      title: "New Conversation",
-      messages: [],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    const newSession = createDefaultSession();
     setSessions((prev) => [newSession, ...prev]);
     setActiveSessionId(newSession.id);
   }, []);
+
+  const handleClearSession = useCallback(() => {
+    setSessions((prev) =>
+      prev.map((session) =>
+        session.id === activeSessionId
+          ? {
+              ...session,
+              messages: [],
+              title: "New Conversation",
+              metadata: {
+                ...session.metadata,
+                langflowSessionId: generateSessionId(),
+              },
+            }
+          : session
+      )
+    );
+  }, [activeSessionId]);
 
   return (
     <>
@@ -245,6 +322,15 @@ export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <button
+              onClick={handleClearSession}
+              className="p-2 rounded-lg hover:bg-surface-variant transition-colors"
+              title="Clear Chat"
+            >
+              <svg className="w-5 h-5 text-on-surface-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
             <button
               onClick={handleNewChat}
               className="p-2 rounded-lg hover:bg-surface-variant transition-colors"
@@ -337,7 +423,85 @@ export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
                     ? "bg-primary text-on-primary rounded-tr-none"
                     : "bg-surface-variant text-on-surface rounded-tl-none"
                 )}>
-                  {message.content}
+                  {message.role === "user" ? (
+                    message.content
+                  ) : (
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        code({ className, children, ...props }) {
+                          const match = /language-(\w+)/.exec(className || "");
+                          const isInline = !match;
+                          return isInline ? (
+                            <code className="px-1.5 py-0.5 bg-black/20 rounded text-xs font-mono" {...props}>
+                              {children}
+                            </code>
+                          ) : (
+                            <SyntaxHighlighter
+                              style={oneDark}
+                              language={match[1]}
+                              PreTag="div"
+                              className="rounded-lg text-xs my-2"
+                            >
+                              {String(children).replace(/\n$/, "")}
+                            </SyntaxHighlighter>
+                          );
+                        },
+                        a({ href, children, ...props }) {
+                          return (
+                            <a href={href} target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80" {...props}>
+                              {children}
+                            </a>
+                          );
+                        },
+                        ul({ children, ...props }) {
+                          return <ul className="list-disc list-inside space-y-1 my-2" {...props}>{children}</ul>;
+                        },
+                        ol({ children, ...props }) {
+                          return <ol className="list-decimal list-inside space-y-1 my-2" {...props}>{children}</ol>;
+                        },
+                        li({ children, ...props }) {
+                          return <li className="text-sm" {...props}>{children}</li>;
+                        },
+                        h1({ children, ...props }) {
+                          return <h1 className="text-xl font-bold my-3" {...props}>{children}</h1>;
+                        },
+                        h2({ children, ...props }) {
+                          return <h2 className="text-lg font-bold my-2" {...props}>{children}</h2>;
+                        },
+                        h3({ children, ...props }) {
+                          return <h3 className="text-md font-semibold my-2" {...props}>{children}</h3>;
+                        },
+                        p({ children, ...props }) {
+                          return <p className="my-2" {...props}>{children}</p>;
+                        },
+                        table({ children, ...props }) {
+                          return (
+                            <div className="overflow-x-auto my-3">
+                              <table className="min-w-full text-xs border-collapse" {...props}>{children}</table>
+                            </div>
+                          );
+                        },
+                        th({ children, ...props }) {
+                          return <th className="border px-2 py-1 bg-black/20 text-left" {...props}>{children}</th>;
+                        },
+                        td({ children, ...props }) {
+                          return <td className="border px-2 py-1" {...props}>{children}</td>;
+                        },
+                        blockquote({ children, ...props }) {
+                          return <blockquote className="border-l-4 border-primary/50 pl-3 my-2 italic" {...props}>{children}</blockquote>;
+                        },
+                        strong({ children, ...props }) {
+                          return <strong className="font-bold" {...props}>{children}</strong>;
+                        },
+                        em({ children, ...props }) {
+                          return <em className="italic" {...props}>{children}</em>;
+                        },
+                      }}
+                    >
+                      {message.content}
+                    </ReactMarkdown>
+                  )}
                 </div>
               </div>
             ))
@@ -399,11 +563,32 @@ export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
           </div>
         </div>
       </div>
+
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className="fixed top-20 right-6 z-50 animate-slide-in">
+          <div className={cn(
+            "flex items-center gap-3 px-4 py-3 rounded-lg shadow-xl border",
+            toast.type === "success" ? "bg-tertiary/20 border-tertiary text-tertiary" : "bg-error/20 border-error text-error"
+          )}>
+            {toast.type === "success" ? (
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            )}
+            <span className="text-sm font-medium text-on-surface">{toast.message}</span>
+            <button onClick={() => setToast({ show: false, message: "", type: "error" })} className="ml-2">✕</button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
 
-// Floating trigger button
 interface ChatTriggerProps {
   onClick: () => void;
   className?: string;
