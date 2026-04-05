@@ -87,7 +87,7 @@ export function DashboardLayout({ children }: LayoutProps) {
       <header className="fixed top-0 left-0 right-0 h-16 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/15 z-30 flex items-center justify-between px-4 lg:px-8">
         <div className="flex items-center gap-4 lg:gap-12">
           {/* Mobile menu button - toggles sidebar on mobile */}
-          <button 
+          <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden p-2 rounded-lg hover:bg-surface-variant/50"
           >
@@ -95,18 +95,14 @@ export function DashboardLayout({ children }: LayoutProps) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
             </svg>
           </button>
-          
+
           <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-primary to-primary-dim rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(93,95,239,0.3)]">
-              <svg className="w-5 lg:w-6 h-5 lg:h-6 text-on-primary-container" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
+            <img src="/aigenesis.png" alt="Aigenesis" className="h-10 w-auto lg:h-10" />
             <span className="text-xl lg:text-2xl font-headline font-bold bg-gradient-to-r from-primary to-primary-dim bg-clip-text text-transparent tracking-tight hidden sm:block">
-              Aigenesis AI
+              Aigenesis
             </span>
           </Link>
-          
+
           <nav className="hidden lg:flex items-center gap-8">
             <Link to="/dashboard" className="text-primary border-b-2 border-primary pb-1 text-sm font-medium">Dashboard</Link>
             <Link to="/claims" className="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium">Claims</Link>
@@ -114,7 +110,7 @@ export function DashboardLayout({ children }: LayoutProps) {
             <Link to="/analytics" className="text-on-surface-variant hover:text-primary transition-colors text-sm font-medium">Insights</Link>
           </nav>
         </div>
-        
+
         <div className="flex items-center gap-2 lg:gap-6">
           <div className="relative hidden md:block">
             <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -126,22 +122,22 @@ export function DashboardLayout({ children }: LayoutProps) {
               className="w-64 bg-surface-container-lowest border-none ring-1 ring-outline-variant/30 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-primary/50 transition-all"
             />
           </div>
-          
+
           <button className="p-2 rounded-full hover:bg-surface-bright transition-all duration-300 relative">
             <svg className="w-5 h-5 text-on-surface-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
             <span className="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full" />
           </button>
-          
+
           <ThemeSwitcher />
-          
+
           <button className="p-2 rounded-full hover:bg-surface-bright transition-all duration-300">
             <svg className="w-5 h-5 text-on-surface-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </button>
-          
+
           {user && (
             <div className="flex items-center gap-3 pl-3 border-l border-outline-variant/20">
               <div className="text-right hidden sm:block">
@@ -168,7 +164,7 @@ export function DashboardLayout({ children }: LayoutProps) {
                     </div>
                   </div>
                   <div className="p-2 border-t border-outline-variant/10">
-                    <button 
+                    <button
                       onClick={handleLogout}
                       className="w-full flex items-center gap-2 px-3 py-2 text-sm text-error hover:bg-error/10 rounded-lg transition-colors"
                     >
@@ -187,12 +183,12 @@ export function DashboardLayout({ children }: LayoutProps) {
 
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-10 lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
-      
+
       {/* Sidebar - Fixed width */}
       <aside className={cn(
         "fixed left-0 top-16 bottom-0 bg-surface-container border-r border-outline-variant/15 z-20 flex flex-col py-8 transition-all duration-300",
@@ -216,7 +212,7 @@ export function DashboardLayout({ children }: LayoutProps) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        
+
         {!isSidebarCollapsed && (
           <div className="flex flex-col items-center gap-1 mb-4 px-4">
             <div className="w-10 h-10 bg-primary-dim rounded-lg flex items-center justify-center">
@@ -226,7 +222,7 @@ export function DashboardLayout({ children }: LayoutProps) {
             </div>
           </div>
         )}
-        
+
         <nav className={cn(
           "flex flex-col gap-2",
           (isSidebarCollapsed && !isMobileMenuOpen) ? "items-center w-full" : "items-start w-full px-4"
@@ -263,7 +259,7 @@ export function DashboardLayout({ children }: LayoutProps) {
             );
           })}
         </nav>
-        
+
         <div className={cn(
           "mt-auto flex flex-col gap-6 pb-4",
           (isSidebarCollapsed && !isMobileMenuOpen) ? "items-center" : "items-start px-4 w-full"

@@ -8,23 +8,22 @@ import { sampleUsers, PERSONA_LABELS } from "@/data/users";
 export function DashboardPage() {
   const { user } = useAuthContext();
   const location = useLocation();
-  
+
   const [selectedPersona, setSelectedPersona] = useState<string>("");
   const [selectedSource, setSelectedSource] = useState<string>("");
   const [additionalDetails, setAdditionalDetails] = useState<string>("");
-  const [showSourceConfig, setShowSourceConfig] = useState(false);
-  const [notification, setNotification] = useState<{show: boolean; message: string; type: "success" | "error"}>({show: false, message: "", type: "success"});
-  
+  const [notification, setNotification] = useState<{ show: boolean; message: string; type: "success" | "error" }>({ show: false, message: "", type: "success" });
+
   const isAdminUsers = location.pathname === "/admin/users";
   const isAdminGovernance = location.pathname === "/admin/governance";
   const isAdminSettings = location.pathname === "/admin/settings";
   const isAdminDashboard = location.pathname === "/dashboard" && user?.role === "admin";
-  
+
   const showNotification = (message: string, type: "success" | "error" = "success") => {
-    setNotification({show: true, message, type});
-    setTimeout(() => setNotification({show: false, message: "", type: "success"}), 4000);
+    setNotification({ show: true, message, type });
+    setTimeout(() => setNotification({ show: false, message: "", type: "success" }), 4000);
   };
-  
+
   const roleConfig = useMemo(() => {
     const configs = {
       admin: {
@@ -117,7 +116,7 @@ export function DashboardPage() {
             <h1 className="text-3xl font-headline font-bold text-on-surface">Systems Overview</h1>
             <p className="text-on-surface-variant mt-1">Real-time performance analytics and platform governance.</p>
           </div>
-          
+
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <GlassPanel className="p-4">
               <div className="flex items-center justify-between mb-2">
@@ -148,14 +147,14 @@ export function DashboardPage() {
               <p className="text-[10px] text-tertiary mt-1">Within acceptable range</p>
             </GlassPanel>
           </div>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
             <GlassPanel className="lg:col-span-2 p-4 lg:p-6">
               <h3 className="text-lg font-headline font-semibold text-on-surface mb-4">Ingestion Trend (Last 7 Days)</h3>
               <div className="flex items-end justify-between h-32 lg:h-40 gap-2">
-                {[{day:"Mon",value:65},{day:"Tue",value:78},{day:"Wed",value:82},{day:"Thu",value:71},{day:"Fri",value:89},{day:"Sat",value:45},{day:"Sun",value:38}].map((item,idx) => (
+                {[{ day: "Mon", value: 65 }, { day: "Tue", value: 78 }, { day: "Wed", value: 82 }, { day: "Thu", value: 71 }, { day: "Fri", value: 89 }, { day: "Sat", value: 45 }, { day: "Sun", value: 38 }].map((item, idx) => (
                   <div key={idx} className="flex-1 flex flex-col items-center gap-2">
-                    <div className="w-full bg-gradient-to-t from-primary to-primary/50 rounded-t" style={{height:`${item.value}%`}} />
+                    <div className="w-full bg-gradient-to-t from-primary to-primary/50 rounded-t" style={{ height: `${item.value}%` }} />
                     <span className="text-[10px] text-on-surface-variant">{item.day}</span>
                   </div>
                 ))}
@@ -164,19 +163,19 @@ export function DashboardPage() {
             <GlassPanel className="p-4 lg:p-6">
               <h3 className="text-lg font-headline font-semibold text-on-surface mb-4">Source Distribution</h3>
               <div className="space-y-3">
-                {[{source:"SharePoint",p:42,c:"bg-primary"},{source:"Google Drive",p:28,c:"bg-secondary"},{source:"Azure Blob",p:18,c:"bg-tertiary"},{source:"Internal SQL",p:8,c:"bg-error"},{source:"Local Files",p:4,c:"bg-on-surface-variant"}].map((item,idx) => (
+                {[{ source: "SharePoint", p: 42, c: "bg-primary" }, { source: "Google Drive", p: 28, c: "bg-secondary" }, { source: "Azure Blob", p: 18, c: "bg-tertiary" }, { source: "Internal SQL", p: 8, c: "bg-error" }, { source: "Local Files", p: 4, c: "bg-on-surface-variant" }].map((item, idx) => (
                   <div key={idx}>
                     <div className="flex justify-between text-xs mb-1">
                       <span className="text-on-surface-variant">{item.source}</span>
                       <span className="text-on-surface font-medium">{item.p}%</span>
                     </div>
-                    <div className="h-2 bg-surface-container-highest rounded-full"><div className={cn("h-full rounded-full",item.c)} style={{width:`${item.p}%`}}/></div>
+                    <div className="h-2 bg-surface-container-highest rounded-full"><div className={cn("h-full rounded-full", item.c)} style={{ width: `${item.p}%` }} /></div>
                   </div>
                 ))}
               </div>
             </GlassPanel>
           </div>
-          
+
           <GlassPanel className="overflow-hidden">
             <div className="px-6 py-4 border-b border-outline-variant/10">
               <h3 className="text-lg font-headline font-semibold text-on-surface">Active Ingestion Jobs</h3>
@@ -193,13 +192,13 @@ export function DashboardPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-outline-variant/10">
-                {[{id:"ING-7241",src:"SharePoint",persona:"Underwriter",prog:78,status:"Running",time:"10 min ago"},{id:"ING-7240",src:"Google Drive",persona:"Claims Adjuster",prog:100,status:"Completed",time:"2 hours ago"},{id:"ING-7239",src:"Azure Blob",persona:"Operations",prog:45,status:"Running",time:"25 min ago"},{id:"ING-7238",src:"Internal SQL",persona:"Executors",prog:100,status:"Completed",time:"5 hours ago"}].map((job,idx) => (
+                {[{ id: "ING-7241", src: "SharePoint", persona: "Underwriter", prog: 78, status: "Running", time: "10 min ago" }, { id: "ING-7240", src: "Google Drive", persona: "Claims Adjuster", prog: 100, status: "Completed", time: "2 hours ago" }, { id: "ING-7239", src: "Azure Blob", persona: "Operations", prog: 45, status: "Running", time: "25 min ago" }, { id: "ING-7238", src: "Internal SQL", persona: "Executors", prog: 100, status: "Completed", time: "5 hours ago" }].map((job, idx) => (
                   <tr key={idx} className="hover:bg-surface-variant/20">
                     <td className="px-6 py-4 text-sm font-medium text-primary">{job.id}</td>
                     <td className="px-6 py-4 text-sm text-on-surface-variant">{job.src}</td>
                     <td className="px-6 py-4 text-sm text-on-surface">{job.persona}</td>
-                    <td className="px-6 py-4"><div className="flex items-center gap-2"><div className="w-24 h-1.5 bg-surface-container-highest rounded-full"><div className={cn("h-full rounded-full",job.status==="Completed"?"bg-tertiary":"bg-secondary")} style={{width:`${job.prog}%`}}/></div><span className="text-xs text-on-surface-variant">{job.prog}%</span></div></td>
-                    <td className="px-6 py-4"><span className={cn("px-2 py-1 rounded-full text-[10px] font-bold uppercase",job.status==="Completed"?"bg-tertiary/20 text-tertiary":"bg-secondary/20 text-secondary")}>{job.status}</span></td>
+                    <td className="px-6 py-4"><div className="flex items-center gap-2"><div className="w-24 h-1.5 bg-surface-container-highest rounded-full"><div className={cn("h-full rounded-full", job.status === "Completed" ? "bg-tertiary" : "bg-secondary")} style={{ width: `${job.prog}%` }} /></div><span className="text-xs text-on-surface-variant">{job.prog}%</span></div></td>
+                    <td className="px-6 py-4"><span className={cn("px-2 py-1 rounded-full text-[10px] font-bold uppercase", job.status === "Completed" ? "bg-tertiary/20 text-tertiary" : "bg-secondary/20 text-secondary")}>{job.status}</span></td>
                     <td className="px-6 py-4 text-xs text-on-surface-variant">{job.time}</td>
                   </tr>
                 ))}
@@ -233,10 +232,10 @@ export function DashboardPage() {
               <tbody className="divide-y divide-outline-variant/10">
                 {sampleUsers.map((u) => (
                   <tr key={u.id} className="hover:bg-surface-variant/30">
-                    <td className="px-6 py-4"><div className="flex items-center gap-3"><div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xs font-medium">{u.name.split(" ").map(n=>n[0]).join("")}</div><div><p className="text-sm font-medium text-on-surface">{u.name}</p><p className="text-xs text-on-surface-variant">{u.email}</p></div></div></td>
-                    <td className="px-6 py-4"><span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">{u.role.replace("_"," ")}</span></td>
+                    <td className="px-6 py-4"><div className="flex items-center gap-3"><div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xs font-medium">{u.name.split(" ").map(n => n[0]).join("")}</div><div><p className="text-sm font-medium text-on-surface">{u.name}</p><p className="text-xs text-on-surface-variant">{u.email}</p></div></div></td>
+                    <td className="px-6 py-4"><span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">{u.role.replace("_", " ")}</span></td>
                     <td className="px-6 py-4 text-sm text-on-surface-variant">{u.department}</td>
-                    <td className="px-6 py-4"><span className="flex items-center gap-2 text-xs text-tertiary"><span className="w-2 h-2 rounded-full bg-tertiary animate-pulse"/>Active</span></td>
+                    <td className="px-6 py-4"><span className="flex items-center gap-2 text-xs text-tertiary"><span className="w-2 h-2 rounded-full bg-tertiary animate-pulse" />Active</span></td>
                     <td className="px-6 py-4 text-right"><button className="text-on-surface-variant hover:text-primary">•••</button></td>
                   </tr>
                 ))}
@@ -253,7 +252,7 @@ export function DashboardPage() {
             <h1 className="text-3xl font-headline font-bold text-on-surface">Governance Console</h1>
             <p className="text-on-surface-variant mt-1">AI model controls and knowledge ingestion management.</p>
           </div>
-          
+
           <GlassPanel className="p-6">
             <h3 className="text-lg font-headline font-semibold text-on-surface mb-6">Knowledge Ingestor</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -261,8 +260,8 @@ export function DashboardPage() {
                 <label className="text-xs uppercase tracking-widest text-on-surface-variant">Target Persona</label>
                 <div className="grid grid-cols-2 gap-2">
                   {Object.entries(PERSONA_LABELS).map(([key, value]) => (
-                    <button key={key} onClick={()=>setSelectedPersona(key)} className={cn("p-3 rounded-lg border transition-all text-left",selectedPersona===key?"bg-primary/10 border-primary":"border-outline-variant/20 bg-surface-container-low hover:border-primary/30")}>
-                      <span className={cn("text-xs font-medium",selectedPersona===key?"text-primary":"text-on-surface")}>{value.title}</span>
+                    <button key={key} onClick={() => setSelectedPersona(key)} className={cn("p-3 rounded-lg border transition-all text-left", selectedPersona === key ? "bg-primary/10 border-primary" : "border-outline-variant/20 bg-surface-container-low hover:border-primary/30")}>
+                      <span className={cn("text-xs font-medium", selectedPersona === key ? "text-primary" : "text-on-surface")}>{value.title}</span>
                       <p className="text-[10px] text-on-surface-variant">{value.subtitle}</p>
                     </button>
                   ))}
@@ -271,38 +270,38 @@ export function DashboardPage() {
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-on-surface-variant">Data Source</label>
                 <div className="space-y-2">
-                  {[{id:"internal",n:"Internal SQL Cluster",s:"Live Production Database",l:"🗄️"},{id:"sharepoint",n:"SharePoint Ecosystem",s:"Microsoft 365 Documents",l:"🌐"},{id:"gdrive",n:"Google Drive Workspace",s:"Cloud Storage",l:"📁"},{id:"azure",n:"Azure Blob Storage",s:"Microsoft Cloud",l:"☁️"},{id:"local",n:"Local File System",s:"On-Premise Files",l:"📂"}].map((src) => (
-                    <button key={src.id} onClick={()=>{setSelectedSource(src.id);setShowSourceConfig(src.id==="sharepoint"||src.id==="gdrive"||src.id==="azure");}} className={cn("w-full p-3 rounded-lg border transition-all text-left flex items-center gap-3",selectedSource===src.id?"bg-secondary/10 border-secondary":"border-outline-variant/20 bg-surface-container-low hover:border-secondary/30")}>
+                  {[{ id: "internal", n: "Internal SQL Cluster", s: "Live Production Database", l: "🗄️" }, { id: "sharepoint", n: "SharePoint Ecosystem", s: "Microsoft 365 Documents", l: "🌐" }, { id: "gdrive", n: "Google Drive Workspace", s: "Cloud Storage", l: "📁" }, { id: "azure", n: "Azure Blob Storage", s: "Microsoft Cloud", l: "☁️" }, { id: "local", n: "Local File System", s: "On-Premise Files", l: "📂" }].map((src) => (
+                    <button key={src.id} onClick={() => { setSelectedSource(src.id); }} className={cn("w-full p-3 rounded-lg border transition-all text-left flex items-center gap-3", selectedSource === src.id ? "bg-secondary/10 border-secondary" : "border-outline-variant/20 bg-surface-container-low hover:border-secondary/30")}>
                       <div className="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-xl">{src.l}</div>
-                      <div><span className={cn("text-sm font-medium block",selectedSource===src.id?"text-secondary":"text-on-surface")}>{src.n}</span><span className="text-[10px] text-on-surface-variant">{src.s}</span></div>
+                      <div><span className={cn("text-sm font-medium block", selectedSource === src.id ? "text-secondary" : "text-on-surface")}>{src.n}</span><span className="text-[10px] text-on-surface-variant">{src.s}</span></div>
                     </button>
                   ))}
                 </div>
               </div>
             </div>
-            
-            {showSourceConfig && (
+
+            {/* {showSourceConfig && (
               <div className="mb-6 p-4 bg-surface-container rounded-xl">
-                <h4 className="text-sm font-semibold text-on-surface mb-4">{selectedSource==="sharepoint"?"SharePoint":selectedSource==="gdrive"?"Google Drive":"Azure"} Configuration</h4>
+                <h4 className="text-sm font-semibold text-on-surface mb-4">{selectedSource === "sharepoint" ? "SharePoint" : selectedSource === "gdrive" ? "Google Drive" : "Azure"} Configuration</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {selectedSource==="sharepoint"&&[<input key="1" placeholder="Site URL" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm"/>,<input key="2" placeholder="Library Name" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm"/>]}
-                  {selectedSource==="gdrive"&&[<input key="1" placeholder="Service Account Email" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm"/>,<input key="2" placeholder="Drive ID" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm"/>]}
-                  {selectedSource==="azure"&&[<input key="1" placeholder="Storage Account" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm"/>,<input key="2" placeholder="Container Name" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm"/>]}
+                  {selectedSource === "sharepoint" && [<input key="1" placeholder="Site URL" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm" />, <input key="2" placeholder="Library Name" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm" />]}
+                  {selectedSource === "gdrive" && [<input key="1" placeholder="Service Account Email" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm" />, <input key="2" placeholder="Drive ID" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm" />]}
+                  {selectedSource === "azure" && [<input key="1" placeholder="Storage Account" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm" />, <input key="2" placeholder="Container Name" className="bg-surface-container-lowest border-b border-outline-variant/30 py-2 text-on-surface text-sm" />]}
                 </div>
               </div>
-            )}
-            
+            )} */}
+
             <div className="space-y-2 mb-6">
               <label className="text-xs uppercase tracking-widest text-on-surface-variant">Additional Instructions</label>
-              <textarea placeholder="Add specific instructions..." className="w-full bg-surface-container-lowest border-b border-outline-variant/30 py-3 px-3 text-on-surface resize-none h-24" value={additionalDetails} onChange={(e)=>setAdditionalDetails(e.target.value)}/>
+              <textarea placeholder="Add specific instructions..." className="w-full bg-surface-container-lowest border-b border-outline-variant/30 py-3 px-3 text-on-surface resize-none h-24" value={additionalDetails} onChange={(e) => setAdditionalDetails(e.target.value)} />
             </div>
-            
+
             <div className="flex items-center justify-between p-4 bg-surface-container rounded-xl">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">🛡️</div>
                 <div><p className="text-sm font-medium text-on-surface">Ready to Ingest</p><p className="text-xs text-on-surface-variant">Auto-refresh: 02:00 UTC</p></div>
               </div>
-              <button onClick={()=>{const pl=selectedPersona?PERSONA_LABELS[selectedPersona]?.title:"Not selected";const sn=selectedSource==="internal"?"Internal SQL":selectedSource==="sharepoint"?"SharePoint":selectedSource==="gdrive"?"Google Drive":selectedSource==="azure"?"Azure":"Local";showNotification(`Knowledge ingestion started for ${pl} from ${sn}. Configuration saved.`);}}disabled={!selectedPersona||!selectedSource}className="px-6 py-3 bg-gradient-to-r from-secondary to-primary text-on-primary font-bold rounded-lg disabled:opacity-50 flex items-center gap-2">⟳ Re-ingest Knowledge Base</button>
+              <button onClick={() => { const pl = selectedPersona ? PERSONA_LABELS[selectedPersona]?.title : "Not selected"; const sn = selectedSource === "internal" ? "Internal SQL" : selectedSource === "sharepoint" ? "SharePoint" : selectedSource === "gdrive" ? "Google Drive" : selectedSource === "azure" ? "Azure" : "Local"; showNotification(`Knowledge ingestion started for ${pl} from ${sn}. Configuration saved.`); }} disabled={!selectedPersona || !selectedSource} className="px-6 py-3 bg-gradient-to-r from-secondary to-primary text-on-primary font-bold rounded-lg disabled:opacity-50 flex items-center gap-2">⟳ Re-ingest Knowledge Base</button>
             </div>
           </GlassPanel>
         </div>
@@ -318,10 +317,10 @@ export function DashboardPage() {
           <GlassPanel className="p-6">
             <h3 className="text-lg font-headline font-semibold text-on-surface mb-6">General Settings</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div><label className="text-xs uppercase tracking-widest text-on-surface-variant block mb-2">Organization Name</label><input type="text" defaultValue="Aigenesis AI" className="w-full bg-surface-container-lowest border-b border-outline-variant/30 py-3 text-on-surface"/></div>
-              <div><label className="text-xs uppercase tracking-widest text-on-surface-variant block mb-2">Support Email</label><input type="email" defaultValue="support@aegis.ai" className="w-full bg-surface-container-lowest border-b border-outline-variant/30 py-3 text-on-surface"/></div>
-              <div><label className="text-xs uppercase tracking-widest text-on-surface-variant block mb-2">Session Timeout</label><input type="number" defaultValue="30" className="w-full bg-surface-container-lowest border-b border-outline-variant/30 py-3 text-on-surface"/></div>
-              <div><label className="text-xs uppercase tracking-widest text-on-surface-variant block mb-2">Max Login Attempts</label><input type="number" defaultValue="5" className="w-full bg-surface-container-lowest border-b border-outline-variant/30 py-3 text-on-surface"/></div>
+              <div><label className="text-xs uppercase tracking-widest text-on-surface-variant block mb-2">Organization Name</label><input type="text" defaultValue="Aigenesis" className="w-full bg-surface-container-lowest border-b border-outline-variant/30 py-3 text-on-surface" /></div>
+              <div><label className="text-xs uppercase tracking-widest text-on-surface-variant block mb-2">Support Email</label><input type="email" defaultValue="support@aegis.ai" className="w-full bg-surface-container-lowest border-b border-outline-variant/30 py-3 text-on-surface" /></div>
+              <div><label className="text-xs uppercase tracking-widest text-on-surface-variant block mb-2">Session Timeout</label><input type="number" defaultValue="30" className="w-full bg-surface-container-lowest border-b border-outline-variant/30 py-3 text-on-surface" /></div>
+              <div><label className="text-xs uppercase tracking-widest text-on-surface-variant block mb-2">Max Login Attempts</label><input type="number" defaultValue="5" className="w-full bg-surface-container-lowest border-b border-outline-variant/30 py-3 text-on-surface" /></div>
             </div>
             <div className="mt-6 flex justify-end"><button className="px-6 py-2 bg-primary text-on-primary rounded-lg text-sm font-medium">Save Changes</button></div>
           </GlassPanel>
@@ -350,9 +349,9 @@ export function DashboardPage() {
             <GlassPanel className="lg:col-span-2 p-6">
               <h3 className="text-lg font-headline font-semibold text-on-surface mb-4">Recent Activity</h3>
               <div className="space-y-4">
-                {[1,2,3].map(i=>(
+                {[1, 2, 3].map(i => (
                   <div key={i} className="flex items-center gap-4 p-3 rounded-lg bg-surface-container-low">
-                    <div className="w-2 h-2 rounded-full bg-primary"/>
+                    <div className="w-2 h-2 rounded-full bg-primary" />
                     <div className="flex-1"><p className="text-sm text-on-surface">Activity item {i}</p><p className="text-[10px] text-on-surface-variant">2 minutes ago</p></div>
                   </div>
                 ))}
@@ -360,7 +359,7 @@ export function DashboardPage() {
             </GlassPanel>
             <GlassPanel className="p-6">
               <h3 className="text-lg font-headline font-semibold text-on-surface mb-4">Quick Actions</h3>
-              <div className="space-y-2">{["View Reports","Create Task","Search"].map(a=><button key={a} className="w-full p-3 text-left text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 rounded-lg">{a}</button>)}</div>
+              <div className="space-y-2">{["View Reports", "Create Task", "Search"].map(a => <button key={a} className="w-full p-3 text-left text-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 rounded-lg">{a}</button>)}</div>
             </GlassPanel>
           </div>
         </>
@@ -369,10 +368,10 @@ export function DashboardPage() {
       {/* Notification Toast */}
       {notification.show && (
         <div className="fixed top-20 right-6 z-50 animate-slide-in">
-          <div className={cn("flex items-center gap-3 px-4 py-3 rounded-lg shadow-xl border",notification.type==="success"?"bg-tertiary/20 border-tertiary text-tertiary":"bg-error/20 border-error text-error")}>
-            {notification.type==="success"?<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>}
+          <div className={cn("flex items-center gap-3 px-4 py-3 rounded-lg shadow-xl border", notification.type === "success" ? "bg-tertiary/20 border-tertiary text-tertiary" : "bg-error/20 border-error text-error")}>
+            {notification.type === "success" ? <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> : <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
             <span className="text-sm font-medium text-on-surface">{notification.message}</span>
-            <button onClick={()=>setNotification({show:false,message:"",type:"success"})} className="ml-2">✕</button>
+            <button onClick={() => setNotification({ show: false, message: "", type: "success" })} className="ml-2">✕</button>
           </div>
         </div>
       )}

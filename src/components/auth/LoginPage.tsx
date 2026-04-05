@@ -15,7 +15,7 @@ const personas = [
   { id: "executors", icon: <BarChart3 className="w-5 h-5" />, title: "Executors", subtitle: "Enterprise Access" },
   { id: "underwriter", icon: <Shield className="w-5 h-5" />, title: "Underwriter", subtitle: "Risk Assessment" },
   { id: "adjudicator", icon: <Gavel className="w-5 h-5" />, title: "Claim Adjudicator", subtitle: "Legal Validation" },
-  { id: "customer-service", icon: <Headphones className="w-5 h-5" />, title: "Customer Service", subtitle: "Tier 1 Support" },
+  { id: "customer-service", icon: <Headphones className="w-5 h-5" />, title: "Custom`er Service", subtitle: "Tier 1 Support" },
   { id: "operations", icon: <Settings className="w-5 h-5" />, title: "Operation Support", subtitle: "Core Systems" },
   { id: "customer-agent", icon: <Badge className="w-5 h-5" />, title: "Customer Agent", subtitle: "Field Operations" },
 ];
@@ -29,8 +29,8 @@ export function LoginPage() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
-  const [notification, setNotification] = useState<{show: boolean; message: string; type: "success" | "error"}>({show: false, message: "", type: "error"});
-  
+  const [notification, setNotification] = useState<{ show: boolean; message: string; type: "success" | "error" }>({ show: false, message: "", type: "error" });
+
   const { login, isLoading, error } = useAuthContext();
 
   const handleEmailLogin = useCallback(async (e: React.FormEvent) => {
@@ -41,10 +41,10 @@ export function LoginPage() {
       password,
       rememberMe,
     });
-    
+
     if (!result.success && result.error) {
-      setNotification({show: true, message: result.error, type: "error"});
-      setTimeout(() => setNotification({show: false, message: "", type: "error"}), 4000);
+      setNotification({ show: true, message: result.error, type: "error" });
+      setTimeout(() => setNotification({ show: false, message: "", type: "error" }), 4000);
     }
   }, [selectedPersona, email, password, rememberMe, login]);
 
@@ -70,13 +70,13 @@ export function LoginPage() {
           <ThemeSwitcher />
         </div>
       </div>
-      
+
       {/* Cinematic Background */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_var(--color-primary)_0.08,_transparent_70%)]" />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
       </div>
-      
+
       <main className="relative z-10 w-full max-w-6xl flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
         {/* Left Column: Branding & Personas */}
         <div className="w-full lg:w-3/5 space-y-8 lg:space-y-12">
@@ -88,13 +88,13 @@ export function LoginPage() {
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-headline font-bold tracking-tighter leading-none">
-              Aigenesis <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">AI</span>
+              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">AI</span>genesis
             </h1>
             <p className="text-on-surface-variant text-base lg:text-lg max-w-md font-light leading-relaxed">
               Secure gateway to the next generation of risk orchestration and claim intelligence.
             </p>
           </header>
-          
+
           <section className="space-y-6">
             <div className="flex items-center gap-4">
               <h2 className="text-xs font-label uppercase tracking-widest text-secondary font-semibold whitespace-nowrap">
@@ -116,13 +116,13 @@ export function LoginPage() {
             </div>
           </section>
         </div>
-        
+
         {/* Right Column: Login Card */}
         <div className="w-full lg:w-2/5 max-w-md">
           <GlassPanel className="p-6 sm:p-8 lg:p-10 rounded-2xl border-t border-l border-white/5 shadow-2xl relative overflow-hidden">
             {/* Decorative AI Pulse */}
             <div className="absolute top-0 right-0 w-24 lg:w-32 h-24 lg:h-32 bg-secondary/5 blur-3xl -mr-12 lg:-mr-16 -mt-12 lg:-mt-16" />
-            
+
             <div className="relative z-10 space-y-6 lg:space-y-8">
               {/* Login Method Toggle */}
               <div className="flex rounded-lg bg-surface-container p-1">
@@ -151,13 +151,13 @@ export function LoginPage() {
                   Keycloak
                 </button>
               </div>
-              
+
               {error && (
                 <div className="p-3 rounded-lg bg-error/10 border border-error/20 text-error text-sm">
                   {error}
                 </div>
               )}
-              
+
               {loginMethod === "email" ? (
                 <form onSubmit={handleEmailLogin} className="space-y-5 lg:space-y-6">
                   {/* Email Input with User Dropdown */}
@@ -207,7 +207,7 @@ export function LoginPage() {
                       )}
                     </div>
                   </div>
-                  
+
                   <Input
                     label="Password"
                     type="password"
@@ -217,7 +217,7 @@ export function LoginPage() {
                     disabled={isLoading}
                     icon={<Lock className="w-4 h-4" />}
                   />
-                  
+
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 pt-2">
                     <Checkbox
                       checked={rememberMe}
@@ -225,9 +225,9 @@ export function LoginPage() {
                       label="Remember me"
                     />
                   </div>
-                  <Button 
-                    type="submit" 
-                    variant="gradient" 
+                  <Button
+                    type="submit"
+                    variant="gradient"
                     className="w-full py-3 lg:py-4 min-h-[48px]"
                     disabled={isLoading || !email || !password}
                   >
@@ -248,10 +248,10 @@ export function LoginPage() {
                     <h3 className="text-xl lg:text-2xl font-headline font-semibold">Keycloak SSO</h3>
                     <p className="text-on-surface-variant text-sm">Authenticate using your organization's Keycloak identity provider</p>
                   </div>
-                  
-                  <Button 
-                    type="button" 
-                    variant="gradient" 
+
+                  <Button
+                    type="button"
+                    variant="gradient"
                     className="w-full py-3 lg:py-4"
                     onClick={handleKeycloakLogin}
                   >
@@ -262,7 +262,7 @@ export function LoginPage() {
               )}
             </div>
           </GlassPanel>
-          
+
           {/* Bottom Disclaimer */}
           <div className="mt-6 lg:mt-8 text-center">
             <p className="text-[10px] font-label text-on-surface-variant/50">
@@ -271,11 +271,11 @@ export function LoginPage() {
           </div>
         </div>
       </main>
-      
+
       {/* Footer */}
       <footer className="fixed bottom-4 lg:bottom-8 left-0 w-full flex justify-between px-6 lg:px-12 items-end z-10 pointer-events-none">
         <div className="flex flex-col gap-0.5">
-          <span className="text-[10px] font-label text-primary uppercase tracking-[0.3em]">Aigenesis AI</span>
+          <span className="text-[10px] font-label text-primary uppercase tracking-[0.3em]">Aigenesis</span>
         </div>
         <div className="flex gap-4 lg:gap-6 pointer-events-auto">
           <a className="text-[10px] font-label text-on-surface-variant hover:text-on-surface transition-colors uppercase tracking-[0.2em]" href="#">
@@ -283,18 +283,18 @@ export function LoginPage() {
           </a>
         </div>
       </footer>
-      
+
       {/* Decorative Elements */}
       <div className="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       <div className="fixed bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-secondary/10 to-transparent" />
-      
+
       {/* Notification Toast */}
       {notification.show && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 animate-slide-in">
           <div className={cn(
             "flex items-center gap-3 px-4 py-3 rounded-lg shadow-xl border",
-            notification.type === "success" 
-              ? "bg-tertiary/20 border-tertiary text-tertiary" 
+            notification.type === "success"
+              ? "bg-tertiary/20 border-tertiary text-tertiary"
               : "bg-error/20 border-error text-error"
           )}>
             {notification.type === "success" ? (
@@ -307,7 +307,7 @@ export function LoginPage() {
               </svg>
             )}
             <span className="text-sm font-medium text-on-surface">{notification.message}</span>
-            <button onClick={()=>setNotification({show:false,message:"",type:"error"})} className="ml-2">
+            <button onClick={() => setNotification({ show: false, message: "", type: "error" })} className="ml-2">
               <svg className="w-4 h-4 text-on-surface-variant hover:text-on-surface" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
