@@ -421,12 +421,15 @@ export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
                   "max-w-[80%] rounded-2xl px-4 py-2 text-sm",
                   message.role === "user"
                     ? "bg-primary text-on-primary rounded-tr-none"
-                    : "bg-surface-variant text-on-surface rounded-tl-none"
+                    : message.content 
+                      ? "bg-surface-variant text-on-surface rounded-tl-none"
+                      : isTyping 
+                        ? "bg-surface-variant text-on-surface-variant rounded-tl-none animate-pulse"
+                        : "hidden"
                 )}>
                   {message.role === "user" ? (
                     message.content
-                  ) : message.content || isTyping ? (
-                    isTyping && !message.content ? null : (
+                  ) : message.content ? (
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
@@ -502,14 +505,15 @@ export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
                       >
                         {message.content}
                       </ReactMarkdown>
-                    )
-                  ) : null}
+                    ) : isTyping ? (
+                      <span className="text-on-surface-variant italic">Thinking...</span>
+                    ) : null}
                 </div>
               </div>
             ))
           )}
           
-          {isTyping && (
+          {isTyping && !activeSession.messages.some(m => m.role === "assistant" && m.content) && (
             <div className="flex gap-3">
               <div className={cn(
                 "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm",

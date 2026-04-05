@@ -140,8 +140,16 @@ export async function sendChatMessageStream(
         try {
           const eventData = JSON.parse(cleanJsonStr);
 
-          if (eventData.event === "token" && eventData.data?.chunk) {
-            fullMessage += eventData.data.chunk;
+        if (eventData.event === "token" && eventData.data?.chunk) {
+            let chunk = eventData.data.chunk;
+            if (chunk.trim() === "..." || chunk.trim() === "…") {
+              continue;
+            }
+            if (chunk.includes("thinking...")) {
+              chunk = chunk.replace(/thinking\.\.\./gi, "").replace(/…/g, "");
+              if (!chunk.trim()) continue;
+            }
+            fullMessage += chunk;
             onChunk(fullMessage, false);
           } else if (eventData.event === "add_message" && eventData.data?.message?.text) {
             fullMessage = eventData.data.message.text;
