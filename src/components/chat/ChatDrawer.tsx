@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useAuthContext } from "@/context/AuthContext";
-import { sendChatMessage, generateSessionId, loadSessionsFromStorage, saveSessionsToStorage } from "@/services/chatApi";
+import { sendChatMessageStream, generateSessionId, loadSessionsFromStorage, saveSessionsToStorage } from "@/services/chatApi";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -166,10 +166,15 @@ export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
     const currentSession = sessions.find((s) => s.id === activeSessionId) || sessions[0];
     const sessionId = currentSession.metadata?.langflowSessionId || generateSessionId();
 
+    const userInput = input.trim();
+
+    setInput("");
+    setIsTyping(true);
+
     const newUserMessage: ChatMessage = {
       id: `msg-${Date.now()}`,
       role: "user",
-      content: input.trim(),
+      content: userInput,
       timestamp: new Date(),
     };
 
@@ -179,7 +184,7 @@ export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
           ? {
               ...session,
               messages: [...session.messages, newUserMessage],
-              title: session.messages.length === 0 ? input.trim().slice(0, 30) + (input.trim().length > 30 ? "..." : "") : session.title,
+              title: session.messages.length === 0 ? userInput.slice(0, 30) + (userInput.length > 30 ? "..." : "") : session.title,
               updatedAt: new Date(),
               metadata: {
                 ...session.metadata,
@@ -189,39 +194,68 @@ export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
           : session
       )
     );
-    setInput("");
-    setIsTyping(true);
+
+    const assistantMessageId = `msg-${Date.now() + 1}`;
+    const placeholderMessage: ChatMessage = {
+      id: assistantMessageId,
+      role: "assistant",
+      content: "",
+      timestamp: new Date(),
+      metadata: {
+        persona: user?.persona,
+      },
+    };
+
+    setSessions((prev) =>
+      prev.map((session) =>
+        session.id === activeSessionId
+          ? {
+              ...session,
+              messages: [...session.messages, placeholderMessage],
+              updatedAt: new Date(),
+            }
+          : session
+      )
+    );
 
     try {
-      const currentSession2 = sessions.find((s) => s.id === activeSessionId) || sessions[0];
-      const messagesWithoutLatest = currentSession2.messages;
-      const response = await sendChatMessage(user.email, messagesWithoutLatest, sessionId);
+      // Get the session messages to send full history to Langflow
+      const currentSessionForApi = sessions.find((s) => s.id === activeSessionId) || sessions[0];
+      const sessionMessages = [...currentSessionForApi.messages, newUserMessage];
       
-      const assistantMessage: ChatMessage = {
-        id: `msg-${Date.now() + 1}`,
-        role: "assistant",
-        content: response,
-        timestamp: new Date(),
-        metadata: {
-          persona: user?.persona,
-        },
-      };
-
+      await sendChatMessageStream(user.email, sessionMessages, sessionId, (chunk, isComplete) => {
+        setSessions((prev) =>
+          prev.map((session) =>
+            session.id === activeSessionId
+              ? {
+                  ...session,
+                  messages: session.messages.map((msg) =>
+                    msg.id === assistantMessageId
+                      ? { ...msg, content: chunk }
+                      : msg
+                  ),
+                }
+              : session
+          )
+        );
+        
+        if (isComplete) {
+          setIsTyping(false);
+        }
+      });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to get response";
+      showToast(errorMessage);
       setSessions((prev) =>
         prev.map((session) =>
           session.id === activeSessionId
             ? {
                 ...session,
-                messages: [...session.messages, assistantMessage],
-                updatedAt: new Date(),
+                messages: session.messages.filter((msg) => msg.id !== assistantMessageId),
               }
             : session
         )
       );
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to get response";
-      showToast(errorMessage);
-    } finally {
       setIsTyping(false);
     }
   }, [input, isTyping, activeSessionId, sessions, user, showToast]);
