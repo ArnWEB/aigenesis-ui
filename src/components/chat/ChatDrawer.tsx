@@ -425,83 +425,85 @@ export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
                 )}>
                   {message.role === "user" ? (
                     message.content
-                  ) : (
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        code({ className, children, ...props }) {
-                          const match = /language-(\w+)/.exec(className || "");
-                          const isInline = !match;
-                          return isInline ? (
-                            <code className="px-1.5 py-0.5 bg-black/20 rounded text-xs font-mono" {...props}>
-                              {children}
-                            </code>
-                          ) : (
-                            <SyntaxHighlighter
-                              style={oneDark}
-                              language={match[1]}
-                              PreTag="div"
-                              className="rounded-lg text-xs my-2"
-                            >
-                              {String(children).replace(/\n$/, "")}
-                            </SyntaxHighlighter>
-                          );
-                        },
-                        a({ href, children, ...props }) {
-                          return (
-                            <a href={href} target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80" {...props}>
-                              {children}
-                            </a>
-                          );
-                        },
-                        ul({ children, ...props }) {
-                          return <ul className="list-disc list-inside space-y-1 my-2" {...props}>{children}</ul>;
-                        },
-                        ol({ children, ...props }) {
-                          return <ol className="list-decimal list-inside space-y-1 my-2" {...props}>{children}</ol>;
-                        },
-                        li({ children, ...props }) {
-                          return <li className="text-sm" {...props}>{children}</li>;
-                        },
-                        h1({ children, ...props }) {
-                          return <h1 className="text-xl font-bold my-3" {...props}>{children}</h1>;
-                        },
-                        h2({ children, ...props }) {
-                          return <h2 className="text-lg font-bold my-2" {...props}>{children}</h2>;
-                        },
-                        h3({ children, ...props }) {
-                          return <h3 className="text-md font-semibold my-2" {...props}>{children}</h3>;
-                        },
-                        p({ children, ...props }) {
-                          return <p className="my-2" {...props}>{children}</p>;
-                        },
-                        table({ children, ...props }) {
-                          return (
-                            <div className="overflow-x-auto my-3">
-                              <table className="min-w-full text-xs border-collapse" {...props}>{children}</table>
-                            </div>
-                          );
-                        },
-                        th({ children, ...props }) {
-                          return <th className="border px-2 py-1 bg-black/20 text-left" {...props}>{children}</th>;
-                        },
-                        td({ children, ...props }) {
-                          return <td className="border px-2 py-1" {...props}>{children}</td>;
-                        },
-                        blockquote({ children, ...props }) {
-                          return <blockquote className="border-l-4 border-primary/50 pl-3 my-2 italic" {...props}>{children}</blockquote>;
-                        },
-                        strong({ children, ...props }) {
-                          return <strong className="font-bold" {...props}>{children}</strong>;
-                        },
-                        em({ children, ...props }) {
-                          return <em className="italic" {...props}>{children}</em>;
-                        },
-                      }}
-                    >
-                      {message.content}
-                    </ReactMarkdown>
-                  )}
+                  ) : message.content || isTyping ? (
+                    isTyping && !message.content ? null : (
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          code({ className, children, ...props }) {
+                            const match = /language-(\w+)/.exec(className || "");
+                            const isInline = !match;
+                            return isInline ? (
+                              <code className="px-1.5 py-0.5 bg-black/20 rounded text-xs font-mono" {...props}>
+                                {children}
+                              </code>
+                            ) : (
+                              <SyntaxHighlighter
+                                style={oneDark}
+                                language={match[1]}
+                                PreTag="div"
+                                className="rounded-lg text-xs my-2"
+                              >
+                                {String(children).replace(/\n$/, "")}
+                              </SyntaxHighlighter>
+                            );
+                          },
+                          a({ href, children, ...props }) {
+                            return (
+                              <a href={href} target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80" {...props}>
+                                {children}
+                              </a>
+                            );
+                          },
+                          ul({ children, ...props }) {
+                            return <ul className="list-disc list-inside space-y-1 my-2" {...props}>{children}</ul>;
+                          },
+                          ol({ children, ...props }) {
+                            return <ol className="list-decimal list-inside space-y-1 my-2" {...props}>{children}</ol>;
+                          },
+                          li({ children, ...props }) {
+                            return <li className="text-sm" {...props}>{children}</li>;
+                          },
+                          h1({ children, ...props }) {
+                            return <h1 className="text-xl font-bold my-3" {...props}>{children}</h1>;
+                          },
+                          h2({ children, ...props }) {
+                            return <h2 className="text-lg font-bold my-2" {...props}>{children}</h2>;
+                          },
+                          h3({ children, ...props }) {
+                            return <h3 className="text-md font-semibold my-2" {...props}>{children}</h3>;
+                          },
+                          p({ children, ...props }) {
+                            return <p className="my-2" {...props}>{children}</p>;
+                          },
+                          table({ children, ...props }) {
+                            return (
+                              <div className="overflow-x-auto my-3">
+                                <table className="min-w-full text-xs border-collapse" {...props}>{children}</table>
+                              </div>
+                            );
+                          },
+                          th({ children, ...props }) {
+                            return <th className="border px-2 py-1 bg-black/20 text-left" {...props}>{children}</th>;
+                          },
+                          td({ children, ...props }) {
+                            return <td className="border px-2 py-1" {...props}>{children}</td>;
+                          },
+                          blockquote({ children, ...props }) {
+                            return <blockquote className="border-l-4 border-primary/50 pl-3 my-2 italic" {...props}>{children}</blockquote>;
+                          },
+                          strong({ children, ...props }) {
+                            return <strong className="font-bold" {...props}>{children}</strong>;
+                          },
+                          em({ children, ...props }) {
+                            return <em className="italic" {...props}>{children}</em>;
+                          },
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                    )
+                  ) : null}
                 </div>
               </div>
             ))
