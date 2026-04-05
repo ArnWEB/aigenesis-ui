@@ -27,8 +27,8 @@ export interface ChatSession {
 }
 
 interface ChatDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
   className?: string;
 }
 
@@ -96,7 +96,16 @@ function createDefaultSession(): ChatSession {
   };
 }
 
-export function ChatDrawer({ isOpen, onClose, className }: ChatDrawerProps) {
+export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, className }: ChatDrawerProps) {
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
+  const onClose = externalOnClose || (() => setInternalIsOpen(false));
+
+  useEffect(() => {
+    const handleOpenChat = () => setInternalIsOpen(true);
+    window.addEventListener("open-chat", handleOpenChat);
+    return () => window.removeEventListener("open-chat", handleOpenChat);
+  }, []);
   const { user } = useAuthContext();
   const [sessions, setSessions] = useState<ChatSession[]>([createDefaultSession()]);
   const [activeSessionId, setActiveSessionId] = useState<string>("");

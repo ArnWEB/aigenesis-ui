@@ -14,19 +14,19 @@ const themeOptions: ThemeOption[] = [
     id: "dark",
     name: "Dark",
     icon: <Moon className="w-4 h-4" />,
-    colors: ["#0e0e0e", "#a4a6ff", "#dd8bfb"],
+    colors: ["#000000", "#e86e24", "#4a4a4a"],
   },
   {
     id: "light",
-    name: "Light",
+    name: "Dim",
     icon: <Sun className="w-4 h-4" />,
-    colors: ["#FAFAFA", "#5D5FEF", "#9B59B6"],
+    colors: ["#121212", "#e86e24", "#4a4a4a"],
   },
   {
     id: "green",
-    name: "Green",
+    name: "Darker",
     icon: <Leaf className="w-4 h-4" />,
-    colors: ["#0F172A", "#10B981", "#06B6D4"],
+    colors: ["#050505", "#e86e24", "#4a4a4a"],
   },
 ];
 
