@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
-import { Mail, Lock, Key, Bot, Activity, Lightbulb, Blocks, CheckCircle2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Mail, Lock, Key, Bot, Activity, Lightbulb, Blocks, CheckCircle2, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -78,6 +79,7 @@ const PRODUCTS: ProductModule[] = [
 type LoginMethod = "email" | "keycloak";
 
 export function LoginPage() {
+  const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
   
@@ -89,6 +91,16 @@ export function LoginPage() {
   const [notification, setNotification] = useState<{ show: boolean; message: string; type: "success" | "error" }>({ show: false, message: "", type: "error" });
 
   const { login, isLoading, error } = useAuthContext();
+
+  const getProductRedirectPath = (productId: string): string => {
+    const routes: Record<string, string> = {
+      orchestrite: "/orchestrite",
+      evaluite: "/evaluite",
+      insight: "/insight",
+      assist: "/assist",
+    };
+    return routes[productId] || "/dashboard";
+  };
 
   const handleEmailLogin = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,11 +129,21 @@ export function LoginPage() {
       rememberMe,
     });
 
+    if (result.success && selectedProduct) {
+      const targetPath = getProductRedirectPath(selectedProduct);
+      // Store intended redirect to prevent PublicRoute override
+      localStorage.setItem("post_login_redirect", targetPath);
+      // Use longer delay to ensure auth state is fully updated
+      setTimeout(() => {
+        navigate(targetPath, { replace: true });
+      }, 100);
+    }
+
     if (!result.success && result.error) {
       setNotification({ show: true, message: result.error, type: "error" });
       setTimeout(() => setNotification({ show: false, message: "", type: "error" }), 4000);
     }
-  }, [selectedProduct, selectedPersona, email, password, rememberMe, login]);
+  }, [selectedProduct, selectedPersona, email, password, rememberMe, login, navigate]);
 
   const handleKeycloakLogin = useCallback(async () => {
     alert("Keycloak integration coming soon");
@@ -162,14 +184,25 @@ export function LoginPage() {
         {/* Left Column: Branding & Personas */}
         <div className="w-full lg:w-3/5 space-y-8 lg:space-y-12">
           <header className="space-y-3 lg:space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant/20">
-              <span className="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_var(--color-secondary)]" />
-              <span className="text-[10px] font-label uppercase tracking-[0.2em] text-on-surface-variant">
-                System Status: Operational
-              </span>
+            <div className="flex items-center justify-between">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant/20">
+                <span className="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_var(--color-secondary)]" />
+                <span className="text-[10px] font-label uppercase tracking-[0.2em] text-on-surface-variant">
+                  System Status: Operational
+                </span>
+              </div>
+              <button
+                onClick={() => navigate("/admin/login")}
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant/20 hover:border-primary/40 hover:bg-surface-variant/50 transition-all group"
+              >
+                <Shield className="w-3.5 h-3.5 text-on-surface-variant group-hover:text-primary" />
+                <span className="text-[10px] font-label uppercase tracking-[0.2em] text-on-surface-variant group-hover:text-on-surface">
+                  Admin Portal
+                </span>
+              </button>
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-headline font-bold tracking-tighter leading-none text-on-surface">
-              <span className="text-primary">AI</span>genesis
+              <span className="text-primary">AIGENESIS</span>
             </h1>
             <p className="text-on-surface-variant text-base lg:text-lg max-w-md font-light leading-relaxed">
               Secure gateway to the next generation of risk orchestration and claim intelligence.
@@ -355,8 +388,9 @@ export function LoginPage() {
                         {showUserDropdown && (
                           <div className="absolute top-full left-0 right-0 mt-3 bg-surface-container-high border border-outline-variant/20 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-20 max-h-[300px] overflow-y-auto custom-scrollbar overflow-hidden">
                             {[...sampleUsers]
+                              .filter(u => u.role !== "admin")
                               .filter(u => !selectedPersona || ROLE_PERSONA_MAP[u.email] === selectedPersona)
-                              .concat([...sampleUsers].filter(u => selectedPersona && ROLE_PERSONA_MAP[u.email] !== selectedPersona))
+                              .concat([...sampleUsers].filter(u => u.role !== "admin").filter(u => selectedPersona && ROLE_PERSONA_MAP[u.email] !== selectedPersona))
                               .map((user, idx) => (
                               <button
                                 key={user.id}
