@@ -57,24 +57,33 @@ export async function sendChatMessageStream(
     throw new Error("API key not configured. Please set VITE_LANGFLOW_API_KEY in .env");
   }
 
-  // Format chat history: Human: message\nAI: response\nHuman: message...
-  const formattedHistory = messages
+  // Format chat history - separate latest input from history
+  // Latest input goes to vector search, history is just for context
+  const historyMessages = messages.slice(0, -1); // All messages except last one
+  const latestInput = messages.length > 0 ? messages[messages.length - 1].content : "";
+
+  const formattedHistory = historyMessages
     .map((msg) => {
       const role = msg.role === "user" ? "Human" : "AI";
       return `${role}: ${msg.content}`;
     })
     .join("\n");
 
+  // Create combined input with clear separator
+  const combinedInput = formattedHistory
+    ? `HISTORY:\n${formattedHistory}\n\nLATEST_INPUT:\n${latestInput}`
+    : latestInput;
+
   const flowId = FLOW_ID;
   const apiBase = getApiBase();
   const initiateUrl = `${apiBase}/api/v1/run/${flowId}?stream=true`;
-  
+
   const payload: LangflowPayload = {
     output_type: "chat",
     input_type: "chat",
     tweaks: {
       "TextInput-Lhpx2": { input_value: email },
-      "ChatInput-Dpbqb": { input_value: formattedHistory },
+      "ChatInput-Dpbqb": { input_value: combinedInput },
     },
     session_id: sessionId,
   };
@@ -105,9 +114,9 @@ export async function sendChatMessageStream(
   try {
     while (true) {
       const { done, value } = await reader.read();
-      
+
       if (done) break;
-      
+
       buffer += decoder.decode(value, { stream: true });
       const lines = buffer.split("\n");
       buffer = lines.pop() || "";
@@ -115,22 +124,22 @@ export async function sendChatMessageStream(
       for (const line of lines) {
         const trimmedLine = line.trim();
         if (!trimmedLine) continue;
-        
+
         let jsonStr = trimmedLine;
         if (trimmedLine.startsWith("data:")) {
           jsonStr = trimmedLine.slice(5).trim();
         }
-        
+
         if (!jsonStr) continue;
-        
+
         const cleanJsonStr = jsonStr.replace(/^\uFEFF/, '').trim();
         if (!cleanJsonStr || cleanJsonStr === '') continue;
-        
+
         if (cleanJsonStr.charAt(0) !== '{' && cleanJsonStr.charAt(0) !== '[') continue;
-        
+
         try {
           const eventData = JSON.parse(cleanJsonStr);
-          
+
           if (eventData.event === "token" && eventData.data?.chunk) {
             fullMessage += eventData.data.chunk;
             onChunk(fullMessage, false);
@@ -152,7 +161,7 @@ export async function sendChatMessageStream(
         }
       }
     }
-    
+
     if (fullMessage) {
       onChunk(fullMessage, true);
     }
@@ -229,7 +238,7 @@ export function loadSessionsFromStorage(userId: string): ChatSession[] | null {
     const key = getStorageKey(userId);
     const stored = localStorage.getItem(key);
     if (!stored) return null;
-    
+
     const parsed = JSON.parse(stored);
     return parsed.map((session: ChatSession) => ({
       ...session,
