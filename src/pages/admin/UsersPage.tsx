@@ -2,19 +2,23 @@ import { GlassPanel } from "@/components/ui/glass-panel";
 import { cn } from "@/lib/utils";
 
 const users = [
-  { id: "usr-001", name: "Alex Thompson", email: "alex.thompson@aegis.ai", role: "executor", status: "active", lastActive: "2 min ago" },
+  { id: "usr-001", name: "Alex Thompson", email: "alex.thompson@aegis.ai", role: "executive", status: "active", lastActive: "2 min ago" },
   { id: "usr-002", name: "Sarah Chen", email: "sarah.chen@aegis.ai", role: "underwriter", status: "active", lastActive: "15 min ago" },
   { id: "usr-003", name: "Marcus Thorne", email: "marcus.thorne@aegis.ai", role: "adjudicator", status: "active", lastActive: "32 min ago" },
   { id: "usr-004", name: "Elena Jorgensen", email: "elena.jorgensen@aegis.ai", role: "customer_service", status: "active", lastActive: "1 hr ago" },
   { id: "usr-005", name: "David Kim", email: "david.kim@aegis.ai", role: "operations", status: "inactive", lastActive: "2 days ago" },
+  { id: "usr-006", name: "James Wilson", email: "james.wilson@aegis.ai", role: "agent", status: "active", lastActive: "5 min ago" },
+  { id: "usr-007", name: "Maria Garcia", email: "maria.garcia@aegis.ai", role: "customer", status: "active", lastActive: "1 day ago" },
 ];
 
 const roleStyles: Record<string, string> = {
-  executor: "bg-primary/20 text-primary",
+  executive: "bg-primary/20 text-primary",
   underwriter: "bg-secondary/20 text-secondary",
   adjudicator: "bg-tertiary/20 text-tertiary",
   customer_service: "bg-error/20 text-error",
   operations: "bg-primary/20 text-primary",
+  agent: "bg-primary/20 text-primary",
+  customer: "bg-secondary/20 text-secondary",
 };
 
 export function UsersPage() {

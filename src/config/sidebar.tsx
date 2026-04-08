@@ -43,19 +43,19 @@ export const PRODUCT_CONFIG: Record<string, ProductConfig> = {
       { id: "settings", label: "Settings", path: "/admin/settings", icon: Icons.settings },
     ],
   },
-  orchestrite: {
-    name: "ORCHESTRITE",
+  orchestrate: {
+    name: "ORCHESTRATE",
     items: [
-      { id: "dashboard", label: "Dashboard", path: "/orchestrite", icon: Icons.dashboard },
-      { id: "tickets", label: "Tickets", path: "/orchestrite/tickets", icon: Icons.tickets, badge: 24 },
+      { id: "dashboard", label: "Dashboard", path: "/orchestrate", icon: Icons.dashboard },
+      { id: "tickets", label: "Tickets", path: "/orchestrate/tickets", icon: Icons.tickets, badge: 24 },
     ],
   },
-  evaluite: {
-    name: "EVALUITE",
+  evaluate: {
+    name: "EVALUATE",
     items: [
-      { id: "dashboard", label: "Dashboard", path: "/evaluite", icon: Icons.dashboard },
-      { id: "claims", label: "Claims", path: "/evaluite/claims", icon: Icons.claims, badge: 12 },
-      { id: "risk", label: "Risk", path: "/evaluite/risk", icon: Icons.risk },
+      { id: "dashboard", label: "Dashboard", path: "/evaluate", icon: Icons.dashboard },
+      { id: "claims", label: "Claims", path: "/evaluate/claims", icon: Icons.claims, badge: 12 },
+      { id: "risk", label: "Risk", path: "/evaluate/risk", icon: Icons.risk },
     ],
   },
   insight: {
@@ -76,20 +76,21 @@ export const PRODUCT_CONFIG: Record<string, ProductConfig> = {
 
 export const ROLE_MAP: Record<string, string> = {
   admin: "ADMINISTRATOR",
-  executors: "EXECUTOR",
+  executive: "EXECUTIVE",
   underwriter: "UNDERWRITER",
   adjudicator: "ADJUDICATOR",
-  "customer-service": "CUSTOMER SERVICE",
+  customer_service: "CUSTOMER SERVICE",
   operations: "OPERATIONS",
-  "customer-agent": "FIELD AGENT",
+  agent: "FIELD AGENT",
+  customer: "CUSTOMER",
 };
 
 export function getProductFromPath(pathname: string): string {
   const pathLower = pathname.toLowerCase();
   if (pathLower.includes("admin")) return "admin";
-  if (pathLower.includes("orchestrite")) return "orchestrite";
-  if (pathLower.includes("evaluite")) return "evaluite";
+  if (pathLower.includes("orchestrate")) return "orchestrate";
+  if (pathLower.includes("evaluate")) return "evaluate";
   if (pathLower.includes("insight")) return "insight";
   if (pathLower.includes("assist")) return "assist";
-  return "executors";
+  return "executive";
 }

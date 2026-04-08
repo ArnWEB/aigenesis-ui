@@ -2,7 +2,7 @@ export interface SampleUser {
   id: string;
   email: string;
   name: string;
-  role: "admin" | "executor" | "underwriter" | "adjudicator" | "customer_service" | "operations" | "customer_agent";
+  role: "admin" | "executive" | "underwriter" | "adjudicator" | "customer_service" | "operations" | "customer" | "agent";
   persona: string;
   avatar?: string;
   department: string;
@@ -14,8 +14,8 @@ export const sampleUsers: SampleUser[] = [
     id: "usr-001",
     email: "alex.thompson@aegis.ai",
     name: "Alex Thompson",
-    role: "executor",
-    persona: "executors",
+    role: "executive",
+    persona: "executive",
     department: "Enterprise",
     permissions: ["read", "write", "admin", "reports", "analytics"],
   },
@@ -59,10 +59,19 @@ export const sampleUsers: SampleUser[] = [
     id: "usr-006",
     email: "james.wilson@aegis.ai",
     name: "James Wilson",
-    role: "customer_agent",
-    persona: "customer-agent",
+    role: "agent",
+    persona: "agent",
     department: "Field Operations",
     permissions: ["read", "write", "field"],
+  },
+  {
+    id: "usr-007",
+    email: "maria.garcia@aegis.ai",
+    name: "Maria Garcia",
+    role: "customer",
+    persona: "customer",
+    department: "Customer Relations",
+    permissions: ["read", "support"],
   },
   {
     id: "usr-007",
@@ -89,21 +98,23 @@ export function getUserPersona(email: string): string | undefined {
 }
 
 export const ROLE_PERSONA_MAP: Record<string, string> = {
-  "alex.thompson@aegis.ai": "executors",
+  "alex.thompson@aegis.ai": "executive",
   "sarah.chen@aegis.ai": "underwriter",
   "marcus.thorne@aegis.ai": "adjudicator",
-  "elena.jorgensen@aegis.ai": "customer-service",
+  "elena.jorgensen@aegis.ai": "customer_service",
   "david.kim@aegis.ai": "operations",
-  "james.wilson@aegis.ai": "customer-agent",
+  "james.wilson@aegis.ai": "agent",
+  "maria.garcia@aegis.ai": "customer",
   "admin@aegis.ai": "admin",
 };
 
 export const PERSONA_LABELS: Record<string, { title: string; subtitle: string }> = {
   admin: { title: "Administrator", subtitle: "System Administration" },
-  executors: { title: "Executors", subtitle: "Enterprise Access" },
+  executive: { title: "Executive", subtitle: "Enterprise Access" },
   underwriter: { title: "Underwriter", subtitle: "Risk Assessment" },
   adjudicator: { title: "Claim Adjudicator", subtitle: "Legal Validation" },
-  "customer-service": { title: "Customer Service", subtitle: "Tier 1 Support" },
+  customer_service: { title: "Customer Service", subtitle: "Tier 1 Support" },
   operations: { title: "Operation Support", subtitle: "Core Systems" },
-  "customer-agent": { title: "Customer Agent", subtitle: "Field Operations" },
+  agent: { title: "Field Agent", subtitle: "Field Operations" },
+  customer: { title: "Customer", subtitle: "Customer Portal" },
 };

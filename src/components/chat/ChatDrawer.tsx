@@ -38,48 +38,54 @@ interface ToastState {
   type: "success" | "error";
 }
 
-const AI_PERSONAS = {
+const AI_PERSONAS: Record<string, { name: string; role: string; color: string; icon: string }> = {
   admin: {
-    name: "System Admin",
+    name: "<span class='text-primary'>@i</span>gene",
     role: "Platform Administration",
     color: "primary",
     icon: "⚙️",
   },
-  executors: {
-    name: "Aigenesis Intelligence",
+  executive: {
+    name: "<span class='text-primary'>@i</span>gene",
     role: "Enterprise Analytics",
     color: "primary",
     icon: "🛡️",
   },
   underwriter: {
-    name: "Risk Analyst",
+    name: "<span class='text-primary'>@i</span>gene",
     role: "Underwriting Assistant",
     color: "secondary",
     icon: "📊",
   },
   adjudicator: {
-    name: "Claims AI",
+    name: "<span class='text-primary'>@i</span>gene",
     role: "Adjudication Support",
     color: "tertiary",
     icon: "⚖️",
   },
-  "customer-service": {
-    name: "Support Agent",
+  "customer_service": {
+    name: "<span class='text-primary'>@i</span>gene",
     role: "Customer Assistance",
     color: "secondary",
     icon: "🎧",
   },
   operations: {
-    name: "Ops Manager",
+    name: "<span class='text-primary'>@i</span>gene",
     role: "Operations AI",
     color: "tertiary",
     icon: "⚙️",
   },
-  "customer-agent": {
-    name: "Field Agent",
+  agent: {
+    name: "<span class='text-primary'>@i</span>gene",
     role: "Mobile Assistant",
     color: "primary",
     icon: "📍",
+  },
+  customer: {
+    name: "<span class='text-primary'>@i</span>gene",
+    role: "Customer Support",
+    color: "secondary",
+    icon: "💬",
   },
 } as const;
 
@@ -117,7 +123,7 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
 
   const persona = user?.persona 
     ? AI_PERSONAS[user.persona as keyof typeof AI_PERSONAS] 
-    : AI_PERSONAS.executors;
+    : AI_PERSONAS.executive;
 
   const activeSession = sessions.find((s) => s.id === activeSessionId) || sessions[0];
 
@@ -324,9 +330,10 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
               {persona.icon}
             </div>
             <div>
-              <h3 className="text-sm font-headline font-semibold text-on-surface">
-                {persona.name}
-              </h3>
+              <h3 
+                className="text-lg font-sans font-bold text-on-surface"
+                dangerouslySetInnerHTML={{ __html: persona.name }}
+              />
               <p className="text-[10px] text-on-surface-variant">{persona.role}</p>
             </div>
           </div>

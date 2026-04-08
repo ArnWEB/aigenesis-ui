@@ -21,8 +21,8 @@ export function DashboardLayout({ children }: LayoutProps) {
   const storedAdminUser = storedAdmin ? JSON.parse(storedAdmin) : null;
   const effectiveUser = storedAdminUser || user;
   const currentProduct = getProductFromPath(location.pathname);
-  
-  const config = PRODUCT_CONFIG[currentProduct] || PRODUCT_CONFIG.orchestrite;
+
+  const config = PRODUCT_CONFIG[currentProduct] || PRODUCT_CONFIG.orchestrate;
   const sidebarItems = config.items;
   const productName = config.name;
 

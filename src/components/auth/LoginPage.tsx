@@ -23,23 +23,23 @@ type ProductModule = {
 
 const PRODUCTS: ProductModule[] = [
   {
-    id: "orchestrite",
+    id: "orchestrate",
     name: "@iorchestrate",
     icon: <Blocks className="w-5 h-5" />,
-    description: "HIL TOOL FOR CS & UW",
+    description: "Agentic workflow for Customer Service & Operations",
     features: [
       "Human-in-the-loop validation",
       "Interactive customer assistance",
       "Real-time operational orchestration"
     ],
     defaultPersona: "customer-service",
-    allowedPersonas: ["customer-service", "underwriter"]
+    allowedPersonas: ["customer-service", "operations"]
   },
   {
-    id: "evaluite",
+    id: "evaluate",
     name: "@ievaluate",
     icon: <Lightbulb className="w-5 h-5" />,
-    description: "WORKBENCH FOR LEADS",
+    description: "Workbench for Underwriting & Claims Management",
     features: [
       "Advanced claim adjudication",
       "Risk assessment scoring engine",
@@ -52,26 +52,26 @@ const PRODUCTS: ProductModule[] = [
     id: "insight",
     name: "@insight",
     icon: <Activity className="w-5 h-5" />,
-    description: "EXECUTIVE INSIGHTS",
+    description: "Curated Business & Operation insight for Executives",
     features: [
       "Global KPI metrics reporting",
       "Predictive analytics engine",
       "Strategic management views"
     ],
-    defaultPersona: "executors",
-    allowedPersonas: ["executors", "admin"]
+    defaultPersona: "executive",
+    allowedPersonas: ["executive", "admin"]
   },
   {
     id: "assist",
     name: "@iassist",
     icon: <Bot className="w-5 h-5" />,
-    description: "PERSONA CO-PILOT",
+    description: "Persona specific knowledge assistant",
     features: [
       "Context-aware AI assistance",
       "Automated prompt engineering",
       "Seamless field operational support"
     ],
-    defaultPersona: "customer-agent",
+    defaultPersona: "agent",
     allowedPersonas: "all"
   }
 ];
@@ -94,8 +94,8 @@ export function LoginPage() {
 
   const getProductRedirectPath = (productId: string): string => {
     const routes: Record<string, string> = {
-      orchestrite: "/orchestrite",
-      evaluite: "/evaluite",
+      orchestrate: "/orchestrate",
+      evaluate: "/evaluate",
       insight: "/insight",
       assist: "/assist",
     };
@@ -260,23 +260,25 @@ export function LoginPage() {
                   </span>
 
                   <div className="text-left w-full z-10">
-                    <span className={cn(
-                      "block text-sm sm:text-base font-headline font-semibold mb-0.5",
-                      selectedProduct === product.id ? "text-white" : "text-on-surface"
+                    <div className={cn(
+                      "flex items-center text-xl sm:text-2xl font-sans font-black tracking-tighter mt-2 mb-1",
+                      selectedProduct === product.id ? "text-black drop-shadow-md" : "text-white"
                     )}>
                       {product.name.startsWith('@') ? (
                         <>
-                          <span className={selectedProduct === product.id ? "text-black" : ""}>
+                          <span className={selectedProduct === product.id ? "text-black" : "text-[#ef803b]"}>
                             {product.name.substring(0, 2)}
                           </span>
-                          <span>
+                          <span className={cn(
+                            selectedProduct === product.id ? "text-black/95" : "text-white"
+                          )}>
                             {product.name.substring(2)}
                           </span>
                         </>
                       ) : (
-                        product.name
+                        <span>{product.name}</span>
                       )}
-                    </span>
+                    </div>
                     <span className={cn(
                       "text-[10px] font-label uppercase tracking-widest",
                       selectedProduct === product.id ? "text-black font-extrabold" : "text-on-surface-variant"
@@ -347,7 +349,7 @@ export function LoginPage() {
 
                 <div className="relative group flex flex-col items-center w-full max-w-[420px]">
                   <div className="absolute -inset-4 bg-gradient-to-b from-primary/10 to-transparent blur-2xl rounded-sm opacity-60" />
-                  
+
                   <div className="relative w-full flex flex-col items-center p-12 sm:px-14 sm:py-16 bg-[#131313]/90 backdrop-blur-2xl rounded-sm border border-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.9)]">
                     {/* High-Tech Tactical Corner Effects */}
                     <div className="absolute top-[-1px] left-[-1px] w-6 h-6 border-t-[1px] border-l-[1px] border-[#ef803b] drop-shadow-[0_0_8px_rgba(239,128,59,0.5)] opacity-80" />
@@ -358,7 +360,7 @@ export function LoginPage() {
                       <span className="text-[#ef803b] text-4xl sm:text-[44px] font-sans font-black tracking-tighter">
                         @i
                       </span>
-                      <span className="text-white text-4xl sm:text-[44px] font-sans font-black italic tracking-tighter ml-1">
+                      <span className="text-white text-4xl sm:text-[44px] font-sans font-black tracking-tighter ml-1">
                         GENE
                       </span>
                     </div>
@@ -367,37 +369,37 @@ export function LoginPage() {
                     <div className="w-40 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mt-5 mb-4" />
 
                     {/* INSURE */}
-                    <div className="text-white/70 text-sm tracking-[0.6em] uppercase font-light drop-shadow-md ml-2">
+                    <div className="text-white/70 text-2xl tracking-[0.6em] uppercase font-light drop-shadow-md ml-2">
                       INSURE
                     </div>
 
                     {/* Validated Neural Core */}
-                    <div className="flex items-center gap-2 mt-10 mb-8 opacity-80 border border-white/5 px-4 py-1.5 rounded-full bg-white/5">
+                    {/* <div className="flex items-center gap-2 mt-10 mb-8 opacity-80 border border-white/5 px-4 py-1.5 rounded-full bg-white/5">
                       <Shield className="w-3 h-3 text-[#ef803b]" />
                       <span className="text-white/60 text-[9px] sm:text-[10px] font-label tracking-[0.15em] uppercase">
                         VALIDATED NEURAL CORE
                       </span>
-                    </div>
+                    </div> */}
 
                     {/* Lower Divider */}
                     <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#ef803b]/40 to-transparent mb-6 opacity-60" />
 
                     {/* INTELLIGENT INSURANCE ECOSYSTEM */}
                     <div className="flex flex-col items-center gap-1.5">
-                       <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
-                         INTELLIGENT
-                       </span>
-                       <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
-                         INSURANCE
-                       </span>
-                       <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
-                         ECOSYSTEM
-                       </span>
+                      <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
+                        INTELLIGENT
+                      </span>
+                      <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
+                        INSURANCE
+                      </span>
+                      <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
+                        ECOSYSTEM
+                      </span>
                     </div>
 
                   </div>
                 </div>
-                
+
               </div>
             </div>
           </div>
