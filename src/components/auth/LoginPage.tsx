@@ -343,16 +343,17 @@ export function LoginPage() {
               <div className="absolute inset-4 bg-primary/10 blur-[100px] rounded-full transition-opacity duration-1000 opacity-60 group-hover:opacity-100" />
 
               {/* Typography Brand Stack */}
-              <div className="flex flex-col items-center justify-center relative z-10 w-full animate-fade-in pointer-events-none">
+              <div className="flex flex-col items-center justify-center relative z-10 w-full animate-fade-in pointer-events-none px-4 sm:px-0">
 
-                {/* Top Lockup: @iGENE INSURE inside a modern glass pill */}
-                <div className="relative group flex flex-col items-center mb-10 w-full">
-                  <div className="absolute -inset-2 bg-gradient-to-b from-primary/20 to-transparent blur-xl rounded-[3rem] opacity-50" />
+                <div className="relative group flex flex-col items-center w-full max-w-[420px]">
+                  <div className="absolute -inset-4 bg-gradient-to-b from-primary/10 to-transparent blur-2xl rounded-sm opacity-60" />
                   
-                  <div className="relative flex flex-col items-center px-10 py-6 bg-surface-container-high/30 backdrop-blur-xl rounded-[2.5rem] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                    {/* Sleek top accent line */}
-                    <div className="absolute top-0 inset-x-12 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
-                    
+                  <div className="relative w-full flex flex-col items-center p-12 sm:px-14 sm:py-16 bg-[#131313]/90 backdrop-blur-2xl rounded-sm border border-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.9)]">
+                    {/* High-Tech Tactical Corner Effects */}
+                    <div className="absolute top-[-1px] left-[-1px] w-6 h-6 border-t-[1px] border-l-[1px] border-[#ef803b] drop-shadow-[0_0_8px_rgba(239,128,59,0.5)] opacity-80" />
+                    <div className="absolute bottom-[-1px] right-[-1px] w-6 h-6 border-b-[1px] border-r-[1px] border-[#ef803b] drop-shadow-[0_0_8px_rgba(239,128,59,0.5)] opacity-80" />
+
+                    {/* @iGENE */}
                     <div className="flex items-center drop-shadow-2xl">
                       <span className="text-[#ef803b] text-6xl sm:text-[76px] font-sans font-black tracking-tighter">
                         @i
@@ -361,38 +362,36 @@ export function LoginPage() {
                         GENE
                       </span>
                     </div>
-                    <div className="text-white/95 text-5xl sm:text-[60px] font-sans font-black italic tracking-tighter mt-1 drop-shadow-xl">
+
+                    {/* INSURE */}
+                    <div className="text-white/95 text-5xl sm:text-[64px] font-sans font-black italic tracking-tighter mt-0 drop-shadow-xl z-10 w-full text-center">
                       INSURE
                     </div>
 
-                    {/* Bottom accent line */}
-                    <div className="absolute bottom-0 inset-x-16 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                  </div>
-                </div>
+                    {/* Validated Neural Core */}
+                    <div className="flex items-center gap-2 mt-10 mb-8 opacity-80 border border-white/5 px-4 py-1.5 rounded-full bg-white/5">
+                      <Shield className="w-3 h-3 text-[#ef803b]" />
+                      <span className="text-white/60 text-[9px] sm:text-[10px] font-label tracking-[0.15em] uppercase">
+                        VALIDATED NEURAL CORE
+                      </span>
+                    </div>
 
-                {/* Bottom Lockup: The Algerian Stack with glowing accents */}
-                <div className="flex flex-col items-center relative w-full pt-4">
-                  {/* Decorative Side Accents */}
-                  <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/30 to-transparent" />
-                  <div className="absolute right-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/30 to-transparent" />
+                    {/* Lower Divider */}
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#ef803b]/40 to-transparent mb-6 opacity-60" />
 
-                  <div 
-                    className="text-[#ef803b] text-4xl sm:text-[50px] leading-[1.2] tracking-wider drop-shadow-[0_0_20px_rgba(239,128,59,0.3)] pointer-events-auto hover:text-white hover:scale-105 transition-all duration-500 cursor-default" 
-                    style={{ fontFamily: '"Algerian", serif' }}
-                  >
-                    INTELLIGENT
-                  </div>
-                  <div 
-                    className="text-[#ef803b] text-4xl sm:text-[50px] leading-[1.2] tracking-wider drop-shadow-[0_0_20px_rgba(239,128,59,0.3)] pointer-events-auto hover:text-white hover:scale-105 transition-all duration-500 cursor-default mt-2" 
-                    style={{ fontFamily: '"Algerian", serif' }}
-                  >
-                    INSURANCE
-                  </div>
-                  <div 
-                    className="text-[#ef803b] text-4xl sm:text-[50px] leading-[1.2] tracking-wider drop-shadow-[0_0_20px_rgba(239,128,59,0.3)] pointer-events-auto hover:text-white hover:scale-105 transition-all duration-500 cursor-default mt-2" 
-                    style={{ fontFamily: '"Algerian", serif' }}
-                  >
-                    ECOSYSTEM
+                    {/* INTELLIGENT INSURANCE ECOSYSTEM */}
+                    <div className="flex flex-col items-center gap-1.5">
+                       <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
+                         INTELLIGENT
+                       </span>
+                       <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
+                         INSURANCE
+                       </span>
+                       <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
+                         ECOSYSTEM
+                       </span>
+                    </div>
+
                   </div>
                 </div>
                 
