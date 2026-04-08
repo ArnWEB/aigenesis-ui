@@ -338,19 +338,65 @@ export function LoginPage() {
                 : "opacity-0 scale-95 pointer-events-none"
             )}
           >
-            <div className="relative w-full aspect-square max-w-[400px] flex items-center justify-center group pointer-events-none">
-              {/* Soft ambient glow behind the logo */}
-              <div className="absolute inset-8 bg-primary/20 blur-[100px] rounded-full transition-opacity duration-700 opacity-60 group-hover:opacity-100" />
+            <div className="relative w-full aspect-square max-w-[480px] flex items-center justify-center group pointer-events-auto">
+              {/* Soft ambient glow behind the entire lockup */}
+              <div className="absolute inset-4 bg-primary/10 blur-[100px] rounded-full transition-opacity duration-1000 opacity-60 group-hover:opacity-100" />
 
-              {/* High-impact Brand Image */}
-              <img
-                src="/aigenesis.jpeg"
-                alt="Aigenesis Brand"
-                className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]"
-                onError={(e) => {
-                  e.currentTarget.style.opacity = '0.5';
-                }}
-              />
+              {/* Typography Brand Stack */}
+              <div className="flex flex-col items-center justify-center relative z-10 w-full animate-fade-in pointer-events-none">
+
+                {/* Top Lockup: @iGENE INSURE inside a modern glass pill */}
+                <div className="relative group flex flex-col items-center mb-10 w-full">
+                  <div className="absolute -inset-2 bg-gradient-to-b from-primary/20 to-transparent blur-xl rounded-[3rem] opacity-50" />
+                  
+                  <div className="relative flex flex-col items-center px-10 py-6 bg-surface-container-high/30 backdrop-blur-xl rounded-[2.5rem] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                    {/* Sleek top accent line */}
+                    <div className="absolute top-0 inset-x-12 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+                    
+                    <div className="flex items-center drop-shadow-2xl">
+                      <span className="text-[#ef803b] text-6xl sm:text-[76px] font-sans font-black tracking-tighter">
+                        @i
+                      </span>
+                      <span className="text-white text-6xl sm:text-[76px] font-sans font-black italic tracking-tighter ml-1">
+                        GENE
+                      </span>
+                    </div>
+                    <div className="text-white/95 text-5xl sm:text-[60px] font-sans font-black italic tracking-tighter mt-1 drop-shadow-xl">
+                      INSURE
+                    </div>
+
+                    {/* Bottom accent line */}
+                    <div className="absolute bottom-0 inset-x-16 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                  </div>
+                </div>
+
+                {/* Bottom Lockup: The Algerian Stack with glowing accents */}
+                <div className="flex flex-col items-center relative w-full pt-4">
+                  {/* Decorative Side Accents */}
+                  <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/30 to-transparent" />
+                  <div className="absolute right-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/30 to-transparent" />
+
+                  <div 
+                    className="text-[#ef803b] text-4xl sm:text-[50px] leading-[1.2] tracking-wider drop-shadow-[0_0_20px_rgba(239,128,59,0.3)] pointer-events-auto hover:text-white hover:scale-105 transition-all duration-500 cursor-default" 
+                    style={{ fontFamily: '"Algerian", serif' }}
+                  >
+                    INTELLIGENT
+                  </div>
+                  <div 
+                    className="text-[#ef803b] text-4xl sm:text-[50px] leading-[1.2] tracking-wider drop-shadow-[0_0_20px_rgba(239,128,59,0.3)] pointer-events-auto hover:text-white hover:scale-105 transition-all duration-500 cursor-default mt-2" 
+                    style={{ fontFamily: '"Algerian", serif' }}
+                  >
+                    INSURANCE
+                  </div>
+                  <div 
+                    className="text-[#ef803b] text-4xl sm:text-[50px] leading-[1.2] tracking-wider drop-shadow-[0_0_20px_rgba(239,128,59,0.3)] pointer-events-auto hover:text-white hover:scale-105 transition-all duration-500 cursor-default mt-2" 
+                    style={{ fontFamily: '"Algerian", serif' }}
+                  >
+                    ECOSYSTEM
+                  </div>
+                </div>
+                
+              </div>
             </div>
           </div>
 
