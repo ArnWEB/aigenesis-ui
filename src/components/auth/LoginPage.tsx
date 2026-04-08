@@ -355,16 +355,19 @@ export function LoginPage() {
 
                     {/* @iGENE */}
                     <div className="flex items-center drop-shadow-2xl">
-                      <span className="text-[#ef803b] text-6xl sm:text-[76px] font-sans font-black tracking-tighter">
+                      <span className="text-[#ef803b] text-4xl sm:text-[44px] font-sans font-black tracking-tighter">
                         @i
                       </span>
-                      <span className="text-white text-6xl sm:text-[76px] font-sans font-black italic tracking-tighter ml-1">
+                      <span className="text-white text-4xl sm:text-[44px] font-sans font-black italic tracking-tighter ml-1">
                         GENE
                       </span>
                     </div>
 
+                    {/* Subtle Divider */}
+                    <div className="w-40 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mt-5 mb-4" />
+
                     {/* INSURE */}
-                    <div className="text-white/95 text-5xl sm:text-[64px] font-sans font-black italic tracking-tighter mt-0 drop-shadow-xl z-10 w-full text-center">
+                    <div className="text-white/70 text-sm tracking-[0.6em] uppercase font-light drop-shadow-md ml-2">
                       INSURE
                     </div>
 
