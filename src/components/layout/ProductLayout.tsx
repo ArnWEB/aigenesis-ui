@@ -5,12 +5,13 @@ import { getProductFromPath, PRODUCT_ROUTES } from "@/config/products";
 
 const ROLE_MAP: Record<string, string> = {
   admin: "ADMINISTRATOR",
-  executors: "EXECUTOR",
+  executive: "EXECUTIVE",
   underwriter: "UNDERWRITER",
   adjudicator: "ADJUDICATOR",
-  "customer-service": "CUSTOMER SERVICE",
+  customer_service: "CUSTOMER SERVICE",
   operations: "OPERATIONS",
-  "customer-agent": "FIELD AGENT",
+  agent: "FIELD AGENT",
+  customer: "CUSTOMER",
 };
 
 interface ProductLayoutProps {
@@ -21,10 +22,10 @@ interface ProductLayoutProps {
 export function ProductLayout({ children, className }: ProductLayoutProps) {
   const { user } = useAuthContext();
   const location = useLocation();
-  
-  const currentProduct = getProductFromPath(location.pathname) || "orchestrite";
+
+  const currentProduct = getProductFromPath(location.pathname) || "orchestrate";
   const productConfig = PRODUCT_ROUTES[currentProduct];
-  
+
   const headerText = useMemo(() => {
     const role = ROLE_MAP[user?.persona || ""] || "USER";
     const storedAdmin = localStorage.getItem("admin_user");

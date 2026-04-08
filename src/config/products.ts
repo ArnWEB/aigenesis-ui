@@ -1,4 +1,4 @@
-export type ProductId = "orchestrite" | "evaluite" | "insight" | "assist" | "admin";
+export type ProductId = "orchestrate" | "evaluate" | "insight" | "assist" | "admin";
 
 export interface ProductRoute {
   path: string;
@@ -12,21 +12,21 @@ export interface ProductConfig {
 }
 
 export const PRODUCT_ROUTES: Record<ProductId, ProductConfig> = {
-  orchestrite: {
-    id: "orchestrite",
-    name: "Orchestrite",
+  orchestrate: {
+    id: "orchestrate",
+    name: "Orchestrate",
     routes: [
-      { path: "/orchestrite", component: () => import("@/pages/orchestrite/DashboardPage") },
-      { path: "/orchestrite/tickets", component: () => import("@/pages/orchestrite/TicketsPage") },
+      { path: "/orchestrate", component: () => import("@/pages/orchestrate/DashboardPage") },
+      { path: "/orchestrate/tickets", component: () => import("@/pages/orchestrate/TicketsPage") },
     ],
   },
-  evaluite: {
-    id: "evaluite",
-    name: "Evaluite",
+  evaluate: {
+    id: "evaluate",
+    name: "Evaluate",
     routes: [
-      { path: "/evaluite", component: () => import("@/pages/evaluite/DashboardPage") },
-      { path: "/evaluite/claims", component: () => import("@/pages/evaluite/ClaimsPage") },
-      { path: "/evaluite/risk", component: () => import("@/pages/evaluite/RiskPage") },
+      { path: "/evaluate", component: () => import("@/pages/evaluate/DashboardPage") },
+      { path: "/evaluate/claims", component: () => import("@/pages/evaluate/ClaimsPage") },
+      { path: "/evaluate/risk", component: () => import("@/pages/evaluate/RiskPage") },
     ],
   },
   insight: {
@@ -59,8 +59,8 @@ export const PRODUCT_ROUTES: Record<ProductId, ProductConfig> = {
 
 export const getProductFromPath = (pathname: string): ProductId | null => {
   const pathLower = pathname.toLowerCase();
-  if (pathLower.startsWith("/orchestrite")) return "orchestrite";
-  if (pathLower.startsWith("/evaluite")) return "evaluite";
+  if (pathLower.startsWith("/orchestrate")) return "orchestrate";
+  if (pathLower.startsWith("/evaluate")) return "evaluate";
   if (pathLower.startsWith("/insight")) return "insight";
   if (pathLower.startsWith("/assist")) return "assist";
   if (pathLower.startsWith("/admin")) return "admin";

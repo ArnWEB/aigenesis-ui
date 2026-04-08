@@ -19,7 +19,7 @@ Aigenesis is a production-ready React application for the insurance and risk man
 
 ### Role-Based Dashboards
 - **Administrator**: System overview, user management, knowledge ingestion, platform settings
-- **Executors**: Enterprise overview with financial metrics (GWP, Combined Ratio, etc.)
+- **Executive**: Enterprise overview with financial metrics (GWP, Combined Ratio, etc.)
 - **Underwriter**: Risk assessment and policy management
 - **Claim Adjudicator**: Claims review and legal validation
 - **Customer Service**: Support desk and ticket management

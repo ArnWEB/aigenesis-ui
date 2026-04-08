@@ -20,15 +20,15 @@ interface ChatSession {
   updatedAt: Date;
 }
 
-const AI_PERSONAS = {
+const AI_PERSONAS: Record<string, { name: string; role: string; color: string; icon: string }> = {
   "customer-agent": {
-    name: "Field Agent AI",
+    name: "<span class='text-primary'>@i</span>gene",
     role: "Mobile Assistant",
     color: "text-primary",
     icon: "🎯",
   },
   default: {
-    name: "Aigenesis Assistant",
+    name: "<span class='text-primary'>@i</span>gene",
     role: "AI Helper",
     color: "text-primary",
     icon: "🤖",
@@ -226,14 +226,13 @@ export function AssistChatPage() {
 
       <div className="flex-1 flex flex-col min-w-0">
         <div className="flex-1 overflow-y-auto space-y-6 p-4">
-          {!activeSession?.messages.length && (
+          {activeSession?.messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-4xl">
-                {aiPersona.icon}
-              </div>
               <div>
-                <h3 className="text-2xl font-headline font-bold text-on-surface">{aiPersona.name}</h3>
-                <p className="text-on-surface-variant mt-1">{aiPersona.role}</p>
+                <h3 
+                  className="text-3xl font-sans font-bold text-on-surface"
+                  dangerouslySetInnerHTML={{ __html: aiPersona.name }}
+                />
               </div>
               <p className="text-sm text-on-surface-variant max-w-md">
                 Start a conversation and I'll help you with field operations, customer inquiries, and more.
@@ -260,7 +259,7 @@ export function AssistChatPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 ) : (
-                  <span className="text-sm">{aiPersona.icon}</span>
+                  <span className="text-xs font-sans font-bold" dangerouslySetInnerHTML={{ __html: aiPersona.name }} />
                 )}
               </div>
               <div

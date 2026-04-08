@@ -3,12 +3,13 @@ import { GlassPanel } from "@/components/ui/glass-panel";
 import { cn } from "@/lib/utils";
 
 const PERSONAS = [
-  { id: "executors", name: "Executors", description: "Enterprise analytics & reporting" },
+  { id: "executive", name: "Executive", description: "Enterprise analytics & reporting" },
   { id: "underwriter", name: "Underwriter", description: "Risk assessment & policy approval" },
   { id: "adjudicator", name: "Adjudicator", description: "Claims validation & processing" },
-  { id: "customer-service", name: "Customer Service", description: "Tier 1 support & inquiries" },
+  { id: "customer_service", name: "Customer Service", description: "Tier 1 support & inquiries" },
   { id: "operations", name: "Operations", description: "Core system management" },
-  { id: "customer-agent", name: "Field Agent", description: "Mobile field operations" },
+  { id: "agent", name: "Field Agent", description: "Mobile field operations" },
+  { id: "customer", name: "Customer", description: "Customer portal access" },
 ];
 
 const KNOWLEDGE_SOURCES = [

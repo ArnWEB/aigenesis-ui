@@ -6,12 +6,20 @@ import { useMemo } from "react";
 const LoginPage = lazy(() => import("@/components/auth/LoginPage").then(m => ({ default: m.LoginPage })));
 const AdminLoginPage = lazy(() => import("@/components/auth/AdminLoginPage").then(m => ({ default: m.AdminLoginPage })));
 const DashboardLayout = lazy(() => import("@/components/layout/DashboardLayout").then(m => ({ default: m.DashboardLayout })));
+const ChatDrawer = lazy(() => import("@/components/chat/ChatDrawer").then(m => ({ default: m.ChatDrawer })));
+const ChatTrigger = lazy(() => import("@/components/chat/ChatDrawer").then(m => ({ default: m.ChatTrigger })));
 
-const OrchestriteDashboard = lazy(() => import("@/pages/orchestrite/DashboardPage").then(m => ({ default: m.DashboardPage })));
-const EvaluiteDashboard = lazy(() => import("@/pages/evaluite/DashboardPage").then(m => ({ default: m.DashboardPage })));
+const OrchestrateDashboard = lazy(() => import("@/pages/orchestrate/DashboardPage").then(m => ({ default: m.DashboardPage })));
+const OrchestrateTickets = lazy(() => import("@/pages/orchestrate/TicketsPage").then(m => ({ default: m.TicketsPage })));
+const EvaluateDashboard = lazy(() => import("@/pages/evaluate/DashboardPage").then(m => ({ default: m.DashboardPage })));
 const InsightDashboard = lazy(() => import("@/pages/insight/DashboardPage").then(m => ({ default: m.DashboardPage })));
 const AssistChat = lazy(() => import("@/pages/assist/ChatPage").then(m => ({ default: m.AssistChatPage })));
 const AdminDashboard = lazy(() => import("@/pages/admin/DashboardPage").then(m => ({ default: m.DashboardPage })));
+const AdminUsers = lazy(() => import("@/pages/admin/UsersPage").then(m => ({ default: m.UsersPage })));
+const AdminGovernance = lazy(() => import("@/pages/admin/GovernancePage").then(m => ({ default: m.GovernancePage })));
+const AdminSettings = lazy(() => import("@/pages/admin/SettingsPage").then(m => ({ default: m.SettingsPage })));
+
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage").then(m => ({ default: m.default })));
 
 const LoadingSpinner = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -39,14 +47,14 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
       localStorage.removeItem("post_login_redirect");
       return <Navigate to={redirect} replace />;
     }
-    return <Navigate to="/orchestrite" replace />;
+    return <Navigate to="/orchestrate" replace />;
   }
   return <Loading>{children}</Loading>;
 }
 
 function AdminRoute({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuthContext();
-  
+
   const isAdmin = useMemo(() => {
     const storedAdmin = localStorage.getItem("admin_user");
     const storedAdminUser = storedAdmin ? JSON.parse(storedAdmin) : null;
@@ -63,18 +71,37 @@ function DashboardWithLayout({ children }: { children: React.ReactNode }) {
     <Suspense fallback={<LoadingSpinner />}>
       <DashboardLayout>
         {children}
+        <ChatTrigger onClick={() => window.dispatchEvent(new CustomEvent("open-chat"))} />
+        <ChatDrawer />
+      </DashboardLayout>
+    </Suspense>
+  );
+}
+
+function DashboardWithLayoutNoChat({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <DashboardLayout>
+        {children}
       </DashboardLayout>
     </Suspense>
   );
 }
 
 function NotFound() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <NotFoundPage />
+    </Suspense>
+  );
+}
+
+function RootRedirect() {
   const isAuthenticated = localStorage.getItem("auth_token");
   const isAdmin = localStorage.getItem("admin_user");
   
-  if (isAuthenticated || isAdmin) {
-    return <Navigate to="/orchestrite" replace />;
-  }
+  if (isAdmin) return <Navigate to="/admin" replace />;
+  if (isAuthenticated) return <Navigate to="/orchestrate" replace />;
   return <Navigate to="/login" replace />;
 }
 
@@ -82,22 +109,27 @@ export function AppRouter() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL || "/"}>
       <Routes>
+        <Route path="/" element={<RootRedirect />} />
         <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
 
-        <Route path="/orchestrite" element={<ProtectedRoute><DashboardWithLayout><OrchestriteDashboard /></DashboardWithLayout></ProtectedRoute>} />
-        <Route path="/orchestrite/*" element={<ProtectedRoute><DashboardWithLayout><OrchestriteDashboard /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/orchestrate" element={<ProtectedRoute><DashboardWithLayout><OrchestrateDashboard /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/orchestrate/tickets" element={<ProtectedRoute><DashboardWithLayout><OrchestrateTickets /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/orchestrate/*" element={<ProtectedRoute><DashboardWithLayout><OrchestrateDashboard /></DashboardWithLayout></ProtectedRoute>} />
 
-        <Route path="/evaluite" element={<ProtectedRoute><DashboardWithLayout><EvaluiteDashboard /></DashboardWithLayout></ProtectedRoute>} />
-        <Route path="/evaluite/*" element={<ProtectedRoute><DashboardWithLayout><EvaluiteDashboard /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/evaluate" element={<ProtectedRoute><DashboardWithLayout><EvaluateDashboard /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/evaluate/*" element={<ProtectedRoute><DashboardWithLayout><EvaluateDashboard /></DashboardWithLayout></ProtectedRoute>} />
 
         <Route path="/insight" element={<ProtectedRoute><DashboardWithLayout><InsightDashboard /></DashboardWithLayout></ProtectedRoute>} />
         <Route path="/insight/*" element={<ProtectedRoute><DashboardWithLayout><InsightDashboard /></DashboardWithLayout></ProtectedRoute>} />
 
-        <Route path="/assist" element={<ProtectedRoute><DashboardWithLayout><AssistChat /></DashboardWithLayout></ProtectedRoute>} />
-        <Route path="/assist/*" element={<ProtectedRoute><DashboardWithLayout><AssistChat /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/assist" element={<ProtectedRoute><DashboardWithLayoutNoChat><AssistChat /></DashboardWithLayoutNoChat></ProtectedRoute>} />
+        <Route path="/assist/*" element={<ProtectedRoute><DashboardWithLayoutNoChat><AssistChat /></DashboardWithLayoutNoChat></ProtectedRoute>} />
 
         <Route path="/admin" element={<AdminRoute><DashboardWithLayout><AdminDashboard /></DashboardWithLayout></AdminRoute>} />
+        <Route path="/admin/users" element={<AdminRoute><DashboardWithLayout><AdminUsers /></DashboardWithLayout></AdminRoute>} />
+        <Route path="/admin/governance" element={<AdminRoute><DashboardWithLayout><AdminGovernance /></DashboardWithLayout></AdminRoute>} />
+        <Route path="/admin/settings" element={<AdminRoute><DashboardWithLayout><AdminSettings /></DashboardWithLayout></AdminRoute>} />
         <Route path="/admin/*" element={<AdminRoute><DashboardWithLayout><AdminDashboard /></DashboardWithLayout></AdminRoute>} />
 
         <Route path="*" element={<NotFound />} />
