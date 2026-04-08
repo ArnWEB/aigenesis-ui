@@ -24,7 +24,7 @@ type ProductModule = {
 const PRODUCTS: ProductModule[] = [
   {
     id: "orchestrite",
-    name: "orchestr@ite",
+    name: "@iorchestrate",
     icon: <Blocks className="w-5 h-5" />,
     description: "HIL TOOL FOR CS & UW",
     features: [
@@ -37,7 +37,7 @@ const PRODUCTS: ProductModule[] = [
   },
   {
     id: "evaluite",
-    name: "evalu@ite",
+    name: "@ievaluate",
     icon: <Lightbulb className="w-5 h-5" />,
     description: "WORKBENCH FOR LEADS",
     features: [
@@ -50,7 +50,7 @@ const PRODUCTS: ProductModule[] = [
   },
   {
     id: "insight",
-    name: "ins@ight",
+    name: "@insight",
     icon: <Activity className="w-5 h-5" />,
     description: "EXECUTIVE INSIGHTS",
     features: [
@@ -63,7 +63,7 @@ const PRODUCTS: ProductModule[] = [
   },
   {
     id: "assist",
-    name: "ass@ist",
+    name: "@iassist",
     icon: <Bot className="w-5 h-5" />,
     description: "PERSONA CO-PILOT",
     features: [
@@ -82,7 +82,7 @@ export function LoginPage() {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
-  
+
   const [loginMethod, setLoginMethod] = useState<LoginMethod>("email");
   const [email, setEmail] = useState("alex.thompson@aegis.ai");
   const [password, setPassword] = useState("");
@@ -104,18 +104,18 @@ export function LoginPage() {
 
   const handleEmailLogin = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Module-Level Access Control Check
     const activeProduct = PRODUCTS.find(p => p.id === selectedProduct);
     const mappedUserPersona = ROLE_PERSONA_MAP[email.toLowerCase()];
-    
+
     if (activeProduct && activeProduct.allowedPersonas !== "all") {
       // Check if user is known and their persona matches allowed personas
       if (!mappedUserPersona || !activeProduct.allowedPersonas.includes(mappedUserPersona)) {
-        setNotification({ 
-          show: true, 
-          message: `Access Denied: The ${activeProduct.name} module is not assigned to your role.`, 
-          type: "error" 
+        setNotification({
+          show: true,
+          message: `Access Denied: The ${activeProduct.name} module is not assigned to your role.`,
+          type: "error"
         });
         setTimeout(() => setNotification({ show: false, message: "", type: "error" }), 5000);
         return; // Prevent login
@@ -160,8 +160,13 @@ export function LoginPage() {
   };
 
   const handleProductSelect = (product: typeof PRODUCTS[0]) => {
-    setSelectedProduct(product.id);
-    setSelectedPersona(product.defaultPersona);
+    if (selectedProduct === product.id) {
+      setSelectedProduct(null);
+      setSelectedPersona(null);
+    } else {
+      setSelectedProduct(product.id);
+      setSelectedPersona(product.defaultPersona);
+    }
   };
 
   return (
@@ -180,7 +185,7 @@ export function LoginPage() {
       </div>
 
       <main className="relative z-10 w-full max-w-6xl flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-start lg:pt-16">
-        
+
         {/* Left Column: Branding & Personas */}
         <div className="w-full lg:w-3/5 space-y-8 lg:space-y-12">
           <header className="space-y-3 lg:space-y-4">
@@ -201,12 +206,27 @@ export function LoginPage() {
                 </span>
               </button>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-headline font-bold tracking-tighter leading-none text-on-surface">
-              <span className="text-primary">AIGENESIS</span>
-            </h1>
-            <p className="text-on-surface-variant text-base lg:text-lg max-w-md font-light leading-relaxed">
-              Secure gateway to the next generation of risk orchestration and claim intelligence.
-            </p>
+            <div className="flex items-center gap-3 sm:gap-4">
+              <img
+                src="/aigenesis.jpeg"
+                alt="Aigenesis Brand"
+                className="w-14 h-14 sm:w-16 sm:h-16 relative z-10 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)] rounded-md object-contain flex-shrink-0"
+                onError={(e) => {
+                  e.currentTarget.style.opacity = '0.5';
+                }}
+              />
+              <div className="flex flex-col justify-center gap-1">
+                <h1
+                  className="text-3xl sm:text-4xl lg:text-[42px] tracking-tight leading-none text-on-surface drop-shadow-sm"
+                  style={{ fontFamily: '"Algerian", serif', fontWeight: 'normal' }}
+                >
+                  <span className="text-primary">AI</span>GENESIS
+                </h1>
+                <p className="text-on-surface-variant text-sm sm:text-base lg:text-lg max-w-md font-medium leading-snug tracking-tight">
+                  Ride the AI Revolution. Accelerate with us
+                </p>
+              </div>
+            </div>
           </header>
 
           <section className="space-y-6">
@@ -216,7 +236,7 @@ export function LoginPage() {
               </h2>
               <div className="h-px flex-1 bg-gradient-to-r from-outline-variant/30 to-transparent min-w-0" />
             </div>
-            
+
             {/* Using items-start ensures tiles that aren't expanded stay at their minimal height */}
             <div className="grid grid-cols-2 lg:grid-cols-2 gap-4 items-start">
               {PRODUCTS.map((product) => (
@@ -224,50 +244,81 @@ export function LoginPage() {
                   key={product.id}
                   onClick={() => handleProductSelect(product)}
                   className={cn(
-                    "glass-panel p-5 rounded-2xl flex flex-col items-start text-left gap-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border",
-                    selectedProduct === product.id 
-                      ? "border-primary shadow-[0_0_20px_rgba(232,110,36,0.15)] bg-surface-container relative z-10 scale-[1.02]" 
-                      : "border-white/5 hover:border-primary/40 hover:bg-surface-variant/50"
+                    "p-5 rounded-2xl flex flex-col items-start text-left gap-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border",
+                    selectedProduct === product.id
+                      ? "border-primary shadow-[0_0_30px_rgba(232,110,36,0.3)] bg-[#ef803b] relative z-10 scale-[1.02]"
+                      : selectedProduct
+                        ? "glass-panel border-white/5 opacity-40 hover:opacity-70 scale-[0.98]"
+                        : "glass-panel border-white/5 hover:border-primary/40 hover:bg-surface-variant/50"
                   )}
                 >
                   <span className={cn(
                     "text-xl transition-colors duration-300",
-                    selectedProduct === product.id ? "text-primary" : "text-primary/70 group-hover:text-primary"
+                    selectedProduct === product.id ? "text-white drop-shadow-md" : "text-primary/70 group-hover:text-primary"
                   )}>
                     {product.icon}
                   </span>
-                  
+
                   <div className="text-left w-full z-10">
-                    <span className="block text-sm sm:text-base font-headline font-semibold text-on-surface mb-0.5">
-                      {product.name}
+                    <span className={cn(
+                      "block text-sm sm:text-base font-headline font-semibold mb-0.5",
+                      selectedProduct === product.id ? "text-white" : "text-on-surface"
+                    )}>
+                      {product.name.startsWith('@') ? (
+                        <>
+                          <span className={selectedProduct === product.id ? "text-black" : ""}>
+                            {product.name.substring(0, 2)}
+                          </span>
+                          <span>
+                            {product.name.substring(2)}
+                          </span>
+                        </>
+                      ) : (
+                        product.name
+                      )}
                     </span>
-                    <span className="text-[10px] text-on-surface-variant font-label uppercase tracking-widest">
+                    <span className={cn(
+                      "text-[10px] font-label uppercase tracking-widest",
+                      selectedProduct === product.id ? "text-black font-extrabold" : "text-on-surface-variant"
+                    )}>
                       {product.description}
                     </span>
-                    
+
                     {/* Expandable Features list */}
-                    <div 
+                    <div
                       className={cn(
                         "grid transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
                         selectedProduct === product.id ? "grid-rows-[1fr] mt-5 opacity-100" : "grid-rows-[0fr] mt-0 opacity-0"
                       )}
                     >
                       <div className="overflow-hidden">
-                        <ul className="space-y-2.5 border-t border-outline-variant/20 pt-4">
+                        <ul className={cn(
+                          "space-y-2.5 pt-4 border-t",
+                          selectedProduct === product.id ? "border-black/20" : "border-outline-variant/20"
+                        )}>
                           {product.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-on-surface-variant font-light leading-relaxed">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" />
-                              <span className="group-hover:text-on-surface transition-colors">{feature}</span>
+                            <li key={idx} className={cn(
+                              "flex items-start gap-2.5 text-xs sm:text-sm font-medium leading-relaxed",
+                              selectedProduct === product.id ? "text-black" : "text-on-surface-variant font-light"
+                            )}>
+                              <CheckCircle2 className={cn(
+                                "w-3.5 h-3.5 mt-0.5 flex-shrink-0",
+                                selectedProduct === product.id ? "text-black" : "text-primary"
+                              )} />
+                              <span className={cn(
+                                "transition-colors",
+                                selectedProduct !== product.id && "group-hover:text-on-surface"
+                              )}>{feature}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     </div>
                   </div>
-                  
-                  {/* Subtle gradient glow when active */}
+
+                  {/* Gentle overlay to give the orange some depth */}
                   {selectedProduct === product.id && (
-                     <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-primary/5 to-transparent pointer-events-none rounded-xl" />
+                    <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent pointer-events-none rounded-xl" />
                   )}
                 </button>
               ))}
@@ -277,38 +328,83 @@ export function LoginPage() {
 
         {/* Right Column: Dynamic Content Area */}
         <div className="w-full lg:w-2/5 max-w-md relative lg:mt-0 mt-8 min-h-[480px] flex flex-col justify-center">
-          
+
           {/* Ambient Brand Graphic (Visible when NO product selected) */}
-          <div 
+          <div
             className={cn(
               "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full flex items-center justify-center transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]",
-              !selectedProduct 
-                ? "opacity-100 scale-100" 
+              !selectedProduct
+                ? "opacity-100 scale-100"
                 : "opacity-0 scale-95 pointer-events-none"
             )}
           >
-            <div className="relative w-full aspect-square max-w-[400px] flex items-center justify-center group pointer-events-none">
-               {/* Soft ambient glow behind the logo */}
-               <div className="absolute inset-8 bg-primary/20 blur-[100px] rounded-full transition-opacity duration-700 opacity-60 group-hover:opacity-100" />
-               
-               {/* High-impact Brand Image */}
-               <img 
-                 src="/aigenesis.jpeg" 
-                 alt="Aigenesis Brand" 
-                 className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]"
-                 onError={(e) => {
-                   e.currentTarget.style.opacity = '0.5';
-                 }}
-               />
+            <div className="relative w-full aspect-square max-w-[480px] flex items-center justify-center group pointer-events-auto">
+              {/* Soft ambient glow behind the entire lockup */}
+              <div className="absolute inset-4 bg-primary/10 blur-[100px] rounded-full transition-opacity duration-1000 opacity-60 group-hover:opacity-100" />
+
+              {/* Typography Brand Stack */}
+              <div className="flex flex-col items-center justify-center relative z-10 w-full animate-fade-in pointer-events-none px-4 sm:px-0">
+
+                <div className="relative group flex flex-col items-center w-full max-w-[420px]">
+                  <div className="absolute -inset-4 bg-gradient-to-b from-primary/10 to-transparent blur-2xl rounded-sm opacity-60" />
+                  
+                  <div className="relative w-full flex flex-col items-center p-12 sm:px-14 sm:py-16 bg-[#131313]/90 backdrop-blur-2xl rounded-sm border border-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.9)]">
+                    {/* High-Tech Tactical Corner Effects */}
+                    <div className="absolute top-[-1px] left-[-1px] w-6 h-6 border-t-[1px] border-l-[1px] border-[#ef803b] drop-shadow-[0_0_8px_rgba(239,128,59,0.5)] opacity-80" />
+                    <div className="absolute bottom-[-1px] right-[-1px] w-6 h-6 border-b-[1px] border-r-[1px] border-[#ef803b] drop-shadow-[0_0_8px_rgba(239,128,59,0.5)] opacity-80" />
+
+                    {/* @iGENE */}
+                    <div className="flex items-center drop-shadow-2xl">
+                      <span className="text-[#ef803b] text-6xl sm:text-[76px] font-sans font-black tracking-tighter">
+                        @i
+                      </span>
+                      <span className="text-white text-6xl sm:text-[76px] font-sans font-black italic tracking-tighter ml-1">
+                        GENE
+                      </span>
+                    </div>
+
+                    {/* INSURE */}
+                    <div className="text-white/95 text-5xl sm:text-[64px] font-sans font-black italic tracking-tighter mt-0 drop-shadow-xl z-10 w-full text-center">
+                      INSURE
+                    </div>
+
+                    {/* Validated Neural Core */}
+                    <div className="flex items-center gap-2 mt-10 mb-8 opacity-80 border border-white/5 px-4 py-1.5 rounded-full bg-white/5">
+                      <Shield className="w-3 h-3 text-[#ef803b]" />
+                      <span className="text-white/60 text-[9px] sm:text-[10px] font-label tracking-[0.15em] uppercase">
+                        VALIDATED NEURAL CORE
+                      </span>
+                    </div>
+
+                    {/* Lower Divider */}
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#ef803b]/40 to-transparent mb-6 opacity-60" />
+
+                    {/* INTELLIGENT INSURANCE ECOSYSTEM */}
+                    <div className="flex flex-col items-center gap-1.5">
+                       <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
+                         INTELLIGENT
+                       </span>
+                       <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
+                         INSURANCE
+                       </span>
+                       <span className="text-[#ef803b]/95 text-lg sm:text-[22px] drop-shadow-[0_0_10px_rgba(239,128,59,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Algerian", serif' }}>
+                         ECOSYSTEM
+                       </span>
+                    </div>
+
+                  </div>
+                </div>
+                
+              </div>
             </div>
           </div>
 
           {/* Login Window (Visible when product IS selected) */}
-          <div 
+          <div
             className={cn(
               "w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] relative",
-              selectedProduct 
-                ? "opacity-100 translate-x-0" 
+              selectedProduct
+                ? "opacity-100 translate-x-0"
                 : "opacity-0 translate-x-16 pointer-events-none"
             )}
           >
@@ -371,7 +467,7 @@ export function LoginPage() {
                         disabled={isLoading}
                         icon={<Mail className="w-5 h-5 text-on-surface-variant" />}
                       />
-                      
+
                       {/* Sample User Dropdown */}
                       <div className="relative">
                         <button
@@ -384,7 +480,7 @@ export function LoginPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
                           </svg>
                         </button>
-                        
+
                         {showUserDropdown && (
                           <div className="absolute top-full left-0 right-0 mt-3 bg-surface-container-high border border-outline-variant/20 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-20 max-h-[300px] overflow-y-auto custom-scrollbar overflow-hidden">
                             {[...sampleUsers]
@@ -392,25 +488,25 @@ export function LoginPage() {
                               .filter(u => !selectedPersona || ROLE_PERSONA_MAP[u.email] === selectedPersona)
                               .concat([...sampleUsers].filter(u => u.role !== "admin").filter(u => selectedPersona && ROLE_PERSONA_MAP[u.email] !== selectedPersona))
                               .map((user, idx) => (
-                              <button
-                                key={user.id}
-                                type="button"
-                                onClick={() => selectUser(user.email, "password123")}
-                                className={cn(
-                                  "w-full px-5 py-3 text-left hover:bg-surface-variant transition-colors flex items-center justify-between",
-                                  idx !== 0 && "border-t border-outline-variant/10",
-                                  selectedPersona && ROLE_PERSONA_MAP[user.email] === selectedPersona && "bg-primary/5"
-                                )}
-                              >
-                                <div>
-                                  <p className="text-sm font-semibold text-on-surface">{user.name}</p>
-                                  <p className="text-[11px] text-on-surface-variant/80 mt-0.5">{user.email}</p>
-                                </div>
-                                <span className="text-[10px] bg-surface-container px-2 py-1 rounded-md text-primary font-bold uppercase tracking-wider border border-outline-variant/10">
-                                  {user.role.replace('_', ' ')}
-                                </span>
-                              </button>
-                            ))}
+                                <button
+                                  key={user.id}
+                                  type="button"
+                                  onClick={() => selectUser(user.email, "password123")}
+                                  className={cn(
+                                    "w-full px-5 py-3 text-left hover:bg-surface-variant transition-colors flex items-center justify-between",
+                                    idx !== 0 && "border-t border-outline-variant/10",
+                                    selectedPersona && ROLE_PERSONA_MAP[user.email] === selectedPersona && "bg-primary/5"
+                                  )}
+                                >
+                                  <div>
+                                    <p className="text-sm font-semibold text-on-surface">{user.name}</p>
+                                    <p className="text-[11px] text-on-surface-variant/80 mt-0.5">{user.email}</p>
+                                  </div>
+                                  <span className="text-[10px] bg-surface-container px-2 py-1 rounded-md text-primary font-bold uppercase tracking-wider border border-outline-variant/10">
+                                    {user.role.replace('_', ' ')}
+                                  </span>
+                                </button>
+                              ))}
                           </div>
                         )}
                       </div>
@@ -495,9 +591,9 @@ export function LoginPage() {
               : "bg-error/20 border-error text-error"
           )}>
             <div className="w-8 h-8 rounded-full bg-error/20 flex items-center justify-center">
-               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
-               </svg>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </div>
             <span className="text-sm font-bold tracking-wide">{notification.message}</span>
             <button onClick={() => setNotification({ show: false, message: "", type: "error" })} className="ml-4 opacity-50 hover:opacity-100 transition-opacity">

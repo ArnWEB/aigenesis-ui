@@ -1,31 +1,17 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import { useMemo } from "react";
 
 const LoginPage = lazy(() => import("@/components/auth/LoginPage").then(m => ({ default: m.LoginPage })));
 const AdminLoginPage = lazy(() => import("@/components/auth/AdminLoginPage").then(m => ({ default: m.AdminLoginPage })));
 const DashboardLayout = lazy(() => import("@/components/layout/DashboardLayout").then(m => ({ default: m.DashboardLayout })));
-const ChatDrawer = lazy(() => import("@/components/chat/ChatDrawer").then(m => ({ default: m.ChatDrawer })));
-const ChatTrigger = lazy(() => import("@/components/chat/ChatDrawer").then(m => ({ default: m.ChatTrigger })));
 
 const OrchestriteDashboard = lazy(() => import("@/pages/orchestrite/DashboardPage").then(m => ({ default: m.DashboardPage })));
-const OrchestriteTickets = lazy(() => import("@/pages/orchestrite/TicketsPage").then(m => ({ default: m.TicketsPage })));
-
 const EvaluiteDashboard = lazy(() => import("@/pages/evaluite/DashboardPage").then(m => ({ default: m.DashboardPage })));
-const EvaluiteClaims = lazy(() => import("@/pages/evaluite/ClaimsPage").then(m => ({ default: m.ClaimsPage })));
-const EvaluiteRisk = lazy(() => import("@/pages/evaluite/RiskPage").then(m => ({ default: m.RiskPage })));
-
 const InsightDashboard = lazy(() => import("@/pages/insight/DashboardPage").then(m => ({ default: m.DashboardPage })));
-const InsightPortfolio = lazy(() => import("@/pages/insight/PortfolioPage").then(m => ({ default: m.PortfolioPage })));
-const InsightAnalytics = lazy(() => import("@/pages/insight/AnalyticsPage").then(m => ({ default: m.AnalyticsPage })));
-
-const AssistDashboard = lazy(() => import("@/pages/assist/DashboardPage").then(m => ({ default: m.DashboardPage })));
-const AssistFieldOps = lazy(() => import("@/pages/assist/FieldOpsPage").then(m => ({ default: m.FieldOpsPage })));
-
+const AssistChat = lazy(() => import("@/pages/assist/ChatPage").then(m => ({ default: m.AssistChatPage })));
 const AdminDashboard = lazy(() => import("@/pages/admin/DashboardPage").then(m => ({ default: m.DashboardPage })));
-const AdminUsers = lazy(() => import("@/pages/admin/UsersPage").then(m => ({ default: m.UsersPage })));
-const AdminGovernance = lazy(() => import("@/pages/admin/GovernancePage").then(m => ({ default: m.GovernancePage })));
-const AdminSettings = lazy(() => import("@/pages/admin/SettingsPage").then(m => ({ default: m.SettingsPage })));
 
 const LoadingSpinner = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -60,9 +46,13 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
 
 function AdminRoute({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuthContext();
-  const storedAdmin = localStorage.getItem("admin_user");
-  const storedAdminUser = storedAdmin ? JSON.parse(storedAdmin) : null;
-  const isAdmin = user?.role === "admin" || storedAdminUser?.role === "admin";
+  
+  const isAdmin = useMemo(() => {
+    const storedAdmin = localStorage.getItem("admin_user");
+    const storedAdminUser = storedAdmin ? JSON.parse(storedAdmin) : null;
+    return user?.role === "admin" || storedAdminUser?.role === "admin";
+  }, [user?.role]);
+
   if (isLoading) return <LoadingSpinner />;
   if (!isAdmin) return <Navigate to="/admin/login" replace />;
   return <Loading>{children}</Loading>;
@@ -73,40 +63,44 @@ function DashboardWithLayout({ children }: { children: React.ReactNode }) {
     <Suspense fallback={<LoadingSpinner />}>
       <DashboardLayout>
         {children}
-        <ChatTrigger onClick={() => window.dispatchEvent(new CustomEvent("open-chat"))} />
-        <ChatDrawer />
       </DashboardLayout>
     </Suspense>
   );
 }
 
+function NotFound() {
+  const isAuthenticated = localStorage.getItem("auth_token");
+  const isAdmin = localStorage.getItem("admin_user");
+  
+  if (isAuthenticated || isAdmin) {
+    return <Navigate to="/orchestrite" replace />;
+  }
+  return <Navigate to="/login" replace />;
+}
+
 export function AppRouter() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL || "/"}>
       <Routes>
         <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
 
         <Route path="/orchestrite" element={<ProtectedRoute><DashboardWithLayout><OrchestriteDashboard /></DashboardWithLayout></ProtectedRoute>} />
-        <Route path="/orchestrite/tickets" element={<ProtectedRoute><DashboardWithLayout><OrchestriteTickets /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/orchestrite/*" element={<ProtectedRoute><DashboardWithLayout><OrchestriteDashboard /></DashboardWithLayout></ProtectedRoute>} />
 
         <Route path="/evaluite" element={<ProtectedRoute><DashboardWithLayout><EvaluiteDashboard /></DashboardWithLayout></ProtectedRoute>} />
-        <Route path="/evaluite/claims" element={<ProtectedRoute><DashboardWithLayout><EvaluiteClaims /></DashboardWithLayout></ProtectedRoute>} />
-        <Route path="/evaluite/risk" element={<ProtectedRoute><DashboardWithLayout><EvaluiteRisk /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/evaluite/*" element={<ProtectedRoute><DashboardWithLayout><EvaluiteDashboard /></DashboardWithLayout></ProtectedRoute>} />
 
         <Route path="/insight" element={<ProtectedRoute><DashboardWithLayout><InsightDashboard /></DashboardWithLayout></ProtectedRoute>} />
-        <Route path="/insight/portfolio" element={<ProtectedRoute><DashboardWithLayout><InsightPortfolio /></DashboardWithLayout></ProtectedRoute>} />
-        <Route path="/insight/analytics" element={<ProtectedRoute><DashboardWithLayout><InsightAnalytics /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/insight/*" element={<ProtectedRoute><DashboardWithLayout><InsightDashboard /></DashboardWithLayout></ProtectedRoute>} />
 
-        <Route path="/assist" element={<ProtectedRoute><DashboardWithLayout><AssistDashboard /></DashboardWithLayout></ProtectedRoute>} />
-        <Route path="/assist/field-ops" element={<ProtectedRoute><DashboardWithLayout><AssistFieldOps /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/assist" element={<ProtectedRoute><DashboardWithLayout><AssistChat /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/assist/*" element={<ProtectedRoute><DashboardWithLayout><AssistChat /></DashboardWithLayout></ProtectedRoute>} />
 
         <Route path="/admin" element={<AdminRoute><DashboardWithLayout><AdminDashboard /></DashboardWithLayout></AdminRoute>} />
-        <Route path="/admin/users" element={<AdminRoute><DashboardWithLayout><AdminUsers /></DashboardWithLayout></AdminRoute>} />
-        <Route path="/admin/governance" element={<AdminRoute><DashboardWithLayout><AdminGovernance /></DashboardWithLayout></AdminRoute>} />
-        <Route path="/admin/settings" element={<AdminRoute><DashboardWithLayout><AdminSettings /></DashboardWithLayout></AdminRoute>} />
+        <Route path="/admin/*" element={<AdminRoute><DashboardWithLayout><AdminDashboard /></DashboardWithLayout></AdminRoute>} />
 
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
