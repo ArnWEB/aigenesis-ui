@@ -42,8 +42,7 @@ export const PRODUCT_ROUTES: Record<ProductId, ProductConfig> = {
     id: "assist",
     name: "Assist",
     routes: [
-      { path: "/assist", component: () => import("@/pages/assist/DashboardPage") },
-      { path: "/assist/field-ops", component: () => import("@/pages/assist/FieldOpsPage") },
+      { path: "/assist", component: () => import("@/pages/assist/ChatPage") },
     ],
   },
   admin: {
