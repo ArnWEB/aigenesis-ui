@@ -40,49 +40,49 @@ interface ToastState {
 
 const AI_PERSONAS: Record<string, { name: string; role: string; color: string; icon: string }> = {
   admin: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Platform Administration",
     color: "primary",
     icon: "⚙️",
   },
   executive: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Enterprise Analytics",
     color: "primary",
     icon: "🛡️",
   },
   underwriter: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Underwriting Assistant",
     color: "secondary",
     icon: "📊",
   },
   adjudicator: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Adjudication Support",
     color: "tertiary",
     icon: "⚖️",
   },
   "customer_service": {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Customer Assistance",
     color: "secondary",
     icon: "🎧",
   },
   operations: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Operations AI",
     color: "tertiary",
     icon: "⚙️",
   },
   agent: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Mobile Assistant",
     color: "primary",
     icon: "📍",
   },
   customer: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Customer Support",
     color: "secondary",
     icon: "💬",
@@ -199,15 +199,15 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
       prev.map((session) =>
         session.id === activeSessionId
           ? {
-              ...session,
-              messages: [...session.messages, newUserMessage],
-              title: session.messages.length === 0 ? userInput.slice(0, 30) + (userInput.length > 30 ? "..." : "") : session.title,
-              updatedAt: new Date(),
-              metadata: {
-                ...session.metadata,
-                langflowSessionId: sessionId,
-              },
-            }
+            ...session,
+            messages: [...session.messages, newUserMessage],
+            title: session.messages.length === 0 ? userInput.slice(0, 30) + (userInput.length > 30 ? "..." : "") : session.title,
+            updatedAt: new Date(),
+            metadata: {
+              ...session.metadata,
+              langflowSessionId: sessionId,
+            },
+          }
           : session
       )
     );
@@ -227,10 +227,10 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
       prev.map((session) =>
         session.id === activeSessionId
           ? {
-              ...session,
-              messages: [...session.messages, placeholderMessage],
-              updatedAt: new Date(),
-            }
+            ...session,
+            messages: [...session.messages, placeholderMessage],
+            updatedAt: new Date(),
+          }
           : session
       )
     );
@@ -239,23 +239,23 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
       // Get the session messages to send full history to Langflow
       const currentSessionForApi = sessions.find((s) => s.id === activeSessionId) || sessions[0];
       const sessionMessages = [...currentSessionForApi.messages, newUserMessage];
-      
+
       await sendChatMessageStream(user.email, sessionMessages, sessionId, (chunk, isComplete) => {
         setSessions((prev) =>
           prev.map((session) =>
             session.id === activeSessionId
               ? {
-                  ...session,
-                  messages: session.messages.map((msg) =>
-                    msg.id === assistantMessageId
-                      ? { ...msg, content: chunk }
-                      : msg
-                  ),
-                }
+                ...session,
+                messages: session.messages.map((msg) =>
+                  msg.id === assistantMessageId
+                    ? { ...msg, content: chunk }
+                    : msg
+                ),
+              }
               : session
           )
         );
-        
+
         if (isComplete) {
           setIsTyping(false);
         }
@@ -267,9 +267,9 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
         prev.map((session) =>
           session.id === activeSessionId
             ? {
-                ...session,
-                messages: session.messages.filter((msg) => msg.id !== assistantMessageId),
-              }
+              ...session,
+              messages: session.messages.filter((msg) => msg.id !== assistantMessageId),
+            }
             : session
         )
       );
@@ -288,14 +288,14 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
       prev.map((session) =>
         session.id === activeSessionId
           ? {
-              ...session,
-              messages: [],
-              title: "New Conversation",
-              metadata: {
-                ...session.metadata,
-                langflowSessionId: generateSessionId(),
-              },
-            }
+            ...session,
+            messages: [],
+            title: "New Conversation",
+            metadata: {
+              ...session.metadata,
+              langflowSessionId: generateSessionId(),
+            },
+          }
           : session
       )
     );
@@ -311,7 +311,7 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
         )}
         onClick={onClose}
       />
-      
+
       {/* Drawer */}
       <div
         className={cn(
@@ -332,7 +332,7 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
               {persona.icon}
             </div>
             <div>
-              <h3 
+              <h3
                 className="text-lg font-sans font-bold text-on-surface"
                 dangerouslySetInnerHTML={{ __html: persona.name }}
               />
@@ -425,9 +425,9 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
               >
                 <div className={cn(
                   "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm",
-                  message.role === "user" 
-                    ? "bg-primary/20 text-primary" 
-                    : personaColor === "secondary" 
+                  message.role === "user"
+                    ? "bg-primary/20 text-primary"
+                    : personaColor === "secondary"
                       ? "bg-secondary/20 text-secondary"
                       : personaColor === "tertiary"
                         ? "bg-tertiary/20 text-tertiary"
@@ -439,98 +439,98 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
                   "max-w-[80%] rounded-2xl px-4 py-2 text-sm",
                   message.role === "user"
                     ? "bg-primary text-on-primary rounded-tr-none"
-                    : message.content 
+                    : message.content
                       ? "bg-surface-variant text-on-surface rounded-tl-none"
-                      : isTyping 
+                      : isTyping
                         ? "bg-surface-variant text-on-surface-variant rounded-tl-none animate-pulse"
                         : "hidden"
                 )}>
                   {message.role === "user" ? (
                     message.content
                   ) : message.content ? (
-                      <ReactMarkdown
-                        remarkPlugins={[remarkGfm]}
-                        components={{
-                          code({ className, children, ...props }) {
-                            const match = /language-(\w+)/.exec(className || "");
-                            const isInline = !match;
-                            return isInline ? (
-                              <code className="px-1.5 py-0.5 bg-black/20 rounded text-xs font-mono" {...props}>
-                                {children}
-                              </code>
-                            ) : (
-                              <SyntaxHighlighter
-                                style={oneDark}
-                                language={match[1]}
-                                PreTag="div"
-                                className="rounded-lg text-xs my-2"
-                              >
-                                {String(children).replace(/\n$/, "")}
-                              </SyntaxHighlighter>
-                            );
-                          },
-                          a({ href, children, ...props }) {
-                            return (
-                              <a href={href} target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80" {...props}>
-                                {children}
-                              </a>
-                            );
-                          },
-                          ul({ children, ...props }) {
-                            return <ul className="list-disc list-inside space-y-1 my-2" {...props}>{children}</ul>;
-                          },
-                          ol({ children, ...props }) {
-                            return <ol className="list-decimal list-inside space-y-1 my-2" {...props}>{children}</ol>;
-                          },
-                          li({ children, ...props }) {
-                            return <li className="text-sm" {...props}>{children}</li>;
-                          },
-                          h1({ children, ...props }) {
-                            return <h1 className="text-xl font-bold my-3" {...props}>{children}</h1>;
-                          },
-                          h2({ children, ...props }) {
-                            return <h2 className="text-lg font-bold my-2" {...props}>{children}</h2>;
-                          },
-                          h3({ children, ...props }) {
-                            return <h3 className="text-md font-semibold my-2" {...props}>{children}</h3>;
-                          },
-                          p({ children, ...props }) {
-                            return <p className="my-2" {...props}>{children}</p>;
-                          },
-                          table({ children, ...props }) {
-                            return (
-                              <div className="overflow-x-auto my-3">
-                                <table className="min-w-full text-xs border-collapse" {...props}>{children}</table>
-                              </div>
-                            );
-                          },
-                          th({ children, ...props }) {
-                            return <th className="border px-2 py-1 bg-black/20 text-left" {...props}>{children}</th>;
-                          },
-                          td({ children, ...props }) {
-                            return <td className="border px-2 py-1" {...props}>{children}</td>;
-                          },
-                          blockquote({ children, ...props }) {
-                            return <blockquote className="border-l-4 border-primary/50 pl-3 my-2 italic" {...props}>{children}</blockquote>;
-                          },
-                          strong({ children, ...props }) {
-                            return <strong className="font-bold" {...props}>{children}</strong>;
-                          },
-                          em({ children, ...props }) {
-                            return <em className="italic" {...props}>{children}</em>;
-                          },
-                        }}
-                      >
-                        {message.content}
-                      </ReactMarkdown>
-                    ) : isTyping ? (
-                      <span className="text-on-surface-variant italic">Thinking...</span>
-                    ) : null}
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        code({ className, children, ...props }) {
+                          const match = /language-(\w+)/.exec(className || "");
+                          const isInline = !match;
+                          return isInline ? (
+                            <code className="px-1.5 py-0.5 bg-black/20 rounded text-xs font-mono" {...props}>
+                              {children}
+                            </code>
+                          ) : (
+                            <SyntaxHighlighter
+                              style={oneDark}
+                              language={match[1]}
+                              PreTag="div"
+                              className="rounded-lg text-xs my-2"
+                            >
+                              {String(children).replace(/\n$/, "")}
+                            </SyntaxHighlighter>
+                          );
+                        },
+                        a({ href, children, ...props }) {
+                          return (
+                            <a href={href} target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80" {...props}>
+                              {children}
+                            </a>
+                          );
+                        },
+                        ul({ children, ...props }) {
+                          return <ul className="list-disc list-inside space-y-1 my-2" {...props}>{children}</ul>;
+                        },
+                        ol({ children, ...props }) {
+                          return <ol className="list-decimal list-inside space-y-1 my-2" {...props}>{children}</ol>;
+                        },
+                        li({ children, ...props }) {
+                          return <li className="text-sm" {...props}>{children}</li>;
+                        },
+                        h1({ children, ...props }) {
+                          return <h1 className="text-xl font-bold my-3" {...props}>{children}</h1>;
+                        },
+                        h2({ children, ...props }) {
+                          return <h2 className="text-lg font-bold my-2" {...props}>{children}</h2>;
+                        },
+                        h3({ children, ...props }) {
+                          return <h3 className="text-md font-semibold my-2" {...props}>{children}</h3>;
+                        },
+                        p({ children, ...props }) {
+                          return <p className="my-2" {...props}>{children}</p>;
+                        },
+                        table({ children, ...props }) {
+                          return (
+                            <div className="overflow-x-auto my-3">
+                              <table className="min-w-full text-xs border-collapse" {...props}>{children}</table>
+                            </div>
+                          );
+                        },
+                        th({ children, ...props }) {
+                          return <th className="border px-2 py-1 bg-black/20 text-left" {...props}>{children}</th>;
+                        },
+                        td({ children, ...props }) {
+                          return <td className="border px-2 py-1" {...props}>{children}</td>;
+                        },
+                        blockquote({ children, ...props }) {
+                          return <blockquote className="border-l-4 border-primary/50 pl-3 my-2 italic" {...props}>{children}</blockquote>;
+                        },
+                        strong({ children, ...props }) {
+                          return <strong className="font-bold" {...props}>{children}</strong>;
+                        },
+                        em({ children, ...props }) {
+                          return <em className="italic" {...props}>{children}</em>;
+                        },
+                      }}
+                    >
+                      {message.content}
+                    </ReactMarkdown>
+                  ) : isTyping ? (
+                    <span className="text-on-surface-variant italic">Thinking...</span>
+                  ) : null}
                 </div>
               </div>
             ))
           )}
-          
+
           {isTyping && !activeSession.messages.some(m => m.role === "assistant" && m.content) && (
             <div className="flex gap-3">
               <div className={cn(

@@ -22,31 +22,31 @@ interface ChatSession {
 
 const AI_PERSONAS: Record<string, { name: string; role: string; color: string; icon: string }> = {
   agent: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Mobile Assistant",
     color: "text-primary",
     icon: "🎯",
   },
   customer: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Customer Support",
     color: "text-primary",
     icon: "💬",
   },
   operations: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Operations AI",
     color: "text-primary",
     icon: "⚙️",
   },
   customer_service: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "Customer Service",
     color: "text-primary",
     icon: "🎧",
   },
   default: {
-    name: "<span class='text-primary'>@i</span>geneAssist",
+    name: "<span class='text-primary'>@i</span>GENE Assist",
     role: "AI Helper",
     color: "text-primary",
     icon: "🤖",
@@ -121,7 +121,7 @@ export function AssistChatPage() {
 
   const updateSessionTitle = useCallback((sessionId: string, firstMessage: string) => {
     const title = firstMessage.length > 30 ? firstMessage.slice(0, 30) + "..." : firstMessage;
-    setSessions(prev => prev.map(s => 
+    setSessions(prev => prev.map(s =>
       s.id === sessionId ? { ...s, title, updatedAt: new Date() } : s
     ));
   }, []);
@@ -136,8 +136,8 @@ export function AssistChatPage() {
       timestamp: new Date(),
     };
 
-    setSessions(prev => prev.map(s => 
-      s.id === activeSessionId 
+    setSessions(prev => prev.map(s =>
+      s.id === activeSessionId
         ? { ...s, messages: [...s.messages, userMessage], updatedAt: new Date() }
         : s
     ));
@@ -154,7 +154,7 @@ export function AssistChatPage() {
     try {
       const sessionId = activeSessionId;
       const allMessages = [...(activeSession?.messages || []), userMessage];
-      
+
       await sendChatMessageStream(
         user?.email || "",
         allMessages,
@@ -162,9 +162,9 @@ export function AssistChatPage() {
         (chunk, isComplete) => {
           setSessions(prev => prev.map(s => {
             if (s.id !== sessionId) return s;
-            
+
             const existingAssistantIdx = s.messages.findIndex(m => m.role === "assistant" && m.id === "streaming");
-            
+
             if (existingAssistantIdx >= 0) {
               const updated = [...s.messages];
               updated[existingAssistantIdx] = { ...updated[existingAssistantIdx], content: chunk };
@@ -247,7 +247,7 @@ export function AssistChatPage() {
           {activeSession?.messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
               <div>
-                <h3 
+                <h3
                   className="text-3xl font-sans font-bold text-on-surface"
                   dangerouslySetInnerHTML={{ __html: aiPersona.name }}
                 />
@@ -268,8 +268,8 @@ export function AssistChatPage() {
             >
               <div className={cn(
                 "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
-                message.role === "user" 
-                  ? "bg-gradient-to-br from-secondary to-secondary-dim text-on-secondary" 
+                message.role === "user"
+                  ? "bg-gradient-to-br from-secondary to-secondary-dim text-on-secondary"
                   : "bg-gradient-to-br from-primary to-primary-dim text-on-primary"
               )}>
                 {message.role === "user" ? (

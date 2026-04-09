@@ -132,7 +132,7 @@ export function LoginPage() {
     if (result.success && selectedProduct) {
       const targetPath = getProductRedirectPath(selectedProduct);
       localStorage.setItem("post_login_redirect", targetPath);
-      navigate(targetPath, { replace: true, preventScrollReset: true });
+      setTimeout(() => navigate(targetPath, { replace: true }), 100);
       return;
     }
 
