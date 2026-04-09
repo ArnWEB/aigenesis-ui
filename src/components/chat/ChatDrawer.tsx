@@ -40,49 +40,49 @@ interface ToastState {
 
 const AI_PERSONAS: Record<string, { name: string; role: string; color: string; icon: string }> = {
   admin: {
-    name: "<span class='text-primary'>@i</span>gene",
+    name: "<span class='text-primary'>@i</span>geneAssist",
     role: "Platform Administration",
     color: "primary",
     icon: "⚙️",
   },
   executive: {
-    name: "<span class='text-primary'>@i</span>gene",
+    name: "<span class='text-primary'>@i</span>geneAssist",
     role: "Enterprise Analytics",
     color: "primary",
     icon: "🛡️",
   },
   underwriter: {
-    name: "<span class='text-primary'>@i</span>gene",
+    name: "<span class='text-primary'>@i</span>geneAssist",
     role: "Underwriting Assistant",
     color: "secondary",
     icon: "📊",
   },
   adjudicator: {
-    name: "<span class='text-primary'>@i</span>gene",
+    name: "<span class='text-primary'>@i</span>geneAssist",
     role: "Adjudication Support",
     color: "tertiary",
     icon: "⚖️",
   },
   "customer_service": {
-    name: "<span class='text-primary'>@i</span>gene",
+    name: "<span class='text-primary'>@i</span>geneAssist",
     role: "Customer Assistance",
     color: "secondary",
     icon: "🎧",
   },
   operations: {
-    name: "<span class='text-primary'>@i</span>gene",
+    name: "<span class='text-primary'>@i</span>geneAssist",
     role: "Operations AI",
     color: "tertiary",
     icon: "⚙️",
   },
   agent: {
-    name: "<span class='text-primary'>@i</span>gene",
+    name: "<span class='text-primary'>@i</span>geneAssist",
     role: "Mobile Assistant",
     color: "primary",
     icon: "📍",
   },
   customer: {
-    name: "<span class='text-primary'>@i</span>gene",
+    name: "<span class='text-primary'>@i</span>geneAssist",
     role: "Customer Support",
     color: "secondary",
     icon: "💬",
@@ -121,9 +121,11 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const persona = user?.persona 
-    ? AI_PERSONAS[user.persona as keyof typeof AI_PERSONAS] 
+  const persona = user?.persona && AI_PERSONAS[user.persona as keyof typeof AI_PERSONAS]
+    ? AI_PERSONAS[user.persona as keyof typeof AI_PERSONAS]
     : AI_PERSONAS.executive;
+
+  const personaColor = persona?.color || "primary";
 
   const activeSession = sessions.find((s) => s.id === activeSessionId) || sessions[0];
 
@@ -323,9 +325,9 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
           <div className="flex items-center gap-3">
             <div className={cn(
               "w-10 h-10 rounded-lg flex items-center justify-center text-lg",
-              persona.color === "primary" && "bg-primary/20",
-              persona.color === "secondary" && "bg-secondary/20",
-              persona.color === "tertiary" && "bg-tertiary/20",
+              personaColor === "primary" && "bg-primary/20",
+              personaColor === "secondary" && "bg-secondary/20",
+              personaColor === "tertiary" && "bg-tertiary/20",
             )}>
               {persona.icon}
             </div>
@@ -425,9 +427,9 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
                   "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm",
                   message.role === "user" 
                     ? "bg-primary/20 text-primary" 
-                    : persona.color === "secondary" 
+                    : personaColor === "secondary" 
                       ? "bg-secondary/20 text-secondary"
-                      : persona.color === "tertiary"
+                      : personaColor === "tertiary"
                         ? "bg-tertiary/20 text-tertiary"
                         : "bg-primary/20 text-primary"
                 )}>
@@ -533,7 +535,7 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
             <div className="flex gap-3">
               <div className={cn(
                 "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm",
-                persona.color === "secondary" ? "bg-secondary/20 text-secondary" : "bg-primary/20 text-primary"
+                personaColor === "secondary" ? "bg-secondary/20 text-secondary" : "bg-primary/20 text-primary"
               )}>
                 {persona.icon}
               </div>

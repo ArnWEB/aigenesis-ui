@@ -21,14 +21,32 @@ interface ChatSession {
 }
 
 const AI_PERSONAS: Record<string, { name: string; role: string; color: string; icon: string }> = {
-  "customer-agent": {
-    name: "<span class='text-primary'>@i</span>gene",
+  agent: {
+    name: "<span class='text-primary'>@i</span>geneAssist",
     role: "Mobile Assistant",
     color: "text-primary",
     icon: "🎯",
   },
+  customer: {
+    name: "<span class='text-primary'>@i</span>geneAssist",
+    role: "Customer Support",
+    color: "text-primary",
+    icon: "💬",
+  },
+  operations: {
+    name: "<span class='text-primary'>@i</span>geneAssist",
+    role: "Operations AI",
+    color: "text-primary",
+    icon: "⚙️",
+  },
+  customer_service: {
+    name: "<span class='text-primary'>@i</span>geneAssist",
+    role: "Customer Service",
+    color: "text-primary",
+    icon: "🎧",
+  },
   default: {
-    name: "<span class='text-primary'>@i</span>gene",
+    name: "<span class='text-primary'>@i</span>geneAssist",
     role: "AI Helper",
     color: "text-primary",
     icon: "🤖",

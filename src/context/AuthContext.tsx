@@ -50,13 +50,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error("User not found. Please contact admin.");
       }
       
-      const selectedPersona = credentials.persona;
-      const userAssignedPersona = sampleUser.persona;
-      
-      if (selectedPersona && selectedPersona !== userAssignedPersona) {
-        throw new Error(`Access denied. Your account is assigned to ${userAssignedPersona.replace('-', ' ')} role. Please select the correct personnel profile.`);
-      }
-      
       const authUser: AuthUser = {
         id: sampleUser.id,
         email: sampleUser.email,

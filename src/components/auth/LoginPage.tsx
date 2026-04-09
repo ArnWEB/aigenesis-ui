@@ -24,7 +24,7 @@ type ProductModule = {
 const PRODUCTS: ProductModule[] = [
   {
     id: "orchestrate",
-    name: "@iorchestrate",
+    name: "@iOrchestrate",
     icon: <Blocks className="w-5 h-5" />,
     description: "Agentic workflow for Customer Service & Operations",
     features: [
@@ -32,12 +32,12 @@ const PRODUCTS: ProductModule[] = [
       "Interactive customer assistance",
       "Real-time operational orchestration"
     ],
-    defaultPersona: "customer-service",
-    allowedPersonas: ["customer-service", "operations"]
+    defaultPersona: "operations",
+    allowedPersonas: ["operations", "customer_service"]
   },
   {
     id: "evaluate",
-    name: "@ievaluate",
+    name: "@iEvaluate",
     icon: <Lightbulb className="w-5 h-5" />,
     description: "Workbench for Underwriting & Claims Management",
     features: [
@@ -50,7 +50,7 @@ const PRODUCTS: ProductModule[] = [
   },
   {
     id: "insight",
-    name: "@insight",
+    name: "@iInsight",
     icon: <Activity className="w-5 h-5" />,
     description: "Curated Business & Operation insight for Executives",
     features: [
@@ -63,7 +63,7 @@ const PRODUCTS: ProductModule[] = [
   },
   {
     id: "assist",
-    name: "@iassist",
+    name: "@iAssist",
     icon: <Bot className="w-5 h-5" />,
     description: "Persona specific knowledge assistant",
     features: [
@@ -131,12 +131,9 @@ export function LoginPage() {
 
     if (result.success && selectedProduct) {
       const targetPath = getProductRedirectPath(selectedProduct);
-      // Store intended redirect to prevent PublicRoute override
       localStorage.setItem("post_login_redirect", targetPath);
-      // Use longer delay to ensure auth state is fully updated
-      setTimeout(() => {
-        navigate(targetPath, { replace: true });
-      }, 100);
+      navigate(targetPath, { replace: true, preventScrollReset: true });
+      return;
     }
 
     if (!result.success && result.error) {
@@ -238,7 +235,7 @@ export function LoginPage() {
             </div>
 
             {/* Using items-start ensures tiles that aren't expanded stay at their minimal height */}
-            <div className="grid grid-cols-2 lg:grid-cols-2 gap-4 items-start">
+            <div className="grid grid-cols-2 lg:grid-cols-2 gap-4">
               {PRODUCTS.map((product) => (
                 <button
                   key={product.id}
@@ -246,10 +243,9 @@ export function LoginPage() {
                   className={cn(
                     "p-5 rounded-2xl flex flex-col items-start text-left gap-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border",
                     selectedProduct === product.id
-                      ? "border-primary shadow-[0_0_30px_rgba(232,110,36,0.3)] bg-[#ef803b] relative z-10 scale-[1.02]"
-                      : selectedProduct
-                        ? "glass-panel border-white/5 opacity-40 hover:opacity-70 scale-[0.98]"
-                        : "glass-panel border-white/5 hover:border-primary/40 hover:bg-surface-variant/50"
+                      ? "min-h-[14rem] border-primary shadow-[0_0_30px_rgba(232,110,36,0.3)] bg-[#ef803b] relative z-10 scale-[1.02]"
+                      : "h-48 glass-panel border-white/5 hover:border-primary/40 hover:bg-surface-variant/50",
+                    selectedProduct && selectedProduct !== product.id && "opacity-40 hover:opacity-70 scale-[0.98]"
                   )}
                 >
                   <span className={cn(
@@ -261,16 +257,16 @@ export function LoginPage() {
 
                   <div className="text-left w-full z-10">
                     <div className={cn(
-                      "flex items-center text-xl sm:text-2xl font-sans font-black tracking-tighter mt-2 mb-1",
+                      "flex items-center text-2xl sm:text-3xl font-sans font-black tracking-tighter mt-2 mb-1",
                       selectedProduct === product.id ? "text-black drop-shadow-md" : "text-white"
                     )}>
                       {product.name.startsWith('@') ? (
                         <>
-                          <span className={selectedProduct === product.id ? "text-black" : "text-[#ef803b]"}>
+                          <span className={cn("font-bold", selectedProduct === product.id ? "text-black" : "text-primary")}>
                             {product.name.substring(0, 2)}
                           </span>
                           <span className={cn(
-                            selectedProduct === product.id ? "text-black/95" : "text-white"
+                            "font-light", selectedProduct === product.id ? "text-black/95" : "text-white"
                           )}>
                             {product.name.substring(2)}
                           </span>
@@ -289,32 +285,30 @@ export function LoginPage() {
                     {/* Expandable Features list */}
                     <div
                       className={cn(
-                        "grid transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-                        selectedProduct === product.id ? "grid-rows-[1fr] mt-5 opacity-100" : "grid-rows-[0fr] mt-0 opacity-0"
+                        "transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden",
+                        selectedProduct === product.id ? "max-h-40 mt-4 opacity-100" : "max-h-0 mt-0 opacity-0"
                       )}
                     >
-                      <div className="overflow-hidden">
-                        <ul className={cn(
-                          "space-y-2.5 pt-4 border-t",
-                          selectedProduct === product.id ? "border-black/20" : "border-outline-variant/20"
-                        )}>
-                          {product.features.map((feature, idx) => (
-                            <li key={idx} className={cn(
-                              "flex items-start gap-2.5 text-xs sm:text-sm font-medium leading-relaxed",
-                              selectedProduct === product.id ? "text-black" : "text-on-surface-variant font-light"
-                            )}>
-                              <CheckCircle2 className={cn(
-                                "w-3.5 h-3.5 mt-0.5 flex-shrink-0",
-                                selectedProduct === product.id ? "text-black" : "text-primary"
-                              )} />
-                              <span className={cn(
-                                "transition-colors",
-                                selectedProduct !== product.id && "group-hover:text-on-surface"
-                              )}>{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      <ul className={cn(
+                        "space-y-2 pt-3 border-t",
+                        selectedProduct === product.id ? "border-black/20" : "border-outline-variant/20"
+                      )}>
+                        {product.features.map((feature, idx) => (
+                          <li key={idx} className={cn(
+                            "flex items-start gap-2.5 text-xs sm:text-sm font-medium leading-relaxed",
+                            selectedProduct === product.id ? "text-black" : "text-on-surface-variant font-light"
+                          )}>
+                            <CheckCircle2 className={cn(
+                              "w-3.5 h-3.5 mt-0.5 flex-shrink-0",
+                              selectedProduct === product.id ? "text-black" : "text-primary"
+                            )} />
+                            <span className={cn(
+                              "transition-colors",
+                              selectedProduct !== product.id && "group-hover:text-on-surface"
+                            )}>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
 

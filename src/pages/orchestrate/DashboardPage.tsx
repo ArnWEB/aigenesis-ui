@@ -113,9 +113,9 @@ export function DashboardPage() {
         </GlassPanel>
         <GlassPanel className="p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">TAT Score</span>
+            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Turn Around Time</span>
           </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">4.9</p>
+          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">4.9 min</p>
           <p className="text-[10px] text-tertiary mt-1">Top tier</p>
         </GlassPanel>
         <GlassPanel className="p-4">

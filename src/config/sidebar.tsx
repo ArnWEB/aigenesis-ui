@@ -79,6 +79,7 @@ export const ROLE_MAP: Record<string, string> = {
   executive: "EXECUTIVE",
   underwriter: "UNDERWRITER",
   adjudicator: "ADJUDICATOR",
+  "customer-service": "CUSTOMER SERVICE",
   customer_service: "CUSTOMER SERVICE",
   operations: "OPERATIONS",
   agent: "FIELD AGENT",
