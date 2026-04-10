@@ -1,6 +1,14 @@
 import { GlassPanel } from "@/components/ui/glass-panel";
+import { MetricChip } from "@/components/admin/MetricChip";
 
 export function DashboardPage() {
+  const metrics = {
+    activeUserRatio: { value1: "42/152", value2: "28%", subtitle: "of total users", trend: "2% increase from last month", trendDirection: "up" },
+    userEngagement: { value1: "34/42", value2: "80%", subtitle: "34 users are online now", trend: null, trendDirection: "online" },
+    knowledgeIndexes: { value1: "9", subtitle: "Knowledge indexes", trend: null, trendDirection: null },
+    requestsToday: { value1: "20", subtitle: "Processed today", trend: null, trendDirection: null },
+  };
+
   return (
     <div className="space-y-8">
       <div>
@@ -8,35 +16,36 @@ export function DashboardPage() {
         <p className="text-on-surface-variant mt-1">System administration and governance</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Total Users</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">156</p>
-          <p className="text-[10px] text-primary mt-1">+12 this month</p>
-        </GlassPanel>
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Active Sessions</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">42</p>
-          <p className="text-[10px] text-secondary mt-1">Online now</p>
-        </GlassPanel>
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">System Health</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-tertiary">98.5%</p>
-          <p className="text-[10px] text-tertiary mt-1">All systems operational</p>
-        </GlassPanel>
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">API Requests</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">24.8K</p>
-          <p className="text-[10px] text-primary mt-1">Today</p>
-        </GlassPanel>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<MetricChip
+          title="Active User Ratio"
+          value1={metrics.activeUserRatio.value1}
+          value2={metrics.activeUserRatio.value2}
+          subtitle={metrics.activeUserRatio.subtitle}
+          trend={metrics.activeUserRatio.trend}
+          trendDirection={metrics.activeUserRatio.trendDirection as "up" | "down" | null}
+          infoText="Users currently in the organization as a % of total users"
+        />
+        <MetricChip
+          title="User Engagement"
+          value1={metrics.userEngagement.value1}
+          value2={metrics.userEngagement.value2}
+          trend={metrics.userEngagement.subtitle}
+          trendDirection="online"
+          infoText="Percentage of active users who are actively using the platform"
+        />
+        <MetricChip
+          title="Number of Knowledge Indexes"
+          value1={metrics.knowledgeIndexes.value1}
+          subtitle={metrics.knowledgeIndexes.subtitle}
+          infoText="Total knowledge indexes configured in the system"
+        />
+        <MetricChip
+          title="Number of Requests Processed Today"
+          value1={metrics.requestsToday.value1}
+          subtitle={metrics.requestsToday.subtitle}
+          infoText="Total number of tickets processed across the platform"
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
