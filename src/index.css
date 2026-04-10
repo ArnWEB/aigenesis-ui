@@ -59,10 +59,10 @@
   --color-inverse-on-surface: var(--color-inverse-on-surface, #1a1a1a);
   --color-inverse-primary: var(--color-inverse-primary, #ffb68c);
 
-  --font-sans: "Agency FB", "Teko", "Manrope", sans-serif;
-  --font-headline: "Agency FB", "Teko", "Manrope", sans-serif;
-  --font-body: "Agency FB", "Teko", "Manrope", sans-serif;
-  --font-label: "Agency FB", "Teko", "Manrope", sans-serif;
+  --font-sans: "Inter", "Manrope", sans-serif;
+  --font-headline: "Inter", "Manrope", sans-serif;
+  --font-body: "Inter", "Manrope", sans-serif;
+  --font-label: "Inter", "Manrope", sans-serif;
 
   --radius-default: 0.125rem;
   --radius-lg: 0.25rem;
