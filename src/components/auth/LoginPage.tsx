@@ -161,10 +161,17 @@ export function LoginPage() {
             <span className="text-xs sm:text-sm text-neutral-400 ml-1">Ride the AI Revolution. Accelerate with us</span>
           </div>
         </div>
+
+        <div className="fixed top-4 right-4 sm:right-8 md:right-16 z-50">
+          <button className="group flex items-center gap-2 px-4 py-2 rounded-lg border border-neutral-600 bg-[var(--color-surface)]/80 backdrop-blur-sm text-[10px] uppercase tracking-[0.12em] text-neutral-400 hover:text-white hover:border-[#ff9159] hover:bg-[#ff9159]/10 transition-all duration-200 ease" onClick={() => navigate("/admin/login")}>
+            <span>Admin Portal</span>
+            <span className="group-hover:translate-x-1 transition-transform duration-200 ease">→</span>
+          </button>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 w-full max-w-7xl mx-auto items-center">
 
           {/* Left Column - Product Grid */}
-          <div className="lg:col-span-7 space-y-3 mt-12 sm:mt-14 md:mt-16">
+          <div className="lg:col-span-7 space-y-3 mt-4 sm:mt-6 md:mt-8">
             <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-[#ff9159] mb-2">SELECT PRODUCT MODULE</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {PRODUCTS.map((product) => (
@@ -217,14 +224,14 @@ export function LoginPage() {
           </div>
 
           {/* Right Column - @iGENE / Login */}
-          <div className="lg:col-span-5 space-y-4 md:space-y-8 flex flex-col items-center text-center justify-center mt-16 sm:mt-20 md:mt-24">
+          <div className="lg:col-span-5 flex flex-col items-center text-center justify-center mt-16 sm:mt-20 md:mt-24">
             {/* @iGENE Hero (when no product selected) */}
-            <div className={cn("transition-all duration-700 flex flex-col items-center", selectedProduct ? "opacity-0 hidden" : "opacity-100")}>
-              <div className="relative p-10 sm:p-12 rounded-3xl bg-[var(--color-surface)]/60 border-t-2 border-[#ff9159] border-white/[0.08] backdrop-blur-md shadow-2xl w-full max-w-md">
+            <div className={cn("transition-all duration-700 flex flex-col items-center justify-center", selectedProduct ? "opacity-0 hidden" : "opacity-100")}>
+              <div className="relative p-10 sm:p-12 pb-8 rounded-3xl bg-[var(--color-surface)]/60 border-t-2 border-[#E8620A] border-white/[0.08] backdrop-blur-md shadow-2xl w-full max-w-md">
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-[#ff9159]/10 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-[#ff9159]/15 blur-[60px] rounded-full pointer-events-none" />
                 
-                <div className="relative z-10 flex flex-col items-center gap-6">
+                <div className="relative z-10 flex flex-col items-center gap-6 pb-2">
                   <span className="px-3 py-1 rounded-full bg-[#ff9159]/20 border border-[#ff9159]/30 text-[10px] uppercase tracking-[0.12em] text-[#ff9159] font-medium">
                     ✦ AI-Powered Platform
                   </span>
@@ -239,16 +246,6 @@ export function LoginPage() {
                     Intelligent Insurance Ecosystem
                   </p>
                   
-                  <div className="flex items-center justify-center gap-3 pt-4">
-                    <button className="whitespace-nowrap min-w-[200px] bg-[#ff9159] text-black px-8 py-3 font-bold text-xs uppercase tracking-[0.12em] hover:bg-[#ff7a2f] transition-all duration-200 ease active:scale-[0.98]" onClick={() => !selectedProduct && PRODUCTS[0] && handleProductSelect(PRODUCTS[0])}>
-                      Initialize System
-                    </button>
-                    <button className="whitespace-nowrap group flex items-center space-x-2 px-4 py-2 rounded-lg border border-neutral-600 text-[10px] uppercase tracking-[0.12em] text-neutral-400 hover:text-white hover:border-neutral-400 transition-all duration-200 ease" onClick={() => navigate("/admin/login")}>
-                      <span>Admin Portal</span>
-                      <span className="group-hover:translate-x-1 transition-transform duration-200 ease">→</span>
-                    </button>
-                  </div>
-
                   <div className="flex items-center gap-3 pt-2 text-[10px] text-neutral-500 uppercase tracking-[0.08em]">
                     <span>4 Modules</span>
                     <span>·</span>
@@ -256,6 +253,7 @@ export function LoginPage() {
                     <span>·</span>
                     <span>Live</span>
                   </div>
+                  <div className="absolute bottom-4 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-[#ff9159]/30 to-transparent" />
                 </div>
               </div>
             </div>
