@@ -184,11 +184,11 @@ export function LoginPage() {
                   </div>
 
                   <div className="text-left w-full z-10 mt-8 sm:mt-10">
-                    <div className="flex items-center font-black tracking-tighter mt-2 mb-1" style={{ fontFamily: 'Arial, sans-serif' }}>
+                    <div className="flex items-center font-black font-serif tracking-tighter mt-2 mb-1" style={{ fontFamily: 'Arial, sans-serif' }}>
                       {product.name.startsWith('@i') ? (
                         <>
-                          <span className={cn(selectedProduct === product.id ? "text-black" : "text-[#ff9159]  text-3xl sm:text-3xl md:text-3 xl")}>@i</span>
-                          <span className={cn(selectedProduct === product.id ? "text-black" : "text-white text-light")}>{product.name.slice(2)}</span>
+                          <span className={cn(selectedProduct === product.id ? "text-black  text-3xl sm:text-3xl md:text-3xl" : "text-[#ff9159]  text-3xl sm:text-3xl md:text-3xl")}>@i</span>
+                          <span className={cn(selectedProduct === product.id ? "text-black" : "text-white text-2xl sm:text-2xl md:text-2xl font-light")}>{product.name.slice(2)}</span>
                         </>
                       ) : product.name}
                     </div>
