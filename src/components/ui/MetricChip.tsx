@@ -19,13 +19,6 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
   const [isPressed, setIsPressed] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
 
-  const getTrendLabel = () => {
-    if (!trendDirection) return null;
-    if (trendDirection === "up") return "Improving";
-    if (trendDirection === "down") return "Decreasing";
-    return "Online";
-  };
-
   return (
     <div 
       className={cn(
@@ -85,7 +78,7 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
               {trendDirection === "up" && <ArrowUpRight className="w-3 h-3" />}
               {trendDirection === "down" && <ArrowDownRight className="w-3 h-3" />}
               {trendDirection === "online" && <span><span className="w-2 h-2 rounded-full bg-green-500" /><span className="ml-0.5">{subtitle}</span></span>}
-              {trend && <span>{variant === "pipe" ? trend : getTrendLabel()}</span>}
+              {trend && <span>{trend}</span>}
             </div>
           )}
         </div>
@@ -107,7 +100,7 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
               {trendDirection === "up" && <ArrowUpRight className="w-3 h-3" />}
               {trendDirection === "down" && <ArrowDownRight className="w-3 h-3" />}
               {trendDirection === "online" && <Activity className="w-3 h-3" />}
-              <span>{getTrendLabel()}</span>
+              <span>{trend}</span>
             </div>
           )}
         </div>

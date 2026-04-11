@@ -333,7 +333,7 @@ export function ChatDrawer({ isOpen: externalIsOpen, onClose: externalOnClose, c
             </div>
             <div>
               <h3
-                className="text-lg font-sans font-bold text-on-surface"
+                className="text-lg font-headline font-bold text-on-surface"
                 dangerouslySetInnerHTML={{ __html: persona.name }}
               />
               <p className="text-[10px] text-on-surface-variant">{persona.role}</p>

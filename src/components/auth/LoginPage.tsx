@@ -153,7 +153,7 @@ export function LoginPage() {
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2 sm:gap-3">
               <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-10 sm:w-12 md:w-14 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif tracking-tighter text-white">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-headline tracking-tighter text-white">
                 <span className="text-[#ff9159]">AI</span>GENESIS
               </h1>
             </div>
@@ -183,7 +183,7 @@ export function LoginPage() {
                   </div>
 
                   <div className="text-left w-full z-10 mt-8 sm:mt-10">
-                    <div className="flex items-center font-black font-serif tracking-tighter mt-2 mb-1">
+                    <div className="flex items-center font-black font-headline tracking-tighter mt-2 mb-1">
                       {product.name.startsWith('@i') ? (
                         <>
                           <span className={cn(selectedProduct === product.id ? "text-white  text-3xl sm:text-3xl md:text-3xl" : "text-[#ff9159]  text-3xl sm:text-3xl md:text-3xl")}>@i</span>
@@ -248,7 +248,7 @@ export function LoginPage() {
 
                 <div className="relative z-10 space-y-6 md:space-y-8">
                   <div className="text-center space-y-2">
-                    <h2 className="text-xl sm:text-2xl font-bold text-white" style={{ fontFamily: 'Arial, sans-serif' }}>System Access</h2>
+                    <h2 className="text-xl sm:text-2xl font-bold text-white">System Access</h2>
                     <p className="text-xs sm:text-sm text-neutral-400">Log in to enter the {PRODUCTS.find(p => p.id === selectedProduct)?.name || "workbench"}.</p>
                   </div>
 

@@ -134,9 +134,9 @@ export const darkTheme: Theme = {
     "inverse-primary": "#ffb68c",
   },
 fonts: {
-    headline: "Arial, sans-serif",
-    body: "Arial, sans-serif",
-    label: "Arial, sans-serif",
+    headline: "Tinos, serif",
+    body: "Tinos, serif",
+    label: "Tinos, serif",
   },
   borderRadius: {
     default: "0.125rem",
@@ -206,7 +206,7 @@ export const lightTheme: Theme = {
     "inverse-on-surface": "#1a1a1a",
     "inverse-primary": "#ffb68c",
   },
-fonts: { headline: "Arial, sans-serif", body: "Arial, sans-serif", label: "Arial, sans-serif" },
+fonts: { headline: "Tinos, serif", body: "Tinos, serif", label: "Tinos, serif" },
   borderRadius: { default: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" }
 };
 
@@ -270,7 +270,7 @@ export const greenTheme: Theme = {
     "inverse-on-surface": "#031a14",
     "inverse-primary": "#086030",
   },
-fonts: { headline: "Arial, sans-serif", body: "Arial, sans-serif", label: "Arial, sans-serif" },
+fonts: { headline: "Tinos, serif", body: "Tinos, serif", label: "Tinos, serif" },
   borderRadius: { default: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" }
 };
 

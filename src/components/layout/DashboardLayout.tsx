@@ -28,7 +28,7 @@ export function DashboardLayout({ children }: LayoutProps) {
 
   const headerText = useMemo(() => {
     const role = ROLE_MAP[user?.persona || ""] || "USER";
-    return { brand: "AIGENESIS", product: productName, role: storedAdminUser ? "ADMINISTRATOR" : role };
+    return { brand: "GENE", product: productName || "DASHBOARD", role: storedAdminUser ? "ADMINISTRATOR" : role };
   }, [productName, user?.persona, storedAdminUser]);
 
   const handleLogout = useCallback(async () => {
@@ -56,9 +56,11 @@ export function DashboardLayout({ children }: LayoutProps) {
           <Link to={storedAdminUser ? "/admin" : `/${currentProduct}`} className="flex items-center gap-2">
             <img src="/aigenesis.jpeg" alt="Aigenesis" className="h-10 w-auto" />
             <span className="text-xl lg:text-2xl font-headline font-bold text-primary tracking-tight hidden sm:block">
-              <span className="text-primary">{headerText.brand}</span>
+              <span className="text-primary">@i</span>
+              <span className="text-on-surface">{headerText.brand}</span>
               <span className="text-on-surface-variant"> | </span>
-              <span className={headerText.product === "ADMIN" ? "text-on-surface-variant" : "text-primary"}>{headerText.product}</span>
+              <span className="text-primary">@i</span>
+              <span className="text-on-surface">{headerText.product}</span>
               {headerText.role && (
                 <>
                   <span className="text-on-surface-variant"> | </span>
