@@ -142,17 +142,12 @@ export function LoginPage() {
             <span className="text-[#ff9159]">AI</span>GENESIS
           </h1>
         </div>
-        <div className="hidden md:flex items-center space-x-12">
-          <span className="font-manrope uppercase tracking-[0.1em] text-xs font-medium text-[#ff9159]">Platform</span>
-          <span className="font-manrope uppercase tracking-[0.1em] text-xs font-medium text-neutral-400 hover:text-white transition-colors duration-300 cursor-pointer">Neural Engine</span>
-          <span className="font-manrope uppercase tracking-[0.1em] text-xs font-medium text-neutral-400 hover:text-white transition-colors duration-300 cursor-pointer">Intelligence</span>
+        <div className="flex items-center space-x-4">
           <button onClick={() => navigate("/admin/login")} className="font-manrope uppercase tracking-[0.1em] text-xs font-medium text-neutral-400 hover:text-white transition-colors duration-300">
             Admin Portal
           </button>
-        </div>
-        <div className="flex items-center space-x-4">
           <ThemeSwitcher />
-          <span className="font-manrope uppercase tracking-[0.2em] text-[10px] text-[#ff9159] font-bold hidden md:inline">SYSTEM ACTIVE</span>
+          <span className="font-manrope uppercase tracking-[0.2em] text-[10px] text-[#ff9159] font-bold">PROTO</span>
         </div>
       </nav>
 
@@ -164,28 +159,68 @@ export function LoginPage() {
       {/* Main Content */}
       <main className="flex-grow flex items-center px-8 md:px-16 pt-24 pb-12 z-10 w-full max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full max-w-7xl mx-auto items-center">
+          
+          {/* Left Column - Product Grid */}
+          <div className="lg:col-span-7">
+            <div className="grid grid-cols-2 gap-4">
+              {PRODUCTS.map((product) => (
+                <button 
+                  key={product.id} 
+                  onClick={() => handleProductSelect(product)} 
+                  className={cn(
+                    "p-5 rounded-2xl flex flex-col items-start text-left gap-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border",
+                    selectedProduct === product.id
+                      ? "min-h-[14rem] border-[#ff9159] shadow-[0_0_30px_rgba(255,145,89,0.3)] bg-[#ff9159] relative z-10"
+                      : "bg-[#1a1a1a] border-white/[0.03] hover:border-[#ff9159]/40",
+                    selectedProduct && selectedProduct !== product.id && "opacity-40 hover:opacity-70"
+                  )}
+                >
+                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity text-[#ff9159]">
+                    {product.icon}
+                  </div>
 
-          {/* Left Column - Brand Graphic + Hero */}
-          <div className="lg:col-span-5 space-y-8">
-{/* Hero Section with Brand */}
-            <div className={cn("space-y-6 transition-all duration-700", selectedProduct ? "opacity-0 hidden" : "opacity-100")}>
-              <div className="inline-flex items-center space-x-2 px-3 py-1 bg-[#ff9159]/10 border border-[#ff9159]/20 rounded-full">
-                <span className="w-2 h-2 rounded-full bg-[#ff9159] animate-pulse"></span>
-                <span className="font-label text-[10px] uppercase tracking-widest text-[#ff9159] font-bold">v4.0 Protocol Active</span>
+                  <div className="text-left w-full z-10">
+                    <div className={cn("flex items-center text-2xl sm:text-3xl font-black tracking-tighter mt-2 mb-1", selectedProduct === product.id ? "text-black" : "text-white")} style={{ fontFamily: '"Manrope", sans-serif' }}>
+                      {product.name}
+                    </div>
+                    
+                    <span className={cn("text-[10px] uppercase tracking-widest", selectedProduct === product.id ? "text-black font-extrabold" : "text-neutral-400")}>
+                      {product.description}
+                    </span>
+
+                    {/* Expandable Features */}
+                    <div className={cn("transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden", selectedProduct === product.id ? "max-h-40 mt-4 opacity-100" : "max-h-0 mt-0 opacity-0")}>
+                      <ul className={cn("space-y-2 pt-3 border-t", selectedProduct === product.id ? "border-black/20" : "border-white/[0.1]")}>
+                        {product.features.map((feature, idx) => (
+                          <li key={idx} className={cn("flex items-start gap-2.5 text-xs sm:text-sm font-medium leading-relaxed", selectedProduct === product.id ? "text-black" : "text-neutral-400")}>
+                            <CheckCircle2 className={cn("w-3.5 h-3.5 mt-0.5 flex-shrink-0", selectedProduct === product.id ? "text-black" : "text-[#ff9159]")} />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className={cn("w-8 h-[1px] bg-[#484847] group-hover:w-full group-hover:bg-[#ff9159] transition-all duration-700", selectedProduct === product.id && "bg-black/20")} />
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column - @iGENE / Login */}
+          <div className="lg:col-span-5 space-y-8 flex flex-col items-center text-center">
+            {/* @iGENE Hero (when no product selected) */}
+            <div className={cn("space-y-6 transition-all duration-700 flex flex-col items-center", selectedProduct ? "opacity-0 hidden" : "opacity-100")}>
+              <div className="flex flex-col items-center">
+                <div className="flex items-center gap-2">
+                  <span className="text-[#ff9159] text-5xl md:text-6xl font-extrabold tracking-tighter">@i</span>
+                  <span className="text-white text-5xl md:text-6xl font-extrabold tracking-tighter">GENE</span>
+                </div>
+                <span className="text-5xl md:text-6xl font-extrabold tracking-tighter text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>INSURE</span>
               </div>
 
-              {/* @iGENE Main */}
-              <div className="flex items-center gap-2">
-                <span className="text-[#ff9159] text-4xl font-black tracking-tighter">@i</span>
-                <span className="text-white text-4xl font-black tracking-tighter">GENE</span>
-              </div>
-
-              <h1 className="text-5xl md:text-6xl font-extrabold tracking-tighter leading-[0.95] text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>
-                RIDE THE AI <br />
-                <span className="text-[#ff9159] italic">REVOLUTION</span>
-              </h1>
               <p className="text-neutral-400 text-sm md:text-base leading-relaxed max-w-md" style={{ fontFamily: '"Inter", sans-serif' }}>
-                Ride the AI Revolution. Accelerate with us
+                AI-Powered Insurance Ecosystem. Accelerate with us
               </p>
               <div className="flex items-center space-x-6 pt-2">
                 <button className="bg-[#ff9159] text-black px-8 py-3 font-bold text-xs uppercase tracking-widest hover:bg-[#ff7a2f] transition-all active:scale-[0.98]" onClick={() => !selectedProduct && PRODUCTS[0] && handleProductSelect(PRODUCTS[0])}>
@@ -198,14 +233,11 @@ export function LoginPage() {
               </div>
             </div>
 
-            {/* Brand Graphic */}
-
-
             {/* Login Form (when product selected) */}
-            <div className={cn("w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]", selectedProduct ? "opacity-100" : "opacity-0 hidden pointer-events-none")}>
-              <div className="p-8 sm:p-10 rounded-2xl border border-white/5 shadow-2xl bg-[#1a1a1a]/95 backdrop-blur-2xl">
+            <div className={cn("w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col items-center", selectedProduct ? "opacity-100" : "opacity-0 hidden pointer-events-none")}>
+              <div className="p-8 sm:p-10 rounded-2xl border border-white/5 shadow-2xl bg-[#1a1a1a]/95 backdrop-blur-2xl w-full max-w-md">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff9159]/20 blur-[50px] -mr-16 -mt-16 pointer-events-none rounded-full" />
-
+                
                 <div className="relative z-10 space-y-8">
                   <div className="text-center space-y-2">
                     <h2 className="text-2xl font-bold text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>System Access</h2>
@@ -271,60 +303,6 @@ export function LoginPage() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Right Column - Product Grid */}
-          <div className="lg:col-span-7">
-            <div className="grid grid-cols-2 gap-4">
-              {PRODUCTS.map((product) => (
-                <button
-                  key={product.id}
-                  onClick={() => handleProductSelect(product)}
-                  className={cn(
-                    "p-5 rounded-2xl flex flex-col items-start text-left gap-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border",
-                    selectedProduct === product.id
-                      ? "min-h-[14rem] border-[#ff9159] shadow-[0_0_30px_rgba(255,145,89,0.3)] bg-[#ff9159] relative z-10"
-                      : "bg-[#1a1a1a] border-white/[0.03] hover:border-[#ff9159]/40",
-                    selectedProduct && selectedProduct !== product.id && "opacity-40 hover:opacity-70"
-                  )}
-                >
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity text-[#ff9159]">
-                    {product.icon}
-                  </div>
-
-                  <div className="text-left w-full z-10">
-                    <span className="text-[10px] font-bold text-[#ff9159] tracking-tighter">
-                      {product.id === "orchestrate" && "PROTO_01"}
-                      {product.id === "evaluate" && "PROTO_02"}
-                      {product.id === "insight" && "PROTO_03"}
-                      {product.id === "assist" && "PROTO_04"}
-                    </span>
-
-                    <div className={cn("flex items-center text-2xl sm:text-3xl font-black tracking-tighter mt-2 mb-1", selectedProduct === product.id ? "text-black" : "text-white")} style={{ fontFamily: '"Manrope", sans-serif' }}>
-                      {product.name}
-                    </div>
-
-                    <span className={cn("text-[10px] uppercase tracking-widest", selectedProduct === product.id ? "text-black font-extrabold" : "text-neutral-400")}>
-                      {product.description}
-                    </span>
-
-                    {/* Expandable Features */}
-                    <div className={cn("transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden", selectedProduct === product.id ? "max-h-40 mt-4 opacity-100" : "max-h-0 mt-0 opacity-0")}>
-                      <ul className={cn("space-y-2 pt-3 border-t", selectedProduct === product.id ? "border-black/20" : "border-white/[0.1]")}>
-                        {product.features.map((feature, idx) => (
-                          <li key={idx} className={cn("flex items-start gap-2.5 text-xs sm:text-sm font-medium leading-relaxed", selectedProduct === product.id ? "text-black" : "text-neutral-400")}>
-                            <CheckCircle2 className={cn("w-3.5 h-3.5 mt-0.5 flex-shrink-0", selectedProduct === product.id ? "text-black" : "text-[#ff9159]")} />
-                            <span>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className={cn("w-8 h-[1px] bg-[#484847] group-hover:w-full group-hover:bg-[#ff9159] transition-all duration-700", selectedProduct === product.id && "bg-black/20")} />
-                  </div>
-                </button>
-              ))}
             </div>
           </div>
         </div>
