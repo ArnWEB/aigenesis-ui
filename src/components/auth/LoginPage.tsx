@@ -226,7 +226,7 @@ return (
                 <span className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>INSURE</span>
               </div>
 
-              <p className="text-neutral-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-md" style={{ fontFamily: '"Inter", sans-serif' }}>
+              <p className="text-neutral-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-md" style={{ fontFamily: '"Manrope", sans-serif' }}>
                 AI-Powered Insurance Ecosystem. Accelerate with us
               </p>
               <div className="flex items-center gap-4 md:space-x-6 pt-2">

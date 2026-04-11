@@ -134,9 +134,9 @@ export const darkTheme: Theme = {
     "inverse-primary": "#ffb68c",
   },
   fonts: {
-    headline: "Space Grotesk",
-    body: "Inter",
-    label: "Inter",
+    headline: "Manrope",
+    body: "Manrope",
+    label: "Manrope",
   },
   borderRadius: {
     default: "0.125rem",

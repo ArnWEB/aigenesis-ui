@@ -59,10 +59,10 @@
   --color-inverse-on-surface: var(--color-inverse-on-surface, #1a1a1a);
   --color-inverse-primary: var(--color-inverse-primary, #ffb68c);
 
-  --font-sans: "Inter", "Manrope", sans-serif;
-  --font-headline: "Inter", "Manrope", sans-serif;
-  --font-body: "Inter", "Manrope", sans-serif;
-  --font-label: "Inter", "Manrope", sans-serif;
+  --font-sans: "Manrope", sans-serif;
+  --font-headline: "Manrope", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Manrope", sans-serif;
 
   --radius-default: 0.125rem;
   --radius-lg: 0.25rem;
