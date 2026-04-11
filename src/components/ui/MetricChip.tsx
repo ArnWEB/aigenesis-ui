@@ -60,17 +60,33 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
       </div>
 
       {variant === "pipe" ? (
-        <div className="flex items-baseline justify-center gap-2">
-          <p className={cn("text-xl lg:text-2xl font-headline font-bold text-[#e86e24]")}>
-            {value1}
-          </p>
-          {value2 && (
-            <>
-              <span className="text-gray-300 text-lg">|</span>
-              <p className={cn("text-xl lg:text-2xl font-headline font-bold text-black")}>
-                {value2}
-              </p>
-            </>
+        <div className="flex flex-col items-center gap-1">
+          <div className="flex items-baseline justify-center gap-2">
+            <p className={cn("text-xl lg:text-2xl font-headline font-bold text-[#e86e24]")}>
+              {value1}
+            </p>
+            {value2 && (
+              <>
+                <span className="text-gray-300 text-lg">|</span>
+                <p className={cn("text-xl lg:text-2xl font-headline font-bold text-black")}>
+                  {value2}
+                </p>
+              </>
+            )}
+          </div>
+          {(trend || subtitle) && (
+            <div className={cn(
+              "flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium",
+              trendDirection === "up" ? "bg-green-100 text-green-600" : 
+              trendDirection === "down" ? "bg-red-100 text-red-600" : 
+              trendDirection === "online" ? "bg-green-100 text-green-600" : 
+              "bg-gray-100 text-gray-600"
+            )}>
+              {trendDirection === "up" && <ArrowUpRight className="w-3 h-3" />}
+              {trendDirection === "down" && <ArrowDownRight className="w-3 h-3" />}
+              {trendDirection === "online" && <span><span className="w-2 h-2 rounded-full bg-green-500" /><span className="ml-0.5">{subtitle}</span></span>}
+              {trend && <span>{variant === "pipe" ? trend : getTrendLabel()}</span>}
+            </div>
           )}
         </div>
       ) : (
@@ -97,7 +113,7 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
         </div>
       )}
       
-      {subtitle && (
+      {subtitle && !subtitle?.startsWith("34") && (
         <p className="text-[10px] mt-1 text-center text-gray-500">{subtitle}</p>
       )}
     </div>
