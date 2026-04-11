@@ -1,13 +1,8 @@
-import { useState } from "react";
 import { MetricChip } from "@/components/ui/MetricChip";
 import { TicketResolutionTrendPanel } from "@/components/ui/TicketResolutionTrendPanel";
 import { KeyHighlightsPanel } from "@/components/ui/KeyHighlightsPanel";
-import { DateRangePicker, type DateRange } from "@/components/ui/DateRangePicker";
-import { getDefaultDateRange } from "@/data/insightTicketData";
 
 export function DashboardPage() {
-  const [dateRange, setDateRange] = useState<DateRange>(getDefaultDateRange());
-
   const highlights = [
     { id: '1', title: 'Growth Insight', text: 'Premium growth up 2.1%, in Saving and Investment Insurance Plans', emphasis: true },
     { id: '2', title: 'Claim and Profitability Insight', text: 'Loss ratio improved by 3%, driven by lower high-value claims.', emphasis: true },
@@ -25,10 +20,12 @@ export function DashboardPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-headline font-bold text-on-surface">ins@ight</h1>
+          <h1 className="text-3xl font-headline font-bold text-on-surface">
+            <span className="text-primary">@i</span>Insight
+          </h1>
           <p className="text-on-surface-variant mt-1">Executive Insights - Global KPI Metrics & Strategic Management</p>
         </div>
-        <DateRangePicker value={dateRange} onChange={setDateRange} />
+        {/* <DateRangePicker value={dateRange} onChange={setDateRange} /> */}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
