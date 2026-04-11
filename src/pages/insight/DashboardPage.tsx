@@ -1,6 +1,6 @@
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { cn } from "@/lib/utils";
-import { MetricChip } from "@/components/admin/MetricChip";
+import { MetricChip } from "@/components/ui/MetricChip";
 
 export function DashboardPage() {
   const metrics = [
