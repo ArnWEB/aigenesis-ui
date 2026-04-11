@@ -1,18 +1,14 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { MetricChip } from "@/components/ui/MetricChip";
 import { TicketResolutionTrendPanel } from "@/components/ui/TicketResolutionTrendPanel";
 import { KeyHighlightsPanel } from "@/components/ui/KeyHighlightsPanel";
 import { DateRangePicker, type DateRange } from "@/components/ui/DateRangePicker";
-import { insightTicketData, filterTicketsByDateRange, getDefaultDateRange } from "@/data/insightTicketData";
+import { insightTicketData, getDefaultDateRange } from "@/data/insightTicketData";
 
 export function DashboardPage() {
   const [dateRange, setDateRange] = useState<DateRange>(getDefaultDateRange());
   
   const roleData = insightTicketData.admin;
-
-  const filteredTicketData = useMemo(() => {
-    return filterTicketsByDateRange(roleData.ticketData, dateRange.start, dateRange.end);
-  }, [roleData.ticketData, dateRange]);
 
   const metrics = [
     { id: 'gwp', title: 'GWP Growth', value1: '8.5%', value2: '+2.1% from last quarter', delta: '+2.1% from last quarter', trendDirection: 'up' as const },
@@ -39,7 +35,7 @@ export function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
         <div className="lg:col-span-2">
-          <TicketResolutionTrendPanel data={filteredTicketData} />
+          <TicketResolutionTrendPanel />
         </div>
         <div>
           <KeyHighlightsPanel highlights={roleData.highlights} />
