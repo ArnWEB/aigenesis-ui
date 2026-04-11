@@ -92,8 +92,9 @@ export function TicketResolutionTrendPanel() {
   };
 
   const handleNavigate = (dir: number) => {
-    if (offset + dir > 0) return;
-    setOffset(prev => prev + dir);
+    const newOffset = offset + dir;
+    if (newOffset > 0 || newOffset < -12) return; // Allow up to 12 periods back
+    setOffset(newOffset);
   };
 
   const handleApplyCustom = () => {
@@ -258,7 +259,7 @@ export function TicketResolutionTrendPanel() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => handleNavigate(-1)}
-                disabled={offset === 0}
+                disabled={offset <= -12}
                 className="px-2 py-1 rounded-lg border border-white/10 text-gray-400 hover:text-white hover:border-blue-500 disabled:opacity-30 disabled:cursor-not-allowed text-sm font-bold"
               >
                 ‹
@@ -268,7 +269,7 @@ export function TicketResolutionTrendPanel() {
               </span>
               <button
                 onClick={() => handleNavigate(1)}
-                disabled={offset === 0}
+                disabled={offset >= 0}
                 className="px-2 py-1 rounded-lg border border-white/10 text-gray-400 hover:text-white hover:border-blue-500 disabled:opacity-30 disabled:cursor-not-allowed text-sm font-bold"
               >
                 ›
