@@ -164,7 +164,7 @@ export function LoginPage() {
       {/* Main Content */}
       <main className="flex-grow flex items-center px-8 md:px-16 pt-24 pb-12 z-10 w-full max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full max-w-7xl mx-auto items-center">
-          
+
           {/* Left Column - Brand Graphic + Hero */}
           <div className="lg:col-span-5 space-y-8">
             {/* Hero Section with Brand */}
@@ -173,13 +173,13 @@ export function LoginPage() {
                 <span className="w-2 h-2 rounded-full bg-[#ff9159] animate-pulse"></span>
                 <span className="font-label text-[10px] uppercase tracking-widest text-[#ff9159] font-bold">v4.0 Protocol Active</span>
               </div>
-              
+
               {/* @iGENE Main */}
               <div className="flex items-center gap-2">
                 <span className="text-[#ff9159] text-4xl font-black tracking-tighter">@i</span>
                 <span className="text-white text-4xl font-black tracking-tighter">GENE</span>
               </div>
-              
+
               <h1 className="text-5xl md:text-6xl font-extrabold tracking-tighter leading-[0.95] text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>
                 RIDE THE AI <br />
                 <span className="text-[#ff9159] italic">REVOLUTION</span>
@@ -199,44 +199,13 @@ export function LoginPage() {
             </div>
 
             {/* Brand Graphic */}
-            <div className={cn("w-full transition-all duration-1000", !selectedProduct ? "opacity-100" : "opacity-0 hidden")}>
-              <div className="relative w-full aspect-square max-w-[480px] flex items-center justify-center mx-auto">
-                <div className="absolute inset-4 bg-[#ff9159]/10 blur-[100px] rounded-full" />
-                <div className="relative flex flex-col items-center p-12 sm:px-14 sm:py-16 bg-[#131313]/90 backdrop-blur-2xl rounded-sm border border-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.9)]">
-                  {/* High-Tech Corner Effects */}
-                  <div className="absolute top-[-1px] left-[-1px] w-6 h-6 border-t-[1px] border-l-[1px] border-[#ff9159] drop-shadow-[0_0_8px_rgba(255,145,89,0.5)] opacity-80" />
-                  <div className="absolute bottom-[-1px] right-[-1px] w-6 h-6 border-b-[1px] border-r-[1px] border-[#ff9159] drop-shadow-[0_0_8px_rgba(255,145,89,0.5)] opacity-80" />
-                  
-                  {/* @iGENE */}
-                  <div className="flex items-center drop-shadow-2xl">
-                    <span className="text-[#ff9159] text-5xl sm:text-6xl font-black tracking-tighter">@i</span>
-                    <span className="text-white text-5xl sm:text-6xl font-black tracking-tighter ml-1">GENE</span>
-                  </div>
-                  
-                  {/* Subtle Divider */}
-                  <div className="w-40 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mt-6 mb-4" />
-                  
-                  {/* INSURE */}
-                  <div className="text-white/70 text-2xl tracking-[0.6em] uppercase font-light drop-shadow-md ml-2">INSURE</div>
-                  
-                  {/* Lower Divider */}
-                  <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#ff9159]/40 to-transparent my-6 opacity-60" />
-                  
-                  {/* INTELLIGENT INSURANCE ECOSYSTEM */}
-                  <div className="flex flex-col items-center gap-1.5">
-                    <span className="text-[#ff9159] text-xl sm:text-2xl drop-shadow-[0_0_10px_rgba(255,145,89,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Manrope", sans-serif' }}>INTELLIGENT</span>
-                    <span className="text-[#ff9159] text-xl sm:text-2xl drop-shadow-[0_0_10px_rgba(255,145,89,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Manrope", sans-serif' }}>INSURANCE</span>
-                    <span className="text-[#ff9159] text-xl sm:text-2xl drop-shadow-[0_0_10px_rgba(255,145,89,0.3)] tracking-[0.15em]" style={{ fontFamily: '"Manrope", sans-serif' }}>ECOSYSTEM</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+
 
             {/* Login Form (when product selected) */}
             <div className={cn("w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]", selectedProduct ? "opacity-100" : "opacity-0 hidden pointer-events-none")}>
               <div className="p-8 sm:p-10 rounded-2xl border border-white/5 shadow-2xl bg-[#1a1a1a]/95 backdrop-blur-2xl">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff9159]/20 blur-[50px] -mr-16 -mt-16 pointer-events-none rounded-full" />
-                
+
                 <div className="relative z-10 space-y-8">
                   <div className="text-center space-y-2">
                     <h2 className="text-2xl font-bold text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>System Access</h2>
@@ -309,9 +278,9 @@ export function LoginPage() {
           <div className="lg:col-span-7">
             <div className="grid grid-cols-2 gap-4">
               {PRODUCTS.map((product) => (
-                <button 
-                  key={product.id} 
-                  onClick={() => handleProductSelect(product)} 
+                <button
+                  key={product.id}
+                  onClick={() => handleProductSelect(product)}
                   className={cn(
                     "p-5 rounded-2xl flex flex-col items-start text-left gap-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border",
                     selectedProduct === product.id
@@ -331,11 +300,11 @@ export function LoginPage() {
                       {product.id === "insight" && "PROTO_03"}
                       {product.id === "assist" && "PROTO_04"}
                     </span>
-                    
+
                     <div className={cn("flex items-center text-2xl sm:text-3xl font-black tracking-tighter mt-2 mb-1", selectedProduct === product.id ? "text-black" : "text-white")} style={{ fontFamily: '"Manrope", sans-serif' }}>
                       {product.name}
                     </div>
-                    
+
                     <span className={cn("text-[10px] uppercase tracking-widest", selectedProduct === product.id ? "text-black font-extrabold" : "text-neutral-400")}>
                       {product.description}
                     </span>
@@ -356,7 +325,7 @@ export function LoginPage() {
                   </div>
                 </button>
               ))}
-</div>
+            </div>
           </div>
         </div>
       </main>
