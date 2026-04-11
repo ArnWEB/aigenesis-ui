@@ -220,26 +220,42 @@ export function LoginPage() {
           <div className="lg:col-span-5 space-y-4 md:space-y-8 flex flex-col items-center text-center justify-center mt-16 sm:mt-20 md:mt-24">
             {/* @iGENE Hero (when no product selected) */}
             <div className={cn("transition-all duration-700 flex flex-col items-center", selectedProduct ? "opacity-0 hidden" : "opacity-100")}>
-              <div className="p-10 sm:p-12 rounded-3xl bg-[var(--color-surface)]/60 border border-white/[0.08] backdrop-blur-md shadow-2xl w-full max-w-md">
-                <div className="flex flex-col items-center gap-8">
+              <div className="relative p-10 sm:p-12 rounded-3xl bg-[var(--color-surface)]/60 border-t-2 border-[#ff9159] border-white/[0.08] backdrop-blur-md shadow-2xl w-full max-w-md">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-[#ff9159]/10 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-[#ff9159]/15 blur-[60px] rounded-full pointer-events-none" />
+                
+                <div className="relative z-10 flex flex-col items-center gap-6">
+                  <span className="px-3 py-1 rounded-full bg-[#ff9159]/20 border border-[#ff9159]/30 text-[10px] uppercase tracking-[0.12em] text-[#ff9159] font-medium">
+                    ✦ AI-Powered Platform
+                  </span>
+                  
                   <div className="flex items-center gap-2">
                     <span className="text-[#ff9159] text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">@i</span>
                     <span className="text-white text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">GENE</span>
                   </div>
-                  <span className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tighter text-neutral-400">INSURE</span>
-                </div>
+                  <span className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tighter text-white">INSURE</span>
 
-                <p className="text-primary text-lg sm:text-sm md:text-base leading-relaxed max-w-md uppercase tracking-[0.12em] text-center mt-6">
-                  Intelligent Insurance Ecosystem
-                </p>
-                <div className="flex items-center justify-center gap-4 md:space-x-6 pt-6">
-                  <button className="bg-[#ff9159] text-black px-6 md:px-8 py-2 md:py-3 font-bold text-xs uppercase tracking-[0.12em] hover:bg-[#ff7a2f] transition-all duration-200 ease active:scale-[0.98]" onClick={() => !selectedProduct && PRODUCTS[0] && handleProductSelect(PRODUCTS[0])}>
-                    Initialize System
-                  </button>
-                  <button className="whitespace-nowrap group flex items-center space-x-2 text-[10px] uppercase tracking-[0.12em] text-neutral-300 hover:text-[#ff9159] transition-all duration-200 ease" onClick={() => navigate("/admin/login")}>
-                    <span>Admin Portal</span>
-                    <span className="group-hover:translate-x-1 transition-transform duration-200 ease">→</span>
-                  </button>
+                  <p className="text-primary text-sm sm:text-xs md:text-sm leading-relaxed max-w-md uppercase tracking-[0.08em] text-center text-[#ff9159]/70">
+                    Intelligent Insurance Ecosystem
+                  </p>
+                  
+                  <div className="flex items-center justify-center gap-3 pt-4">
+                    <button className="whitespace-nowrap min-w-[200px] bg-[#ff9159] text-black px-8 py-3 font-bold text-xs uppercase tracking-[0.12em] hover:bg-[#ff7a2f] transition-all duration-200 ease active:scale-[0.98]" onClick={() => !selectedProduct && PRODUCTS[0] && handleProductSelect(PRODUCTS[0])}>
+                      Initialize System
+                    </button>
+                    <button className="whitespace-nowrap group flex items-center space-x-2 px-4 py-2 rounded-lg border border-neutral-600 text-[10px] uppercase tracking-[0.12em] text-neutral-400 hover:text-white hover:border-neutral-400 transition-all duration-200 ease" onClick={() => navigate("/admin/login")}>
+                      <span>Admin Portal</span>
+                      <span className="group-hover:translate-x-1 transition-transform duration-200 ease">→</span>
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-3 pt-2 text-[10px] text-neutral-500 uppercase tracking-[0.08em]">
+                    <span>4 Modules</span>
+                    <span>·</span>
+                    <span>99.9% Uptime</span>
+                    <span>·</span>
+                    <span>Live</span>
+                  </div>
                 </div>
               </div>
             </div>
