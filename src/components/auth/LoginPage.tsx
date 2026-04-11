@@ -142,7 +142,7 @@ export function LoginPage() {
         <div className="absolute -top-[10%] -right-[5%] w-[50%] h-[50%] bg-[#ff9159]/5 blur-[120px] rounded-full" />
       </div>
 
-{/* Main Content - includes header text */}
+      {/* Main Content - includes header text */}
       <main className="flex-grow flex flex-col px-4 sm:px-8 md:px-16 pt-2 pb-4 z-10 w-full max-w-7xl mx-auto justify-center min-h-[calc(100vh-150px)]">
         {/* Fixed top right controls - hidden for now */}
         {/* <div className="fixed top-4 right-4 sm:right-8 md:right-16 z-50">
@@ -153,7 +153,7 @@ export function LoginPage() {
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2 sm:gap-3">
               <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-10 sm:w-12 md:w-14 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter text-white" style={{ fontFamily: 'Arial, sans-serif' }}>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif tracking-tighter text-white">
                 <span className="text-[#ff9159]">AI</span>GENESIS
               </h1>
             </div>
@@ -219,16 +219,16 @@ export function LoginPage() {
           <div className="lg:col-span-5 space-y-4 md:space-y-8 flex flex-col items-center text-center justify-center mt-16 sm:mt-20 md:mt-24">
             {/* @iGENE Hero (when no product selected) */}
             <div className={cn("space-y-4 md:space-y-6 transition-all duration-700 flex flex-col items-center", selectedProduct ? "opacity-0 hidden" : "opacity-100")}>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center gap-8">
                 <div className="flex items-center gap-2">
                   <span className="text-[#ff9159] text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">@i</span>
                   <span className="text-white text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">GENE</span>
                 </div>
-                <span className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter text-white" style={{ fontFamily: 'Arial, sans-serif' }}>INSURE</span>
+                <span className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tighter text-neutral-400">INSURE</span>
               </div>
 
-              <p className="text-neutral-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-md" style={{ fontFamily: 'Arial, sans-serif' }}>
-                AI-Powered Insurance Ecosystem. Accelerate with us
+              <p className="text-primary text-lg sm:text-sm md:text-base leading-relaxed max-w-md uppercase">
+                Intelligent Insurance Ecosystem
               </p>
               <div className="flex items-center gap-4 md:space-x-6 pt-2">
                 <button className="bg-[#ff9159] text-black px-6 md:px-8 py-2 md:py-3 font-bold text-xs uppercase tracking-widest hover:bg-[#ff7a2f] transition-all active:scale-[0.98]" onClick={() => !selectedProduct && PRODUCTS[0] && handleProductSelect(PRODUCTS[0])}>

@@ -59,6 +59,7 @@
   --color-inverse-primary: var(--color-inverse-primary, #ffb68c);
 
 --font-sans: "Arial", sans-serif;
+  --font-serif: "Times New Roman", serif;
   --font-headline: "Arial", sans-serif;
   --font-body: "Arial", sans-serif;
   --font-label: "Arial", sans-serif;
@@ -74,9 +75,9 @@
     border-color: var(--color-outline);
   }
 
-  body {
+body {
     @apply bg-background text-on-surface font-body;
-    font-family: var(--font-body);
+    font-family: var(--font-serif);
   }
 
   h1,
@@ -130,10 +131,15 @@
     font-weight: 400;
   }
 
-  .font-label {
+.font-label {
     font-family: var(--font-label);
     font-weight: 500;
     letter-spacing: 0.02em;
+  }
+
+  .font-serif {
+    font-family: var(--font-serif);
+    font-weight: 400;
   }
 
   @keyframes slide-in {
