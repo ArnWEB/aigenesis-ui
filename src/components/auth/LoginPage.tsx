@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 
 import { useAuthContext } from "@/context/AuthContext";
+import { useTheme } from "@/context/ThemeContext";
 import { sampleUsers, ROLE_PERSONA_MAP } from "@/data/users";
 import { cn } from "@/lib/utils";
 
@@ -73,6 +74,7 @@ export function LoginPage() {
   const [notification, setNotification] = useState<{ show: boolean; message: string; type: "success" | "error" }>({ show: false, message: "", type: "error" });
 
   const { login, isLoading, error } = useAuthContext();
+  const { colors } = useTheme();
 
   const getProductRedirectPath = (productId: string): string => {
     const routes: Record<string, string> = {
@@ -134,7 +136,7 @@ export function LoginPage() {
   };
 
 return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden bg-[#0e0e0e]">
+    <div className="min-h-screen flex flex-col relative overflow-hidden" style={{ backgroundColor: colors.background }}>
 
       {/* Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -173,7 +175,7 @@ return (
                     "p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start text-left gap-4 sm:gap-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border",
                     selectedProduct === product.id
                       ? "min-h-[14rem] border-[#ff9159] shadow-[0_0_30px_rgba(255,145,89,0.3)] bg-[#ff9159] relative z-10"
-                      : "bg-[#1a1a1a] border-white/[0.03] hover:border-[#ff9159]/40",
+                      : "bg-[var(--color-surface-container)] border-white/[0.03] hover:border-[#ff9159]/40",
                     selectedProduct && selectedProduct !== product.id && "opacity-40 hover:opacity-70"
                   )}
                 >
@@ -242,7 +244,7 @@ return (
 
 {/* Login Form (when product selected) */}
             <div className={cn("w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col items-center", selectedProduct ? "opacity-100" : "opacity-0 hidden pointer-events-none")}>
-              <div className="p-6 sm:p-8 md:p-10 rounded-2xl border border-white/5 shadow-2xl bg-[#1a1a1a]/95 backdrop-blur-2xl w-full max-w-md">
+              <div className="p-6 sm:p-8 md:p-10 rounded-2xl border border-white/5 shadow-2xl bg-[var(--color-surface-container-high)]/95 backdrop-blur-2xl w-full max-w-md">
                 <div className="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 bg-[#ff9159]/20 blur-[40px] sm:blur-[50px] -mr-12 sm:-mr-16 -mt-12 sm:-mt-16 pointer-events-none rounded-full" />
                 
                 <div className="relative z-10 space-y-6 md:space-y-8">
@@ -279,7 +281,7 @@ return (
                                     <p className="text-sm font-semibold text-white">{user.name}</p>
                                     <p className="text-[11px] text-neutral-400 mt-0.5">{user.email}</p>
                                   </div>
-                                  <span className="text-[10px] bg-[#1a1a1a] px-2 py-1 rounded-md text-[#ff9159] font-bold uppercase tracking-wider border border-white/[0.05]">{user.role.replace('_', ' ')}</span>
+                                  <span className="text-[10px] bg-[var(--color-surface-container)] px-2 py-1 rounded-md text-[#ff9159] font-bold uppercase tracking-wider border border-white/[0.05]">{user.role.replace('_', ' ')}</span>
                                 </button>
                               ))}
                             </div>
