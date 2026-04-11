@@ -245,8 +245,13 @@ export function LoginPage() {
                   <p className="text-primary text-sm sm:text-xs md:text-sm leading-relaxed max-w-md uppercase tracking-[0.08em] text-center text-[#ff9159]/70">
                     Intelligent Insurance Ecosystem
                   </p>
+
+                  <div className="flex items-center gap-2 pt-2 text-[10px] text-neutral-500 animate-pulse">
+                    <span className="text-[#ff9159]">←</span>
+                    <span className="uppercase tracking-[0.08em]">Select a module to begin</span>
+                  </div>
                   
-                  <div className="flex items-center gap-3 pt-2 text-[10px] text-neutral-500 uppercase tracking-[0.08em]">
+                  <div className="flex items-center gap-3 pt-4 text-[10px] text-neutral-500 uppercase tracking-[0.08em]">
                     <span>4 Modules</span>
                     <span>·</span>
                     <span>99.9% Uptime</span>
@@ -254,6 +259,13 @@ export function LoginPage() {
                     <span>Live</span>
                   </div>
                   <div className="absolute bottom-4 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-[#ff9159]/30 to-transparent" />
+                  <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-6 text-[9px] text-neutral-600 uppercase tracking-[0.1em]">
+                    <span>v2.4.0</span>
+                    <span>·</span>
+                    <span>Production</span>
+                    <span>·</span>
+                    <span>IN-WEST</span>
+                  </div>
                 </div>
               </div>
             </div>
