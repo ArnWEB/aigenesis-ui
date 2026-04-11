@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
+
 import { useAuthContext } from "@/context/AuthContext";
 import { sampleUsers, ROLE_PERSONA_MAP } from "@/data/users";
 import { cn } from "@/lib/utils";
@@ -132,35 +133,36 @@ export function LoginPage() {
     }
   };
 
-  return (
+return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-[#0e0e0e]">
-{/* Top Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-[#0e0e0e]/80 backdrop-blur-xl flex justify-between items-center px-8 md:px-16 py-6 border-b border-white/5">
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-3">
-            <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-12 h-12 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
-            <h1 className="text-3xl font-black tracking-tighter text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>
-              <span className="text-[#ff9159]">AI</span>GENESIS
-            </h1>
-          </div>
-          <span className="text-sm text-neutral-400 ml-1">Ride the AI Revolution. Accelerate with us</span>
-        </div>
-        <div className="flex items-center space-x-4">
-          <ThemeSwitcher />
-          <button onClick={() => navigate("/admin/login")} className="font-manrope uppercase tracking-[0.1em] text-xs font-medium text-neutral-400 hover:text-white transition-colors duration-300">
-            Admin Portal
-          </button>
-        </div>
-      </nav>
 
       {/* Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute -top-[10%] -right-[5%] w-[50%] h-[50%] bg-[#ff9159]/5 blur-[120px] rounded-full" />
       </div>
 
-      {/* Main Content */}
-      <main className="flex-grow flex items-center px-8 md:px-16 pt-24 pb-12 z-10 w-full max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full max-w-7xl mx-auto items-center">
+      {/* Main Content - includes header text */}
+      <main className="flex-grow flex flex-col px-8 md:px-16 pt-4 pb-12 z-10 w-full max-w-7xl mx-auto justify-center min-h-[calc(100vh-100px)]">
+        {/* Fixed top right controls */}
+        <div className="fixed top-4 right-6 z-50 flex items-center gap-4">
+          <ThemeSwitcher />
+          <button onClick={() => navigate("/admin/login")} className="font-manrope uppercase tracking-[0.1em] text-xs font-medium text-neutral-400 hover:text-white transition-colors duration-300">
+            Admin Portal
+          </button>
+        </div>
+
+        <div className="mb-6">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-3">
+              <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-12 h-12 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
+              <h1 className="text-3xl font-black tracking-tighter text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>
+                <span className="text-[#ff9159]">AI</span>GENESIS
+              </h1>
+            </div>
+            <span className="text-sm text-neutral-400 ml-1">Ride the AI Revolution. Accelerate with us</span>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full max-w-7xl mx-auto items-center justify-center">
           
 {/* Left Column - Product Grid */}
           <div className="lg:col-span-7 space-y-4">
