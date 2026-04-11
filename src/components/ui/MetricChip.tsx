@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
-import { Info, TrendingUp, TrendingDown } from "lucide-react";
+import { AlertCircle, ArrowUpRight, ArrowDownRight, Activity } from "lucide-react";
 
 export interface MetricChipProps {
   title: string;
@@ -11,12 +11,20 @@ export interface MetricChipProps {
   trendDirection?: "up" | "down" | "online" | null;
   infoText?: string;
   onClick?: () => void;
+  variant?: "pipe" | "stacked";
 }
 
-export function MetricChip({ title, value1, value2, subtitle, trend, trendDirection, infoText, onClick }: MetricChipProps) {
+export function MetricChip({ title, value1, value2, subtitle, trend, trendDirection, infoText, onClick, variant = "stacked" }: MetricChipProps) {
   const [showTooltip, setShowTooltip] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
+
+  const getTrendLabel = () => {
+    if (!trendDirection) return null;
+    if (trendDirection === "up") return "Improving";
+    if (trendDirection === "down") return "Decreasing";
+    return "Online";
+  };
 
   return (
     <div 
@@ -38,10 +46,10 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
           onMouseLeave={() => setShowTooltip(false)}
         >
           <button
-            className="w-6 h-6 flex items-center justify-center rounded-full text-white bg-[#e86e24] hover:bg-[#d45f1f] transition-colors"
+            className="w-5 h-5 flex items-center justify-center rounded-full text-gray-800 hover:text-[#e86e24] transition-all duration-200"
             title={title}
           >
-            <Info className="w-3.5 h-3.5" />
+            <AlertCircle className="w-full h-full" />
           </button>
           {showTooltip && infoText && (
             <div className="absolute top-full right-0 mt-2 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-lg z-10 w-48">
@@ -50,30 +58,45 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
           )}
         </div>
       </div>
-      <div className="flex flex-col items-center gap-2">
-        <p className={cn("text-xl lg:text-2xl font-headline font-bold text-[#e86e24]")}>
-          {value1}
-        </p>
-        {value2 && (
-          <p className={cn("text-sm text-gray-400")}>{value2}</p>
-        )}
-        {trend && (
-          <div className="flex items-center gap-2 text-xs">
-            {trendDirection === "up" && (
-              <TrendingUp className="w-3 h-3 text-green-600" />
-            )}
-            {trendDirection === "down" && (
-              <TrendingDown className="w-3 h-3 text-red-600" />
-            )}
-            {trendDirection === "online" && (
-              <span className="w-2 h-2 rounded-full bg-green-500" />
-            )}
-            <span className={cn(trendDirection === "down" ? "text-red-600" : trendDirection === "up" ? "text-green-600" : "text-green-600")}>
-              {trend}
-            </span>
-          </div>
-        )}
-      </div>
+
+      {variant === "pipe" ? (
+        <div className="flex items-baseline justify-center gap-2">
+          <p className={cn("text-xl lg:text-2xl font-headline font-bold text-[#e86e24]")}>
+            {value1}
+          </p>
+          {value2 && (
+            <>
+              <span className="text-gray-300 text-lg">|</span>
+              <p className={cn("text-xl lg:text-2xl font-headline font-bold text-black")}>
+                {value2}
+              </p>
+            </>
+          )}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-1">
+          <p className={cn("text-xl lg:text-2xl font-headline font-bold text-[#e86e24]")}>
+            {value1}
+          </p>
+          {value2 && (
+            <p className={cn("text-sm text-gray-400")}>{value2}</p>
+          )}
+          {trend && (
+            <div className={cn(
+              "flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium",
+              trendDirection === "up" ? "bg-green-100 text-green-600" : 
+              trendDirection === "down" ? "bg-red-100 text-red-600" : 
+              "bg-green-100 text-green-600"
+            )}>
+              {trendDirection === "up" && <ArrowUpRight className="w-3 h-3" />}
+              {trendDirection === "down" && <ArrowDownRight className="w-3 h-3" />}
+              {trendDirection === "online" && <Activity className="w-3 h-3" />}
+              <span>{getTrendLabel()}</span>
+            </div>
+          )}
+        </div>
+      )}
+      
       {subtitle && (
         <p className="text-[10px] mt-1 text-center text-gray-500">{subtitle}</p>
       )}

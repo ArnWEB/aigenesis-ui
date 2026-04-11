@@ -24,37 +24,6 @@ export function DashboardPage() {
       </div>
       {/* KPI chips end */}
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4"> 
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Global GWP</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">$4.28B</p>
-          <p className="text-[10px] text-primary mt-1">+12.4% YoY</p>
-        </GlassPanel>
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Combined Ratio</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">91.4%</p>
-          <p className="text-[10px] text-secondary mt-1">-2.1% improved</p>
-        </GlassPanel>
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Net Loss Ratio</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">64.2%</p>
-          <p className="text-[10px] text-tertiary mt-1">-4.5% optimized</p>
-        </GlassPanel>
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Active Policies</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">1.2M+</p>
-          <p className="text-[10px] text-primary mt-1">+8% growth</p>
-        </GlassPanel>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
         <GlassPanel className="lg:col-span-2 p-6">
           <h3 className="text-lg font-headline font-semibold text-on-surface mb-4">Revenue Trend (Last 7 Days)</h3>
