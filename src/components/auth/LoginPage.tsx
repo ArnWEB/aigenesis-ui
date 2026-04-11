@@ -142,51 +142,53 @@ return (
       </div>
 
       {/* Main Content - includes header text */}
-      <main className="flex-grow flex flex-col px-8 md:px-16 pt-4 pb-12 z-10 w-full max-w-7xl mx-auto justify-center min-h-[calc(100vh-100px)]">
+<main className="flex-grow flex flex-col px-4 sm:px-8 md:px-16 pt-2 pb-4 z-10 w-full max-w-7xl mx-auto justify-center min-h-[calc(100vh-150px)]">
         {/* Fixed top right controls */}
-        <div className="fixed top-4 right-6 z-50 flex items-center gap-4">
+        <div className="fixed top-4 right-4 sm:right-8 md:right-16 z-50">
           <ThemeSwitcher />
-          <button onClick={() => navigate("/admin/login")} className="font-manrope uppercase tracking-[0.1em] text-xs font-medium text-neutral-400 hover:text-white transition-colors duration-300">
-            Admin Portal
-          </button>
         </div>
 
-        <div className="mb-6">
+        <div className="fixed top-4 left-4 sm:left-8 md:left-16 z-50">
           <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-3">
-              <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-12 h-12 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
-              <h1 className="text-3xl font-black tracking-tighter text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-10 sm:w-12 md:w-14 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>
                 <span className="text-[#ff9159]">AI</span>GENESIS
               </h1>
             </div>
-            <span className="text-sm text-neutral-400 ml-1">Ride the AI Revolution. Accelerate with us</span>
+            <span className="text-xs sm:text-sm text-neutral-400 ml-1">Ride the AI Revolution. Accelerate with us</span>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full max-w-7xl mx-auto items-center justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 w-full max-w-7xl mx-auto items-center">
           
 {/* Left Column - Product Grid */}
-          <div className="lg:col-span-7 space-y-4">
+          <div className="lg:col-span-7 space-y-4 mt-16 sm:mt-20 md:mt-24">
             <h2 className="text-xs font-bold uppercase tracking-widest text-[#ff9159]">SELECT PRODUCT MODULE</h2>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {PRODUCTS.map((product) => (
-                <button 
+<button 
                   key={product.id} 
                   onClick={() => handleProductSelect(product)} 
                   className={cn(
-                    "p-5 rounded-2xl flex flex-col items-start text-left gap-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border",
+                    "p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start text-left gap-4 sm:gap-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border",
                     selectedProduct === product.id
                       ? "min-h-[14rem] border-[#ff9159] shadow-[0_0_30px_rgba(255,145,89,0.3)] bg-[#ff9159] relative z-10"
                       : "bg-[#1a1a1a] border-white/[0.03] hover:border-[#ff9159]/40",
                     selectedProduct && selectedProduct !== product.id && "opacity-40 hover:opacity-70"
                   )}
                 >
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity text-[#ff9159]">
+                  <div className="absolute top-0 left-0 p-5 sm:p-6 opacity-40 group-hover:opacity-100 transition-opacity text-[#ff9159]">
                     {product.icon}
                   </div>
 
-                  <div className="text-left w-full z-10">
-                    <div className={cn("flex items-center text-2xl sm:text-3xl font-black tracking-tighter mt-2 mb-1", selectedProduct === product.id ? "text-black" : "text-white")} style={{ fontFamily: '"Manrope", sans-serif' }}>
-                      {product.name}
+                  <div className="text-left w-full z-10 mt-8 sm:mt-10">
+                    <div className="flex items-center text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter mt-2 mb-1" style={{ fontFamily: '"Manrope", sans-serif' }}>
+                      {product.name.startsWith('@i') ? (
+                        <>
+                          <span className={cn(selectedProduct === product.id ? "text-black" : "text-[#ff9159]")}>@i</span>
+                          <span className={cn(selectedProduct === product.id ? "text-black" : "text-white")}>{product.name.slice(2)}</span>
+                        </>
+                      ) : product.name}
                     </div>
                     
                     <span className={cn("text-[10px] uppercase tracking-widest", selectedProduct === product.id ? "text-black font-extrabold" : "text-neutral-400")}>
@@ -212,23 +214,23 @@ return (
             </div>
           </div>
 
-          {/* Right Column - @iGENE / Login */}
-          <div className="lg:col-span-5 space-y-8 flex flex-col items-center text-center">
+{/* Right Column - @iGENE / Login */}
+          <div className="lg:col-span-5 space-y-4 md:space-y-8 flex flex-col items-center text-center justify-center mt-16 sm:mt-20 md:mt-24">
             {/* @iGENE Hero (when no product selected) */}
-            <div className={cn("space-y-6 transition-all duration-700 flex flex-col items-center", selectedProduct ? "opacity-0 hidden" : "opacity-100")}>
+            <div className={cn("space-y-4 md:space-y-6 transition-all duration-700 flex flex-col items-center", selectedProduct ? "opacity-0 hidden" : "opacity-100")}>
               <div className="flex flex-col items-center">
                 <div className="flex items-center gap-2">
-                  <span className="text-[#ff9159] text-5xl md:text-6xl font-extrabold tracking-tighter">@i</span>
-                  <span className="text-white text-5xl md:text-6xl font-extrabold tracking-tighter">GENE</span>
+                  <span className="text-[#ff9159] text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">@i</span>
+                  <span className="text-white text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">GENE</span>
                 </div>
-                <span className="text-5xl md:text-6xl font-extrabold tracking-tighter text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>INSURE</span>
+                <span className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>INSURE</span>
               </div>
 
-              <p className="text-neutral-400 text-sm md:text-base leading-relaxed max-w-md" style={{ fontFamily: '"Inter", sans-serif' }}>
+              <p className="text-neutral-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-md" style={{ fontFamily: '"Inter", sans-serif' }}>
                 AI-Powered Insurance Ecosystem. Accelerate with us
               </p>
-              <div className="flex items-center space-x-6 pt-2">
-                <button className="bg-[#ff9159] text-black px-8 py-3 font-bold text-xs uppercase tracking-widest hover:bg-[#ff7a2f] transition-all active:scale-[0.98]" onClick={() => !selectedProduct && PRODUCTS[0] && handleProductSelect(PRODUCTS[0])}>
+              <div className="flex items-center gap-4 md:space-x-6 pt-2">
+                <button className="bg-[#ff9159] text-black px-6 md:px-8 py-2 md:py-3 font-bold text-xs uppercase tracking-widest hover:bg-[#ff7a2f] transition-all active:scale-[0.98]" onClick={() => !selectedProduct && PRODUCTS[0] && handleProductSelect(PRODUCTS[0])}>
                   Initialize System
                 </button>
                 <button className="group flex items-center space-x-2 text-[10px] uppercase tracking-widest text-neutral-400 hover:text-[#ff9159] transition-colors" onClick={() => navigate("/admin/login")}>
@@ -238,15 +240,15 @@ return (
               </div>
             </div>
 
-            {/* Login Form (when product selected) */}
+{/* Login Form (when product selected) */}
             <div className={cn("w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col items-center", selectedProduct ? "opacity-100" : "opacity-0 hidden pointer-events-none")}>
-              <div className="p-8 sm:p-10 rounded-2xl border border-white/5 shadow-2xl bg-[#1a1a1a]/95 backdrop-blur-2xl w-full max-w-md">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff9159]/20 blur-[50px] -mr-16 -mt-16 pointer-events-none rounded-full" />
+              <div className="p-6 sm:p-8 md:p-10 rounded-2xl border border-white/5 shadow-2xl bg-[#1a1a1a]/95 backdrop-blur-2xl w-full max-w-md">
+                <div className="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 bg-[#ff9159]/20 blur-[40px] sm:blur-[50px] -mr-12 sm:-mr-16 -mt-12 sm:-mt-16 pointer-events-none rounded-full" />
                 
-                <div className="relative z-10 space-y-8">
+                <div className="relative z-10 space-y-6 md:space-y-8">
                   <div className="text-center space-y-2">
-                    <h2 className="text-2xl font-bold text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>System Access</h2>
-                    <p className="text-sm text-neutral-400">Log in to enter the {PRODUCTS.find(p => p.id === selectedProduct)?.name || "workbench"}.</p>
+                    <h2 className="text-xl sm:text-2xl font-bold text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>System Access</h2>
+                    <p className="text-xs sm:text-sm text-neutral-400">Log in to enter the {PRODUCTS.find(p => p.id === selectedProduct)?.name || "workbench"}.</p>
                   </div>
 
                   <div className="flex rounded-xl bg-[#262626] p-1.5 border border-white/[0.05]">
