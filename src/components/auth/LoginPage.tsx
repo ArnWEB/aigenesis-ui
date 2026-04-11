@@ -140,6 +140,7 @@ export function LoginPage() {
       {/* Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute -top-[10%] -right-[5%] w-[50%] h-[50%] bg-[#ff9159]/5 blur-[120px] rounded-full" />
+        <div className="absolute top-1/2 right-0 w-[30%] h-[80%] bg-[#ff9159]/3 blur-[80px] rounded-full" />
       </div>
 
       {/* Main Content - includes header text */}
@@ -164,7 +165,7 @@ export function LoginPage() {
 
           {/* Left Column - Product Grid */}
           <div className="lg:col-span-7 space-y-4 mt-16 sm:mt-20 md:mt-24">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-[#ff9159]">SELECT PRODUCT MODULE</h2>
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-[#ff9159]">SELECT PRODUCT MODULE</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {PRODUCTS.map((product) => (
                 <button
@@ -174,7 +175,7 @@ export function LoginPage() {
                     "p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start text-left gap-4 sm:gap-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border",
                     selectedProduct === product.id
                       ? "min-h-[14rem] border-[#ff9159] shadow-[0_0_30px_rgba(255,145,89,0.3)] bg-[#ff9159] relative z-10"
-                      : "bg-[var(--color-surface-container)] border-white/[0.03] hover:border-[#ff9159]/40",
+                      : "bg-[var(--color-surface-container)] border-white/[0.03] hover:border-[#ff9159]/40 transition-all duration-200 ease",
                     selectedProduct && selectedProduct !== product.id && "opacity-40 hover:opacity-70"
                   )}
                 >
@@ -192,7 +193,7 @@ export function LoginPage() {
                       ) : product.name}
                     </div>
 
-                    <span className={cn("text-[10px] uppercase tracking-widest", selectedProduct === product.id ? "text-black font-extrabold" : "text-neutral-400")}>
+                    <span className={cn("text-[10px] uppercase tracking-[0.12em]", selectedProduct === product.id ? "text-black font-extrabold" : "text-neutral-400")}>
                       {product.description}
                     </span>
 
@@ -227,16 +228,16 @@ export function LoginPage() {
                 <span className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tighter text-neutral-400">INSURE</span>
               </div>
 
-              <p className="text-primary text-lg sm:text-sm md:text-base leading-relaxed max-w-md uppercase">
+              <p className="text-primary text-lg sm:text-sm md:text-base leading-relaxed max-w-md uppercase tracking-[0.12em]">
                 Intelligent Insurance Ecosystem
               </p>
               <div className="flex items-center gap-4 md:space-x-6 pt-2">
-                <button className="bg-[#ff9159] text-black px-6 md:px-8 py-2 md:py-3 font-bold text-xs uppercase tracking-widest hover:bg-[#ff7a2f] transition-all active:scale-[0.98]" onClick={() => !selectedProduct && PRODUCTS[0] && handleProductSelect(PRODUCTS[0])}>
+                <button className="bg-[#ff9159] text-black px-6 md:px-8 py-2 md:py-3 font-bold text-xs uppercase tracking-[0.12em] hover:bg-[#ff7a2f] transition-all duration-200 ease active:scale-[0.98]" onClick={() => !selectedProduct && PRODUCTS[0] && handleProductSelect(PRODUCTS[0])}>
                   Initialize System
                 </button>
-                <button className="group flex items-center space-x-2 text-[10px] uppercase tracking-widest text-neutral-400 hover:text-[#ff9159] transition-colors" onClick={() => navigate("/admin/login")}>
+                <button className="group flex items-center space-x-2 text-[10px] uppercase tracking-[0.12em] text-neutral-400 hover:text-[#ff9159] transition-all duration-200 ease" onClick={() => navigate("/admin/login")}>
                   <span>Admin Portal</span>
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  <span className="group-hover:translate-x-1 transition-transform duration-200 ease">→</span>
                 </button>
               </div>
             </div>
@@ -315,6 +316,21 @@ export function LoginPage() {
           </div>
         </div>
       </main>
+
+      {/* Footer Status Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between px-4 sm:px-8 md:px-16 py-2.5 bg-[var(--color-surface)]/80 backdrop-blur-md border-t border-white/[0.05]">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
+            <span className="text-xs font-medium text-neutral-400">System Status: Operational</span>
+          </div>
+          <span className="text-[10px] text-neutral-500 hidden sm:inline">• v2.4.0</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-[10px] text-neutral-500 hidden md:inline">Build: 2026.04.12</span>
+          <span className="text-[10px] text-neutral-500">UTC: {new Date().toUTCString().slice(17, 25)}</span>
+        </div>
+      </div>
 
       {/* Notification Toast */}
       {notification.show && (
