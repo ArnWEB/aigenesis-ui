@@ -4,7 +4,6 @@ import { Mail, Lock, Key, Bot, Activity, Lightbulb, Blocks, CheckCircle2 } from 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 
 import { useAuthContext } from "@/context/AuthContext";
 import { useTheme } from "@/context/ThemeContext";
@@ -143,12 +142,12 @@ export function LoginPage() {
         <div className="absolute -top-[10%] -right-[5%] w-[50%] h-[50%] bg-[#ff9159]/5 blur-[120px] rounded-full" />
       </div>
 
-      {/* Main Content - includes header text */}
+{/* Main Content - includes header text */}
       <main className="flex-grow flex flex-col px-4 sm:px-8 md:px-16 pt-2 pb-4 z-10 w-full max-w-7xl mx-auto justify-center min-h-[calc(100vh-150px)]">
-        {/* Fixed top right controls */}
-        <div className="fixed top-4 right-4 sm:right-8 md:right-16 z-50">
+        {/* Fixed top right controls - hidden for now */}
+        {/* <div className="fixed top-4 right-4 sm:right-8 md:right-16 z-50">
           <ThemeSwitcher />
-        </div>
+        </div> */}
 
         <div className="fixed top-4 left-4 sm:left-8 md:left-16 z-50">
           <div className="flex flex-col gap-1">
@@ -184,11 +183,11 @@ export function LoginPage() {
                   </div>
 
                   <div className="text-left w-full z-10 mt-8 sm:mt-10">
-                    <div className="flex items-center font-black font-serif tracking-tighter mt-2 mb-1" style={{ fontFamily: 'Arial, sans-serif' }}>
+                    <div className="flex items-center font-black font-serif tracking-tighter mt-2 mb-1">
                       {product.name.startsWith('@i') ? (
                         <>
-                          <span className={cn(selectedProduct === product.id ? "text-black  text-3xl sm:text-3xl md:text-3xl" : "text-[#ff9159]  text-3xl sm:text-3xl md:text-3xl")}>@i</span>
-                          <span className={cn(selectedProduct === product.id ? "text-black" : "text-white text-2xl sm:text-2xl md:text-2xl font-light")}>{product.name.slice(2)}</span>
+                          <span className={cn(selectedProduct === product.id ? "text-white  text-3xl sm:text-3xl md:text-3xl" : "text-[#ff9159]  text-3xl sm:text-3xl md:text-3xl")}>@i</span>
+                          <span className={cn(selectedProduct === product.id ? "text-black  text-3xl sm:text-3xl md:text-3xl" : "text-white text-2xl sm:text-2xl md:text-2xl font-light")}>{product.name.slice(2)}</span>
                         </>
                       ) : product.name}
                     </div>
