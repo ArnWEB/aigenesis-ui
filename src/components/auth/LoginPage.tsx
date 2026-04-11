@@ -167,8 +167,8 @@ export function LoginPage() {
 
           {/* Left Column - Brand Graphic + Hero */}
           <div className="lg:col-span-5 space-y-8">
-            {/* Hero Section with Brand */}
-            <div className="space-y-6">
+{/* Hero Section with Brand */}
+            <div className={cn("space-y-6 transition-all duration-700", selectedProduct ? "opacity-0 hidden" : "opacity-100")}>
               <div className="inline-flex items-center space-x-2 px-3 py-1 bg-[#ff9159]/10 border border-[#ff9159]/20 rounded-full">
                 <span className="w-2 h-2 rounded-full bg-[#ff9159] animate-pulse"></span>
                 <span className="font-label text-[10px] uppercase tracking-widest text-[#ff9159] font-bold">v4.0 Protocol Active</span>
