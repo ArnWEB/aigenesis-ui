@@ -134,20 +134,22 @@ export function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-[#0e0e0e]">
-      {/* Top Navigation */}
+{/* Top Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-[#0e0e0e]/80 backdrop-blur-xl flex justify-between items-center px-8 md:px-16 py-6 border-b border-white/5">
-        <div className="flex items-center gap-3">
-          <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-10 h-10 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
-          <h1 className="text-2xl font-black tracking-tighter text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>
-            <span className="text-[#ff9159]">AI</span>GENESIS
-          </h1>
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-3">
+            <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-12 h-12 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
+            <h1 className="text-3xl font-black tracking-tighter text-white" style={{ fontFamily: '"Manrope", sans-serif' }}>
+              <span className="text-[#ff9159]">AI</span>GENESIS
+            </h1>
+          </div>
+          <span className="text-sm text-neutral-400 ml-1">Ride the AI Revolution. Accelerate with us</span>
         </div>
         <div className="flex items-center space-x-4">
+          <ThemeSwitcher />
           <button onClick={() => navigate("/admin/login")} className="font-manrope uppercase tracking-[0.1em] text-xs font-medium text-neutral-400 hover:text-white transition-colors duration-300">
             Admin Portal
           </button>
-          <ThemeSwitcher />
-          <span className="font-manrope uppercase tracking-[0.2em] text-[10px] text-[#ff9159] font-bold">PROTO</span>
         </div>
       </nav>
 
@@ -160,8 +162,9 @@ export function LoginPage() {
       <main className="flex-grow flex items-center px-8 md:px-16 pt-24 pb-12 z-10 w-full max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full max-w-7xl mx-auto items-center">
           
-          {/* Left Column - Product Grid */}
-          <div className="lg:col-span-7">
+{/* Left Column - Product Grid */}
+          <div className="lg:col-span-7 space-y-4">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-[#ff9159]">SELECT PRODUCT MODULE</h2>
             <div className="grid grid-cols-2 gap-4">
               {PRODUCTS.map((product) => (
                 <button 
