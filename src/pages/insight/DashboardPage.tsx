@@ -1,7 +1,15 @@
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { cn } from "@/lib/utils";
+import { MetricChip } from "@/components/admin/MetricChip";
 
 export function DashboardPage() {
+  const metrics = [
+    { id: 'gwp', title: 'GWP Growth', value1: '8.5%', value2: '+2.1% from last quarter', delta: '+2.1% from last quarter', trendDirection: 'up' as const },
+    { id: 'claims', title: 'Claims Loss Ratio', value1: '72%', value2: '-3% from last quarter', delta: '-3% from last quarter', trendDirection: 'down' as const },
+    { id: 'xp', title: 'Customer Experience Pulse', value1: '12%', value2: '-4% from last quarter', delta: '-4% from last quarter', trendDirection: 'down' as const },
+    { id: 'eff', title: 'Operational Efficiency Ratio', value1: '1.15', value2: '+0.01 from last quarter', delta: '+0.01 from last quarter', trendDirection: 'up' as const },
+  ];
+
   return (
     <div className="space-y-8">
       <div>
@@ -9,7 +17,14 @@ export function DashboardPage() {
         <p className="text-on-surface-variant mt-1">Executive Insights - Global KPI Metrics & Strategic Management</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
+        {metrics.map(m => (
+          <MetricChip key={m.id} title={m.title} value1={m.value1} value2={m.value2} trend={m.delta} trendDirection={m.trendDirection} />
+        ))}
+      </div>
+      {/* KPI chips end */}
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4"> 
         <GlassPanel className="p-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-on-surface-variant uppercase tracking-wider">Global GWP</span>

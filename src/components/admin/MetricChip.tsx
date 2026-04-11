@@ -50,44 +50,34 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
           )}
         </div>
       </div>
-      <div className="flex items-baseline justify-center gap-4">
+      <div className="flex flex-col items-center gap-2">
         <p className={cn("text-xl lg:text-2xl font-headline font-bold text-[#e86e24]")}>
           {value1}
         </p>
         {value2 && (
-          <>
-            <span className="text-gray-300 text-lg">|</span>
-            <p className={cn("text-xl lg:text-2xl font-headline font-bold text-black")}>
-              {value2}
-            </p>
-          </>
+          <p className={cn("text-sm text-gray-400")}>{value2}</p>
+        )}
+        {trend && (
+          <div className="flex items-center gap-2 text-xs">
+            {trendDirection === "up" && (
+              <TrendingUp className="w-3 h-3 text-green-600" />
+            )}
+            {trendDirection === "down" && (
+              <TrendingDown className="w-3 h-3 text-red-600" />
+            )}
+            {trendDirection === "online" && (
+              <span className="w-2 h-2 rounded-full bg-green-500" />
+            )}
+            <span className={cn(trendDirection === "down" ? "text-red-600" : trendDirection === "up" ? "text-green-600" : "text-green-600")}>
+              {trend}
+            </span>
+          </div>
         )}
       </div>
       {subtitle && (
         <p className="text-[10px] mt-1 text-center text-gray-500">{subtitle}</p>
       )}
-      {trend && (
-        <div className="flex items-center justify-center gap-2 mt-1">
-          {trendDirection === "up" && (
-            <div className="flex items-center gap-1.5 px-2 py-1 bg-green-100 rounded-full">
-              <TrendingUp className="w-4 h-4 text-green-600" />
-              <span className="text-xs font-semibold text-green-600">{trend}</span>
-            </div>
-          )}
-          {trendDirection === "down" && (
-            <div className="flex items-center gap-1.5 px-2 py-1 bg-red-100 rounded-full">
-              <TrendingDown className="w-4 h-4 text-red-600" />
-              <span className="text-xs font-semibold text-red-600">{trend}</span>
-            </div>
-          )}
-          {trendDirection === "online" && (
-            <div className="flex items-center gap-1.5 px-2 py-1 bg-green-100 rounded-full">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-xs font-semibold text-green-600">{trend}</span>
-            </div>
-          )}
-        </div>
-      )}
+      
     </div>
   );
 }
