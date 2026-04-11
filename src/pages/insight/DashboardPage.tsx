@@ -3,12 +3,16 @@ import { MetricChip } from "@/components/ui/MetricChip";
 import { TicketResolutionTrendPanel } from "@/components/ui/TicketResolutionTrendPanel";
 import { KeyHighlightsPanel } from "@/components/ui/KeyHighlightsPanel";
 import { DateRangePicker, type DateRange } from "@/components/ui/DateRangePicker";
-import { insightTicketData, getDefaultDateRange } from "@/data/insightTicketData";
+import { getDefaultDateRange } from "@/data/insightTicketData";
 
 export function DashboardPage() {
   const [dateRange, setDateRange] = useState<DateRange>(getDefaultDateRange());
-  
-  const roleData = insightTicketData.admin;
+
+  const highlights = [
+    { id: '1', title: 'Growth Insight', text: 'Premium growth up 2.1%, in Saving and Investment Insurance Plans', emphasis: true },
+    { id: '2', title: 'Claim and Profitability Insight', text: 'Loss ratio improved by 3%, driven by lower high-value claims.', emphasis: true },
+    { id: '3', title: 'Efficiency Insight', text: 'BOT handled 65% of tickets this week, improving overall efficiency.', emphasis: true },
+  ];
 
   const metrics = [
     { id: 'gwp', title: 'GWP Growth', value1: '8.5%', value2: '+2.1% from last quarter', delta: '+2.1% from last quarter', trendDirection: 'up' as const },
@@ -38,7 +42,7 @@ export function DashboardPage() {
           <TicketResolutionTrendPanel />
         </div>
         <div>
-          <KeyHighlightsPanel highlights={roleData.highlights} />
+          <KeyHighlightsPanel highlights={highlights} />
         </div>
       </div>
     </div>
