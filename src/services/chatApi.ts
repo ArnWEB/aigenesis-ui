@@ -1,31 +1,25 @@
 import type { ChatMessage, ChatSession } from "@/components/chat/ChatDrawer";
 
 const API_KEY = import.meta.env.VITE_LANGFLOW_API_KEY || "";
-const BASE_URL = import.meta.env.VITE_LANGFLOW_URL || "https://langflow-aigenesis-dev.azurewebsites.net";
-const FLOW_ID = import.meta.env.VITE_LANGFLOW_FLOW_ID || "chat";
+const BASE_URL = import.meta.env.VITE_LANGFLOW_BASE_URL || "";
+const FLOW_ID = import.meta.env.VITE_LANGFLOW_FLOW_ID || "";
 
 const getApiBase = () => BASE_URL;
 
 export interface LangflowPayload {
-  output_type: "chat";
-  input_type: "chat";
-  tweaks: {
-    "TextInput-Lhpx2": { input_value: string };
-    "ChatInput-Dpbqb": { input_value: string };
-  };
+  output_type: string;
+  input_type: string;
+  tweaks: Record<string, any>;
   session_id: string;
 }
 
 interface LangflowResponse {
-  outputs?: Array<{
-    outputs?: Array<{
-      artifacts?: {
-        stream_url?: string;
-        message?: string;
-      };
-      results?: {
-        message?: {
-          text?: string;
+  outputs: Array<{
+    outputs: Array<{
+      component_id: string;
+      outputs: {
+        text: {
+          message: string;
         };
       };
     }>;
@@ -47,156 +41,40 @@ export function generateSessionId(): string {
 
 export type StreamCallback = (chunk: string, isComplete: boolean) => void;
 
+/**
+ * Sends a chat message and simulates a stream for the UI.
+ * The provided API is non-streaming, so we return the full result as a single chunk.
+ */
 export async function sendChatMessageStream(
   email: string,
   messages: ChatMessage[],
   sessionId: string,
   onChunk: StreamCallback
 ): Promise<void> {
-  if (!API_KEY || API_KEY === "your_api_key_here") {
-    throw new Error("API key not configured. Please set VITE_LANGFLOW_API_KEY in .env");
-  }
-
-  // Format chat history - separate latest input from history
-  // Latest input goes to vector search, history is just for context
-  const historyMessages = messages.slice(0, -1); // All messages except last one
-  const latestInput = messages.length > 0 ? messages[messages.length - 1].content : "";
-
-  const formattedHistory = historyMessages
-    .map((msg) => {
-      const role = msg.role === "user" ? "Human" : "AI";
-      return `${role}: ${msg.content}`;
-    })
-    .join("\n");
-
-  // Create combined input with clear separator
-  const combinedInput = formattedHistory
-    ? `HISTORY:\n${formattedHistory}\n\nLATEST_INPUT:\n${latestInput}`
-    : latestInput;
-
-  const flowId = FLOW_ID;
-  const apiBase = getApiBase();
-  const initiateUrl = `${apiBase}/api/v1/run/${flowId}?stream=true`;
-
-  const payload: LangflowPayload = {
-    output_type: "chat",
-    input_type: "chat",
-    tweaks: {
-      "TextInput-Lhpx2": { input_value: email },
-      "ChatInput-Dpbqb": { input_value: combinedInput },
-    },
-    session_id: sessionId,
-  };
-
-  const initResponse = await fetch(initiateUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": API_KEY,
-    },
-    body: JSON.stringify(payload),
-  });
-
-  if (!initResponse.ok) {
-    const errorText = await initResponse.text();
-    throw new Error(`API error: ${initResponse.status} - ${errorText}`);
-  }
-
-  if (!initResponse.body) {
-    throw new Error("No response body");
-  }
-
-  const reader = initResponse.body.getReader();
-  const decoder = new TextDecoder();
-  let buffer = "";
-  let fullMessage = "";
-
   try {
-    while (true) {
-      const { done, value } = await reader.read();
-
-      if (done) break;
-
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split("\n");
-      buffer = lines.pop() || "";
-
-      for (const line of lines) {
-        const trimmedLine = line.trim();
-        if (!trimmedLine) continue;
-
-        let jsonStr = trimmedLine;
-        if (trimmedLine.startsWith("data:")) {
-          jsonStr = trimmedLine.slice(5).trim();
-        }
-
-        if (!jsonStr) continue;
-
-        const cleanJsonStr = jsonStr.replace(/^\uFEFF/, '').trim();
-        if (!cleanJsonStr || cleanJsonStr === '') continue;
-
-        if (cleanJsonStr.charAt(0) !== '{' && cleanJsonStr.charAt(0) !== '[') continue;
-
-        try {
-          const eventData = JSON.parse(cleanJsonStr);
-
-        if (eventData.event === "token" && eventData.data?.chunk) {
-            let chunk = eventData.data.chunk;
-            if (chunk.trim() === "..." || chunk.trim() === "…") {
-              continue;
-            }
-            if (chunk.includes("thinking...")) {
-              chunk = chunk.replace(/thinking\.\.\./gi, "").replace(/…/g, "");
-              if (!chunk.trim()) continue;
-            }
-            fullMessage += chunk;
-            onChunk(fullMessage, false);
-          } else if (eventData.event === "add_message" && eventData.data?.message?.text) {
-            fullMessage = eventData.data.message.text;
-            onChunk(fullMessage, false);
-          } else if (eventData.event === "end") {
-            if (eventData.data?.message?.text) {
-              fullMessage = eventData.data.message.text;
-            }
-            onChunk(fullMessage, true);
-            return;
-          } else if (eventData.event === "close") {
-            onChunk(fullMessage, true);
-            return;
-          }
-        } catch (e) {
-          console.warn("JSON parse error:", e);
-        }
-      }
-    }
-
-    if (fullMessage) {
-      onChunk(fullMessage, true);
-    }
-  } finally {
-    reader.releaseLock();
+    const response = await sendChatMessage(email, messages, sessionId);
+    onChunk(response, true);
+  } catch (error) {
+    console.error("Error in sendChatMessageStream:", error);
+    throw error;
   }
 }
 
 export async function sendChatMessage(
   email: string,
-  _messages: ChatMessage[],
+  messages: ChatMessage[],
   sessionId: string
 ): Promise<string> {
-  if (!API_KEY || API_KEY === "your_api_key_here") {
-    throw new Error("API key not configured. Please set VITE_LANGFLOW_API_KEY in .env");
-  }
-
-  const flowId = FLOW_ID;
-  const apiBase = getApiBase();
-  const apiUrl = `${apiBase}/api/v1/run/${flowId}`;
+  const latestInput = messages.length > 0 ? messages[messages.length - 1].content : "";
+  
+  const apiUrl = `${getApiBase()}/api/v1/run/${FLOW_ID}`;
 
   const payload: LangflowPayload = {
-    output_type: "chat",
-    input_type: "chat",
+    output_type: "text",
+    input_type: "text",
     tweaks: {
-      "TextInput-Lhpx2": { input_value: email },
-      "ChatInput-Dpbqb": { input_value: "" },
+      "TextInput-L0fNg": { input_value: latestInput },
+      "TextInput-1MH9m": { input_value: email },
     },
     session_id: sessionId,
   };
@@ -215,25 +93,36 @@ export async function sendChatMessage(
     throw new Error(`API error: ${response.status} - ${errorText}`);
   }
 
-  const data: LangflowResponse = await response.json();
-
+  const responseData: LangflowResponse = await response.json();
+  
   try {
-    const outputs = data.outputs;
-    if (!outputs || !outputs[0]) throw new Error("Invalid response format");
-
-    const firstOutput = outputs[0].outputs;
-    if (!firstOutput || !firstOutput[0]) throw new Error("No response from flow");
-
-    const artifacts = firstOutput[0].artifacts;
-    if (artifacts?.message) return artifacts.message;
-
-    const results = firstOutput[0].results;
-    if (results?.message?.text) return results.message.text;
-
-    throw new Error("No message in response");
-  } catch (error) {
-    if (error instanceof Error) throw error;
-    throw new Error("Failed to parse response");
+    const outputNodes = responseData.outputs[0].outputs;
+    
+    // Define the exact component IDs you want to listen to
+    const targetComponents = ["TextOutput-0rR1m", "TextOutput-c5P1O", "TextOutput-a4DTq"];
+    let finalMessage = "No valid output found from target branches.";
+    
+    // Loop through all nodes in the response
+    for (const node of outputNodes) {
+      const componentId = node.component_id;
+      
+      // Only process the node if it matches one of your targets
+      if (targetComponents.includes(componentId)) {
+        const textResult = node.outputs.text.message.trim();
+        
+        // If it is the active branch, it will have real text.
+        // If it is the blocked branch, it will just be "None".
+        if (textResult !== "None" && textResult !== "") {
+          finalMessage = textResult;
+          break; // We found the active target, so we can stop looking
+        }
+      }
+    }
+    
+    return finalMessage;
+  } catch (e) {
+    console.error("Error parsing response structure:", e);
+    throw new Error("Error parsing response structure");
   }
 }
 

@@ -181,7 +181,7 @@ export function LoginPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
       </div>
 
-      <main className="relative z-10 w-full max-w-6xl flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-start lg:pt-16">
+      <main className="relative z-10 w-full max-w-6xl flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-stretch lg:pt-16">
 
         {/* Left Column: Branding & Personas */}
         <div className="w-full lg:w-3/5 space-y-8 lg:space-y-12">
@@ -219,7 +219,7 @@ export function LoginPage() {
                 >
                   <span className="text-primary">AI</span>GENESIS
                 </h1>
-                <p className="text-on-surface-variant text-sm sm:text-base lg:text-lg max-w-md font-medium leading-snug tracking-tight">
+                <p className="text-xs font-label leading-snug tracking-widest whitespace-nowrap">
                   Ride the AI Revolution. Accelerate with us
                 </p>
               </div>
@@ -257,12 +257,12 @@ export function LoginPage() {
 
                   <div className="text-left w-full z-10">
                     <div className={cn(
-                      "flex items-center text-2xl sm:text-3xl font-sans font-black tracking-tighter mt-2 mb-1",
+                      "flex items-center text-2xl sm:text-2xl font-serif font-black tracking-tighter mt-2 mb-1",
                       selectedProduct === product.id ? "text-black drop-shadow-md" : "text-white"
                     )}>
                       {product.name.startsWith('@') ? (
                         <>
-                          <span className={cn("font-bold", selectedProduct === product.id ? "text-black" : "text-primary")}>
+                          <span className={cn("font-arial sm:text-3xl", selectedProduct === product.id ? "text-black" : "text-primary")}>
                             {product.name.substring(0, 2)}
                           </span>
                           <span className={cn(
@@ -323,23 +323,23 @@ export function LoginPage() {
         </div>
 
         {/* Right Column: Dynamic Content Area */}
-        <div className="w-full lg:w-2/5 max-w-md relative lg:mt-0 mt-8 min-h-[480px] flex flex-col justify-center">
+        <div className="w-full lg:w-2/5 max-w-md relative lg:mt-0 mt-8 flex flex-col justify-end">
 
           {/* Ambient Brand Graphic (Visible when NO product selected) */}
           <div
             className={cn(
-              "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full flex items-center justify-center transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]",
+              "absolute inset-0 flex flex-col justify-end items-center transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]",
               !selectedProduct
                 ? "opacity-100 scale-100"
                 : "opacity-0 scale-95 pointer-events-none"
             )}
           >
-            <div className="relative w-full aspect-square max-w-[480px] flex items-center justify-center group pointer-events-auto">
+            <div className="relative w-full max-w-[480px] flex items-end justify-center group pointer-events-auto translate-y-[-50px]">
               {/* Soft ambient glow behind the entire lockup */}
               <div className="absolute inset-4 bg-primary/10 blur-[100px] rounded-full transition-opacity duration-1000 opacity-60 group-hover:opacity-100" />
 
               {/* Typography Brand Stack */}
-              <div className="flex flex-col items-center justify-center relative z-10 w-full animate-fade-in pointer-events-none px-4 sm:px-0">
+              <div className="flex flex-col items-center justify-end relative z-10 w-full animate-fade-in pointer-events-none px-4 sm:px-0">
 
                 <div className="relative group flex flex-col items-center w-full max-w-[420px]">
                   <div className="absolute -inset-4 bg-gradient-to-b from-primary/10 to-transparent blur-2xl rounded-sm opacity-60" />
@@ -430,7 +430,7 @@ export function LoginPage() {
                         : "text-on-surface-variant hover:text-on-surface"
                     )}
                   >
-                    Platform Auth
+                    Login
                   </button>
                   <button
                     type="button"
@@ -442,7 +442,7 @@ export function LoginPage() {
                         : "text-on-surface-variant hover:text-on-surface"
                     )}
                   >
-                    Keycloak SSO
+                    SSO
                   </button>
                 </div>
 

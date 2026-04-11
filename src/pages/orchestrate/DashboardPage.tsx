@@ -108,19 +108,19 @@ export function DashboardPage() {
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-on-surface-variant uppercase tracking-wider">Avg Handling Time</span>
           </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">2.4m</p>
+          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">24 mins</p>
           <p className="text-[10px] text-secondary mt-1">-15s improved</p>
         </GlassPanel>
         <GlassPanel className="p-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-on-surface-variant uppercase tracking-wider">Turn Around Time</span>
           </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">4.9 min</p>
+          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">49 mins</p>
           <p className="text-[10px] text-tertiary mt-1">Top tier</p>
         </GlassPanel>
         <GlassPanel className="p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Agent Resolution Rate</span>
+            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Productivity</span>
           </div>
           <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">98%</p>
           <p className="text-[10px] text-primary mt-1">High performance</p>
