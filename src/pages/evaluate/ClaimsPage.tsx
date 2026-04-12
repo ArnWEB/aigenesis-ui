@@ -1,7 +1,38 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { GlassPanel } from "@/components/ui/glass-panel";
+import { MetricChip } from "@/components/ui/MetricChip";
+import { ApplicantDetails } from "@/components/ui/ApplicantDetails";
+import { DocumentViewer } from "@/components/ui/DocumentViewer";
 import { claims, claimInsights, type Claim } from "@/data/claims";
+
+const claimKPIs: Array<{
+  title: string;
+  value: string;
+  trend?: string | null;
+  trendDirection?: "up" | "down" | "online" | null;
+  subtitle?: string;
+  status?: "good" | "warning" | "neutral" | null;
+}> = [
+  { title: "Health Risk Score", value: "72" },
+  { title: "Occupational Risk", value: "65" },
+  { title: "Territorial Risk", value: "N/A" },
+  { title: "Overall Risk Score", value: "68.5" },
+  { title: "Risk Category", value: "Standard" },
+  { title: "BOT Decision", value: "Approve" },
+];
+
+const applicantData = {
+  name: "John Doe",
+  details: [
+    { label: "Place of Birth", value: "New York, USA" },
+    { label: "Nationality", value: "American" },
+    { label: "Date of Birth", value: "15/03/1985" },
+    { label: "Gender", value: "Male" },
+    { label: "Civil Status", value: "Married" },
+    { label: "Country", value: "United States" },
+  ],
+};
 
 interface ClaimsPageProps {
   type?: "claims" | "adjudicate" | "portfolio";
@@ -71,6 +102,37 @@ export function ClaimsPage({ type = "claims" }: ClaimsPageProps) {
         </div>
       </section>
 
+      {/* KPI Row */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {claimKPIs.map((kpi) => (
+          <MetricChip
+            key={kpi.title}
+            title={kpi.title}
+            value1={kpi.value}
+            trend={kpi.trend || null}
+            trendDirection={kpi.trendDirection}
+            subtitle={kpi.subtitle}
+            status={kpi.status}
+          />
+        ))}
+      </div>
+
+      {/* Claim Details & Document */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-1">
+          <ApplicantDetails
+            name={applicantData.name}
+            details={applicantData.details}
+          />
+        </div>
+        <div className="lg:col-span-2">
+          <DocumentViewer
+            url=""
+            title="Application for Health Insurance"
+          />
+        </div>
+      </div>
+
       {/* Main Bento Grid */}
       <div className="grid grid-cols-12 gap-6">
         {/* Claims Table */}
@@ -98,7 +160,7 @@ export function ClaimsPage({ type = "claims" }: ClaimsPageProps) {
               </thead>
               <tbody className="divide-y divide-outline-variant/10">
                 {claims.map((claim) => (
-                  <tr 
+                  <tr
                     key={claim.id}
                     onClick={() => setSelectedClaim(claim)}
                     className={cn(
@@ -118,7 +180,7 @@ export function ClaimsPage({ type = "claims" }: ClaimsPageProps) {
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-2">
                         <div className="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
-                          <div 
+                          <div
                             className={cn("h-full rounded-full", getRiskColor(claim.riskScore))}
                             style={{ width: `${claim.riskScore}%` }}
                           />
@@ -200,11 +262,11 @@ export function ClaimsPage({ type = "claims" }: ClaimsPageProps) {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-full h-full opacity-20 grayscale">
                   <svg viewBox="0 0 400 200" className="w-full h-full">
-                    <path d="M50 100 Q100 80 150 100 T250 100 T350 80" stroke="#dd8bfb" fill="none" strokeWidth="1" opacity="0.5"/>
-                    <path d="M30 120 Q80 100 130 120 T230 100 T330 110" stroke="#a4a6ff" fill="none" strokeWidth="1" opacity="0.5"/>
-                    <circle cx="200" cy="100" r="60" stroke="#494847" fill="none" strokeWidth="1" opacity="0.3"/>
-                    <circle cx="200" cy="100" r="40" stroke="#494847" fill="none" strokeWidth="1" opacity="0.4"/>
-                    <circle cx="200" cy="100" r="20" stroke="#494847" fill="none" strokeWidth="1" opacity="0.5"/>
+                    <path d="M50 100 Q100 80 150 100 T250 100 T350 80" stroke="#dd8bfb" fill="none" strokeWidth="1" opacity="0.5" />
+                    <path d="M30 120 Q80 100 130 120 T230 100 T330 110" stroke="#a4a6ff" fill="none" strokeWidth="1" opacity="0.5" />
+                    <circle cx="200" cy="100" r="60" stroke="#494847" fill="none" strokeWidth="1" opacity="0.3" />
+                    <circle cx="200" cy="100" r="40" stroke="#494847" fill="none" strokeWidth="1" opacity="0.4" />
+                    <circle cx="200" cy="100" r="20" stroke="#494847" fill="none" strokeWidth="1" opacity="0.5" />
                   </svg>
                 </div>
               </div>

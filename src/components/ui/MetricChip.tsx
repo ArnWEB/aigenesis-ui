@@ -9,12 +9,13 @@ export interface MetricChipProps {
   subtitle?: string;
   trend?: string | null;
   trendDirection?: "up" | "down" | "online" | null;
+  status?: "good" | "warning" | "neutral" | null;
   infoText?: string;
   onClick?: () => void;
   variant?: "pipe" | "stacked";
 }
 
-export function MetricChip({ title, value1, value2, subtitle, trend, trendDirection, infoText, onClick, variant = "stacked" }: MetricChipProps) {
+export function MetricChip({ title, value1, value2, subtitle, trend, trendDirection, status, infoText, onClick, variant = "stacked" }: MetricChipProps) {
   const [showTooltip, setShowTooltip] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
@@ -107,7 +108,12 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
       )}
       
       {subtitle && !subtitle?.startsWith("34") && (
-        <p className="text-[10px] mt-1 text-center text-gray-500">{subtitle}</p>
+        <div className="flex items-center justify-center gap-1.5 mt-1">
+          {status === "good" && <span className="w-2 h-2 rounded-full bg-green-500" />}
+          {status === "warning" && <span className="w-2 h-2 rounded-full bg-yellow-500" />}
+          {status === "neutral" && <span className="w-2 h-2 rounded-full bg-gray-400" />}
+          <p className="text-[10px] text-center text-gray-500">{subtitle}</p>
+        </div>
       )}
     </div>
   );

@@ -12,6 +12,7 @@ const ChatTrigger = lazy(() => import("@/components/chat/ChatDrawer").then(m => 
 const OrchestrateDashboard = lazy(() => import("@/pages/orchestrate/DashboardPage").then(m => ({ default: m.DashboardPage })));
 const OrchestrateTickets = lazy(() => import("@/pages/orchestrate/TicketsPage").then(m => ({ default: m.TicketsPage })));
 const EvaluateDashboard = lazy(() => import("@/pages/evaluate/DashboardPage").then(m => ({ default: m.DashboardPage })));
+const EvaluateClaims = lazy(() => import("@/pages/evaluate/ClaimsPage").then(m => ({ default: m.ClaimsPage })));
 const InsightDashboard = lazy(() => import("@/pages/insight/DashboardPage").then(m => ({ default: m.DashboardPage })));
 const AssistChat = lazy(() => import("@/pages/assist/ChatPage").then(m => ({ default: m.AssistChatPage })));
 const AdminDashboard = lazy(() => import("@/pages/admin/DashboardPage").then(m => ({ default: m.DashboardPage })));
@@ -119,6 +120,7 @@ export function AppRouter() {
         <Route path="/orchestrate/*" element={<ProtectedRoute><DashboardWithLayout><OrchestrateDashboard /></DashboardWithLayout></ProtectedRoute>} />
 
         <Route path="/evaluate" element={<ProtectedRoute><DashboardWithLayout><EvaluateDashboard /></DashboardWithLayout></ProtectedRoute>} />
+        <Route path="/evaluate/claims" element={<ProtectedRoute><DashboardWithLayout><EvaluateClaims /></DashboardWithLayout></ProtectedRoute>} />
         <Route path="/evaluate/*" element={<ProtectedRoute><DashboardWithLayout><EvaluateDashboard /></DashboardWithLayout></ProtectedRoute>} />
 
         <Route path="/insight" element={<ProtectedRoute><DashboardWithLayout><InsightDashboard /></DashboardWithLayout></ProtectedRoute>} />
