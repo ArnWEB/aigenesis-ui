@@ -253,7 +253,7 @@ export function AssistChatPage() {
                 />
               </div>
               <p className="text-sm text-on-surface-variant max-w-md">
-                Start a conversation and I'll help you with field operations, customer inquiries, and more.
+                Start a conversation, I will help you with your Inquiry and Transaction.
               </p>
             </div>
           )}

@@ -97,34 +97,34 @@ export function DashboardPage() {
         <p className="text-on-surface-variant mt-1">Agentic workflow for Customer Service & Operation</p>
       </div>
 
-<div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
-        <MetricChip 
-          title="Open Tickets" 
-          value1={openTickets.length} 
-          value2="tickets" 
-          trend="+12% from last week" 
-          trendDirection="up" 
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
+        <MetricChip
+          title="Open Tickets"
+          value1={openTickets.length}
+          value2="tickets"
+          trend="+12% from last week"
+          trendDirection="up"
         />
-        <MetricChip 
-          title="Avg Handling Time" 
-          value1="2.4m" 
-          value2="minutes" 
-          trend="-15s improved" 
-          trendDirection="up" 
+        <MetricChip
+          title="Avg Handling Time"
+          value1="24"
+          value2="minutes"
+          trend="-15s improved"
+          trendDirection="up"
         />
-        <MetricChip 
-          title="Turn Around Time" 
-          value1="4.9m" 
-          value2="min" 
-          trend="Top tier" 
-          trendDirection="up" 
+        <MetricChip
+          title="Turn Around Time"
+          value1="49"
+          value2="min"
+          trend="Top tier"
+          trendDirection="up"
         />
-        <MetricChip 
-          title="Agent Resolution" 
-          value1="98%" 
-          value2="rate" 
-          trend="High performance" 
-          trendDirection="up" 
+        <MetricChip
+          title="Agent Resolution"
+          value1="98%"
+          value2="rate"
+          trend="High performance"
+          trendDirection="up"
         />
       </div>
 
