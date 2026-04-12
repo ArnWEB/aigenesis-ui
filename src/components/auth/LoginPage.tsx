@@ -144,27 +144,28 @@ export function LoginPage() {
       </div>
 
       {/* Main Content - includes header text */}
-      <main className="flex-grow flex flex-col px-4 sm:px-8 md:px-16 pt-2 pb-4 z-10 w-full max-w-7xl mx-auto justify-center min-h-[calc(100vh-150px)]">
+      <main className="flex-grow flex flex-col px-3 sm:px-8 md:px-16 pt-12 sm:pt-2 pb-4 z-10 w-full max-w-7xl mx-auto justify-center min-h-[calc(100vh-150px)]">
         {/* Fixed top right controls - hidden for now */}
         {/* <div className="fixed top-4 right-4 sm:right-8 md:right-16 z-50">
           <ThemeSwitcher />
         </div> */}
 
-        <div className="fixed top-4 left-4 sm:left-8 md:left-16 z-50">
+        <div className="fixed top-3 left-3 sm:top-4 sm:left-4 md:top-4 md:left-16 z-50">
           <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-8 sm:w-9 md:w-10 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
-              <h1 className="text-lg sm:text-xl md:text-2xl font-headline tracking-tighter text-white">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-6 h-6 sm:w-7 sm:w-8 md:w-9 lg:w-10 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
+              <h1 className="text-sm sm:text-base md:text-xl lg:text-2xl font-headline tracking-tighter text-white">
                 <span className="text-[#ff9159]">AI</span>GENESIS
               </h1>
             </div>
-            <span className="text-[10px] sm:text-xs text-neutral-400 ml-1 mt-0.5">Ride the AI Revolution. Accelerate with us</span>
+            <span className="text-[8px] sm:text-[10px] text-neutral-400 ml-0.5 sm:ml-1 mt-0.5 hidden sm:block">Ride the AI Revolution. Accelerate with us</span>
           </div>
         </div>
 
-        <div className="fixed top-4 right-4 sm:right-8 md:right-16 z-50">
-          <button className="group flex items-center gap-2 px-4 py-2 rounded-lg border border-neutral-600 bg-[var(--color-surface)]/80 backdrop-blur-sm text-[10px] uppercase tracking-[0.12em] text-neutral-400 hover:text-white hover:border-[#ff9159] hover:bg-[#ff9159]/10 transition-all duration-200 ease" onClick={() => navigate("/admin/login")}>
-            <span>Admin Portal</span>
+<div className="fixed top-3 right-3 sm:top-4 sm:right-4 md:top-4 md:right-16 z-50">
+          <button className="group flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-lg border border-neutral-600 bg-[var(--color-surface)]/80 backdrop-blur-sm text-[8px] sm:text-[10px] uppercase tracking-[0.12em] text-neutral-400 hover:text-white hover:border-[#ff9159] hover:bg-[#ff9159]/10 transition-all duration-200 ease" onClick={() => navigate("/admin/login")}>
+            <span className="hidden xs:inline sm:inline">Admin</span>
+            <span className="xs:inline sm:hidden">→</span>
             <span className="group-hover:translate-x-1 transition-transform duration-200 ease">→</span>
           </button>
         </div>
@@ -346,17 +347,17 @@ export function LoginPage() {
       </main >
 
       {/* Footer Status Bar */}
-      < div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between px-4 sm:px-8 md:px-16 py-2.5 bg-[var(--color-surface)]/80 backdrop-blur-md border-t border-white/[0.05]" >
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
-            <span className="text-xs font-medium text-neutral-400">System Status: Operational</span>
+      < div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between px-3 sm:px-8 md:px-16 py-1.5 sm:py-2 bg-[var(--color-surface)]/80 backdrop-blur-md border-t border-white/[0.05]">
+<div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
+            <span className="text-[9px] sm:text-xs font-medium text-neutral-400">Operational</span>
           </div>
-          <span className="text-[10px] text-neutral-500 hidden sm:inline">• v2.4.0</span>
+          <span className="text-[9px] sm:text-[10px] text-neutral-500 hidden sm:inline">• v2.4.0</span>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="text-[10px] text-neutral-500 hidden md:inline">Build: 2026.04.12</span>
-          <span className="text-[10px] text-neutral-500">UTC: {new Date().toUTCString().slice(17, 25)}</span>
+        <div className="flex items-center gap-2 sm:gap-4">
+          <span className="text-[9px] sm:text-[10px] text-neutral-500 hidden md:inline">Build: 2026.04.12</span>
+          <span className="text-[9px] sm:text-[10px] text-neutral-500">{new Date().toUTCString().slice(17, 25)}</span>
         </div>
       </div >
 
