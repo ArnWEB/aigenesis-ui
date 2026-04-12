@@ -140,6 +140,7 @@ export function LoginPage() {
       {/* Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute -top-[10%] -right-[5%] w-[50%] h-[50%] bg-[#ff9159]/5 blur-[120px] rounded-full" />
+        <div className="absolute top-1/2 right-0 w-[30%] h-[80%] bg-[#ff9159]/3 blur-[80px] rounded-full" />
       </div>
 
       {/* Main Content - includes header text */}
@@ -150,31 +151,38 @@ export function LoginPage() {
         </div> */}
 
         <div className="fixed top-4 left-4 sm:left-8 md:left-16 z-50">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-10 sm:w-12 md:w-14 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif tracking-tighter text-white">
+          <div className="flex flex-col">
+            <div className="flex items-center gap-2">
+              <img src="/aigenesis.jpeg" alt="Aigenesis" className="w-8 sm:w-9 md:w-10 rounded-md object-contain" onError={(e) => { e.currentTarget.style.opacity = '0.5'; }} />
+              <h1 className="text-lg sm:text-xl md:text-2xl font-headline tracking-tighter text-white">
                 <span className="text-[#ff9159]">AI</span>GENESIS
               </h1>
             </div>
-            <span className="text-xs sm:text-sm text-neutral-400 ml-1">Ride the AI Revolution. Accelerate with us</span>
+            <span className="text-[10px] sm:text-xs text-neutral-400 ml-1 mt-0.5">Ride the AI Revolution. Accelerate with us</span>
           </div>
+        </div>
+
+        <div className="fixed top-4 right-4 sm:right-8 md:right-16 z-50">
+          <button className="group flex items-center gap-2 px-4 py-2 rounded-lg border border-neutral-600 bg-[var(--color-surface)]/80 backdrop-blur-sm text-[10px] uppercase tracking-[0.12em] text-neutral-400 hover:text-white hover:border-[#ff9159] hover:bg-[#ff9159]/10 transition-all duration-200 ease" onClick={() => navigate("/admin/login")}>
+            <span>Admin Portal</span>
+            <span className="group-hover:translate-x-1 transition-transform duration-200 ease">→</span>
+          </button>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12 w-full max-w-7xl mx-auto items-center">
 
           {/* Left Column - Product Grid */}
-          <div className="lg:col-span-7 space-y-4 mt-16 sm:mt-20 md:mt-24">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-[#ff9159]">SELECT PRODUCT MODULE</h2>
+          <div className="lg:col-span-7 space-y-3 mt-4 sm:mt-6 md:mt-8">
+            <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-[#ff9159] mb-2">SELECT PRODUCT MODULE</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {PRODUCTS.map((product) => (
                 <button
                   key={product.id}
                   onClick={() => handleProductSelect(product)}
                   className={cn(
-                    "p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start text-left gap-4 sm:gap-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border",
+                    "p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start text-left gap-4 sm:gap-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group outline-none overflow-hidden relative border-l-[3px]",
                     selectedProduct === product.id
-                      ? "min-h-[14rem] border-[#ff9159] shadow-[0_0_30px_rgba(255,145,89,0.3)] bg-[#ff9159] relative z-10"
-                      : "bg-[var(--color-surface-container)] border-white/[0.03] hover:border-[#ff9159]/40",
+                      ? "min-h-[14rem] border-l-[#ff9159] border-[#ff9159] shadow-[0_0_30px_rgba(255,145,89,0.3)] bg-[#ff9159] relative z-10"
+                      : "bg-[var(--color-surface-container)] border-l-transparent border-white/[0.03] hover:border-l-[#ff9159] hover:border-[#ff9159]/40 hover:brightness-110 transition-all duration-200 ease",
                     selectedProduct && selectedProduct !== product.id && "opacity-40 hover:opacity-70"
                   )}
                 >
@@ -183,7 +191,7 @@ export function LoginPage() {
                   </div>
 
                   <div className="text-left w-full z-10 mt-8 sm:mt-10">
-                    <div className="flex items-center font-black font-serif tracking-tighter mt-2 mb-1">
+                    <div className="flex items-center font-black font-headline tracking-tighter mt-2 mb-1">
                       {product.name.startsWith('@i') ? (
                         <>
                           <span className={cn(selectedProduct === product.id ? "text-white  text-3xl sm:text-3xl md:text-3xl" : "text-[#ff9159]  text-3xl sm:text-3xl md:text-3xl")}>@i</span>
@@ -192,7 +200,7 @@ export function LoginPage() {
                       ) : product.name}
                     </div>
 
-                    <span className={cn("text-[10px] uppercase tracking-widest", selectedProduct === product.id ? "text-black font-extrabold" : "text-neutral-400")}>
+                    <span className={cn("text-[10px] uppercase tracking-[0.12em]", selectedProduct === product.id ? "text-black font-extrabold" : "text-neutral-400")}>
                       {product.description}
                     </span>
 
@@ -216,28 +224,49 @@ export function LoginPage() {
           </div>
 
           {/* Right Column - @iGENE / Login */}
-          <div className="lg:col-span-5 space-y-4 md:space-y-8 flex flex-col items-center text-center justify-center mt-16 sm:mt-20 md:mt-24">
+          <div className="lg:col-span-5 flex flex-col items-center text-center justify-start mt-4 sm:mt-6 md:mt-8 pt-8 sm:pt-10 md:pt-12">
             {/* @iGENE Hero (when no product selected) */}
-            <div className={cn("space-y-4 md:space-y-6 transition-all duration-700 flex flex-col items-center", selectedProduct ? "opacity-0 hidden" : "opacity-100")}>
-              <div className="flex flex-col items-center gap-8">
-                <div className="flex items-center gap-2">
-                  <span className="text-[#ff9159] text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">@i</span>
-                  <span className="text-white text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">GENE</span>
-                </div>
-                <span className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tighter text-neutral-400">INSURE</span>
-              </div>
+            <div className={cn("transition-all duration-700 flex flex-col items-center justify-center", selectedProduct ? "opacity-0 hidden" : "opacity-100")}>
+              <div className="relative p-8 sm:p-10 pb-4 rounded-3xl bg-[var(--color-surface)]/60 border-t-2 border-[#E8620A] border-white/[0.08] backdrop-blur-md shadow-2xl w-full max-w-md">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-[#ff9159]/10 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-[#ff9159]/15 blur-[60px] rounded-full pointer-events-none" />
 
-              <p className="text-primary text-lg sm:text-sm md:text-base leading-relaxed max-w-md uppercase">
-                Intelligent Insurance Ecosystem
-              </p>
-              <div className="flex items-center gap-4 md:space-x-6 pt-2">
-                <button className="bg-[#ff9159] text-black px-6 md:px-8 py-2 md:py-3 font-bold text-xs uppercase tracking-widest hover:bg-[#ff7a2f] transition-all active:scale-[0.98]" onClick={() => !selectedProduct && PRODUCTS[0] && handleProductSelect(PRODUCTS[0])}>
-                  Initialize System
-                </button>
-                <button className="group flex items-center space-x-2 text-[10px] uppercase tracking-widest text-neutral-400 hover:text-[#ff9159] transition-colors" onClick={() => navigate("/admin/login")}>
-                  <span>Admin Portal</span>
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </button>
+                <div className="relative z-10 flex flex-col items-center gap-6 pb-2">
+                  <span className="px-3 py-1 rounded-full bg-[#ff9159]/20 border border-[#ff9159]/30 text-[10px] uppercase tracking-[0.12em] text-[#ff9159] font-medium">
+                    ✦ AI-Powered Platform
+                  </span>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#ff9159] text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">@i</span>
+                    <span className="text-white text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">GENE</span>
+                  </div>
+                  <span className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tighter text-white">INSURE</span>
+
+                  <p className="text-primary text-sm sm:text-xs md:text-sm leading-relaxed max-w-md uppercase tracking-[0.08em] text-center text-[#ff9159]/70">
+                    Intelligent Insurance Ecosystem
+                  </p>
+
+                  <div className="flex items-center gap-2 pt-2 text-[10px] text-neutral-400 animate-pulse">
+                    <span className="text-[#ff9159] font-semibold">←</span>
+                    <span className="uppercase tracking-[0.08em]">Select a module to begin</span>
+                  </div>
+
+                  <div className="flex items-center gap-3 pt-4 text-[10px] text-neutral-500 uppercase tracking-[0.08em]">
+                    <span>4 Modules</span>
+                    <span>·</span>
+                    <span>99.9% Uptime</span>
+                    <span>·</span>
+                    <span>Live</span>
+                  </div>
+                  <div className="absolute bottom-3 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-[#ff9159]/30 to-transparent" />
+                  {/* <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4 text-[9px] text-neutral-500 uppercase tracking-[0.1em]">
+                    <span>v2.4.0</span>
+                    <span>·</span>
+                    <span>Production</span>
+                    <span>·</span>
+                    <span>IN-WEST</span>
+                  </div> */}
+                </div>
               </div>
             </div>
 
@@ -248,7 +277,7 @@ export function LoginPage() {
 
                 <div className="relative z-10 space-y-6 md:space-y-8">
                   <div className="text-center space-y-2">
-                    <h2 className="text-xl sm:text-2xl font-bold text-white" style={{ fontFamily: 'Arial, sans-serif' }}>System Access</h2>
+                    <h2 className="text-xl sm:text-2xl font-bold text-white">System Access</h2>
                     <p className="text-xs sm:text-sm text-neutral-400">Log in to enter the {PRODUCTS.find(p => p.id === selectedProduct)?.name || "workbench"}.</p>
                   </div>
 
@@ -314,22 +343,39 @@ export function LoginPage() {
             </div>
           </div>
         </div>
-      </main>
+      </main >
+
+      {/* Footer Status Bar */}
+      < div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between px-4 sm:px-8 md:px-16 py-2.5 bg-[var(--color-surface)]/80 backdrop-blur-md border-t border-white/[0.05]" >
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
+            <span className="text-xs font-medium text-neutral-400">System Status: Operational</span>
+          </div>
+          <span className="text-[10px] text-neutral-500 hidden sm:inline">• v2.4.0</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-[10px] text-neutral-500 hidden md:inline">Build: 2026.04.12</span>
+          <span className="text-[10px] text-neutral-500">UTC: {new Date().toUTCString().slice(17, 25)}</span>
+        </div>
+      </div >
 
       {/* Notification Toast */}
-      {notification.show && (
-        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 animate-slide-in">
-          <div className={cn("flex items-center gap-3 px-5 py-4 rounded-xl shadow-2xl border backdrop-blur-xl", notification.type === "success" ? "bg-green-500/20 border-green-500 text-green-500" : "bg-red-500/20 border-red-500 text-red-500")}>
-            <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" /></svg>
+      {
+        notification.show && (
+          <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 animate-slide-in">
+            <div className={cn("flex items-center gap-3 px-5 py-4 rounded-xl shadow-2xl border backdrop-blur-xl", notification.type === "success" ? "bg-green-500/20 border-green-500 text-green-500" : "bg-red-500/20 border-red-500 text-red-500")}>
+              <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" /></svg>
+              </div>
+              <span className="text-sm font-bold tracking-wide">{notification.message}</span>
+              <button onClick={() => setNotification({ show: false, message: "", type: "error" })} className="ml-4 opacity-50 hover:opacity-100 transition-opacity">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
             </div>
-            <span className="text-sm font-bold tracking-wide">{notification.message}</span>
-            <button onClick={() => setNotification({ show: false, message: "", type: "error" })} className="ml-4 opacity-50 hover:opacity-100 transition-opacity">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 }

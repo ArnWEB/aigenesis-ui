@@ -1,10 +1,10 @@
 import { GlassPanel } from "@/components/ui/glass-panel";
-import { MetricChip } from "@/components/admin/MetricChip";
+import { MetricChip } from "@/components/ui/MetricChip";
 
 export function DashboardPage() {
   const metrics = {
-    activeUserRatio: { value1: "42/152", value2: "28%", subtitle: "of total users", trend: "2% increase from last month", trendDirection: "up" },
-    userEngagement: { value1: "34/42", value2: "80%", subtitle: "34 users are online now", trend: null, trendDirection: "online" },
+    activeUserRatio: { value1: "42/152", value2: "28%", trend: "2% increase from last month", trendDirection: "up" },
+    userEngagement: { value1: "34/42", value2: "80%", subtitle: "34 people online now", trend: null, trendDirection: "online" },
     knowledgeIndexes: { value1: "9", subtitle: "Knowledge indexes", trend: null, trendDirection: null },
     requestsToday: { value1: "20", subtitle: "Processed today", trend: null, trendDirection: null },
   };
@@ -16,31 +16,34 @@ export function DashboardPage() {
         <p className="text-on-surface-variant mt-1">System administration and governance</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 <MetricChip
+          variant="pipe"
           title="Active User Ratio"
           value1={metrics.activeUserRatio.value1}
           value2={metrics.activeUserRatio.value2}
-          subtitle={metrics.activeUserRatio.subtitle}
           trend={metrics.activeUserRatio.trend}
           trendDirection={metrics.activeUserRatio.trendDirection as "up" | "down" | null}
           infoText="Users currently in the organization as a % of total users"
         />
         <MetricChip
+          variant="pipe"
           title="User Engagement"
           value1={metrics.userEngagement.value1}
           value2={metrics.userEngagement.value2}
-          trend={metrics.userEngagement.subtitle}
+          subtitle={metrics.userEngagement.subtitle}
           trendDirection="online"
           infoText="Percentage of active users who are actively using the platform"
         />
         <MetricChip
+          variant="pipe"
           title="Number of Knowledge Indexes"
           value1={metrics.knowledgeIndexes.value1}
           subtitle={metrics.knowledgeIndexes.subtitle}
           infoText="Total knowledge indexes configured in the system"
         />
         <MetricChip
+          variant="pipe"
           title="Number of Requests Processed Today"
           value1={metrics.requestsToday.value1}
           subtitle={metrics.requestsToday.subtitle}

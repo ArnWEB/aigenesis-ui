@@ -32,7 +32,7 @@ export function ProductLayout({ children, className }: ProductLayoutProps) {
     const storedAdmin = localStorage.getItem("admin_user");
     const isAdmin = storedAdmin ? JSON.parse(storedAdmin) : null;
     return {
-      brand: "AIGENESIS",
+      brand: "GENE",
       product: productConfig?.name || "DASHBOARD",
       role: isAdmin ? "ADMINISTRATOR" : role,
     };
@@ -41,9 +41,11 @@ export function ProductLayout({ children, className }: ProductLayoutProps) {
   return (
     <div className={`space-y-6 ${className || ""}`}>
       <div className="flex items-center gap-2 text-sm">
-        <span className="text-primary font-medium">{headerText.brand}</span>
+        <span className="text-primary font-bold text-lg">@i</span>
+        <span className="text-on-surface font-bold text-lg">{headerText.brand}</span>
         <span className="text-on-surface-variant">|</span>
-        <span className="text-primary font-bold">{headerText.product}</span>
+        <span className="text-primary font-bold">@i</span>
+        <span className="text-on-surface font-bold">{headerText.product}</span>
         <span className="text-on-surface-variant">|</span>
         <span className="text-secondary">{headerText.role}</span>
       </div>

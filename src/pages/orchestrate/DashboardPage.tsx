@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { GlassPanel } from "@/components/ui/glass-panel";
+import { MetricChip } from "@/components/ui/MetricChip";
 import { cn } from "@/lib/utils";
 
 interface Ticket {
@@ -92,39 +93,39 @@ export function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-sans"><span className="text-primary">@i</span>orchestrate</h1>
+        <h1 className="text-3xl font-headline"><span className="text-primary">@i</span>orchestrate</h1>
         <p className="text-on-surface-variant mt-1">Agentic workflow for Customer Service & Operation</p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Open Tickets</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">{openTickets.length}</p>
-          <p className="text-[10px] text-primary mt-1">+12% from last week</p>
-        </GlassPanel>
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Avg Handling Time</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">2.4m</p>
-          <p className="text-[10px] text-secondary mt-1">-15s improved</p>
-        </GlassPanel>
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Turn Around Time</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">4.9 min</p>
-          <p className="text-[10px] text-tertiary mt-1">Top tier</p>
-        </GlassPanel>
-        <GlassPanel className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-on-surface-variant uppercase tracking-wider">Agent Resolution Rate</span>
-          </div>
-          <p className="text-xl lg:text-2xl font-headline font-bold text-on-surface">98%</p>
-          <p className="text-[10px] text-primary mt-1">High performance</p>
-        </GlassPanel>
+<div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-4">
+        <MetricChip 
+          title="Open Tickets" 
+          value1={openTickets.length} 
+          value2="tickets" 
+          trend="+12% from last week" 
+          trendDirection="up" 
+        />
+        <MetricChip 
+          title="Avg Handling Time" 
+          value1="2.4m" 
+          value2="minutes" 
+          trend="-15s improved" 
+          trendDirection="up" 
+        />
+        <MetricChip 
+          title="Turn Around Time" 
+          value1="4.9m" 
+          value2="min" 
+          trend="Top tier" 
+          trendDirection="up" 
+        />
+        <MetricChip 
+          title="Agent Resolution" 
+          value1="98%" 
+          value2="rate" 
+          trend="High performance" 
+          trendDirection="up" 
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -248,7 +248,7 @@ export function AssistChatPage() {
             <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
               <div>
                 <h3
-                  className="text-3xl font-sans font-bold text-on-surface"
+                  className="text-3xl font-headline font-bold text-on-surface"
                   dangerouslySetInnerHTML={{ __html: aiPersona.name }}
                 />
               </div>
@@ -277,7 +277,7 @@ export function AssistChatPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 ) : (
-                  <span className="text-xs font-sans font-bold" dangerouslySetInnerHTML={{ __html: aiPersona.name }} />
+                  <span className="text-xs font-headline font-bold" dangerouslySetInnerHTML={{ __html: aiPersona.name }} />
                 )}
               </div>
               <div
