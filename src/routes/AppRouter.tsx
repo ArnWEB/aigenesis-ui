@@ -18,6 +18,7 @@ const AdminDashboard = lazy(() => import("@/pages/admin/DashboardPage").then(m =
 const AdminUsers = lazy(() => import("@/pages/admin/UsersPage").then(m => ({ default: m.UsersPage })));
 const AdminGovernance = lazy(() => import("@/pages/admin/GovernancePage").then(m => ({ default: m.GovernancePage })));
 const AdminSettings = lazy(() => import("@/pages/admin/SettingsPage").then(m => ({ default: m.SettingsPage })));
+const AdminAgentConsole = lazy(() => import("@/pages/admin/AgentConsolePage").then(m => ({ default: m.default })));
 
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage").then(m => ({ default: m.default })));
 
@@ -127,6 +128,7 @@ export function AppRouter() {
         <Route path="/assist/*" element={<ProtectedRoute><DashboardWithLayoutNoChat><AssistChat /></DashboardWithLayoutNoChat></ProtectedRoute>} />
 
         <Route path="/admin" element={<AdminRoute><DashboardWithLayout><AdminDashboard /></DashboardWithLayout></AdminRoute>} />
+        <Route path="/admin/agent-console" element={<AdminRoute><DashboardWithLayout><AdminAgentConsole /></DashboardWithLayout></AdminRoute>} />
         <Route path="/admin/users" element={<AdminRoute><DashboardWithLayout><AdminUsers /></DashboardWithLayout></AdminRoute>} />
         <Route path="/admin/governance" element={<AdminRoute><DashboardWithLayout><AdminGovernance /></DashboardWithLayout></AdminRoute>} />
         <Route path="/admin/settings" element={<AdminRoute><DashboardWithLayout><AdminSettings /></DashboardWithLayout></AdminRoute>} />

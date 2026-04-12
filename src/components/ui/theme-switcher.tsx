@@ -13,19 +13,19 @@ const themeOptions: ThemeOption[] = [
   {
     id: "dark",
     name: "Dark",
-    icon: <Moon className="w-4 h-4" />,
+    icon: <Moon className="w-4 h-4 text-white" />,
     colors: ["#000000", "#e86e24", "#4a4a4a"],
   },
   {
     id: "light",
     name: "Dim",
-    icon: <Sun className="w-4 h-4" />,
+    icon: <Sun className="w-4 h-4 text-white" />,
     colors: ["#121212", "#e86e24", "#4a4a4a"],
   },
   {
     id: "green",
     name: "Darker",
-    icon: <Leaf className="w-4 h-4" />,
+    icon: <Leaf className="w-4 h-4 text-white" />,
     colors: ["#050505", "#e86e24", "#4a4a4a"],
   },
 ];
@@ -43,7 +43,7 @@ export function ThemeSwitcher() {
             "flex items-center gap-1.5 px-2.5 py-1.5 rounded-full transition-all duration-200",
             themeName === option.id
               ? "bg-primary/20 text-primary shadow-sm"
-              : "text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50"
+              : "text-neutral-400 hover:text-white hover:bg-white/10"
           )}
           title={option.name}
         >
