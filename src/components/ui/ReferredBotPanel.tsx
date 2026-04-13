@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 
+// ReferredBotItem interface
 export interface ReferredBotItem {
   id: string;
   name: string;
@@ -9,10 +10,12 @@ export interface ReferredBotItem {
 
 interface ReferredBotPanelProps {
   items: ReferredBotItem[];
+  onItemClick?: (item: ReferredBotItem) => void;
+  selectedId?: string;
   className?: string;
 }
 
-export function ReferredBotPanel({ items, className }: ReferredBotPanelProps) {
+export function ReferredBotPanel({ items, onItemClick, selectedId, className }: ReferredBotPanelProps) {
   return (
     <div className={cn("rounded-xl overflow-hidden", className)}>
       <div className="bg-[#0b0b0b] px-4 py-3">
@@ -22,7 +25,21 @@ export function ReferredBotPanel({ items, className }: ReferredBotPanelProps) {
         {items.map((item) => (
           <div
             key={item.id}
-            className="flex items-center justify-between p-2 rounded-lg bg-[#252525] hover:bg-[#2a2a2a] transition-colors"
+            onClick={() => onItemClick?.(item)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onItemClick?.(item);
+              }
+            }}
+            className={cn(
+              "flex items-center justify-between p-2 rounded-lg transition-colors cursor-pointer",
+              selectedId === item.id
+                ? "bg-[#3a3a3a] ring-1 ring-primary/50"
+                : "bg-[#252525] hover:bg-[#2a2a2a]"
+            )}
           >
             <div>
               <p className="text-sm font-medium text-white">{item.name}</p>
@@ -30,7 +47,7 @@ export function ReferredBotPanel({ items, className }: ReferredBotPanelProps) {
             </div>
             <span
               className={cn(
-                "px-2.5 py-1 rounded-md text-[10px] font-semibold uppercase tracking-wide",
+                "px-3 py-1 rounded-md text-[10px] font-semibold uppercase tracking-wide w-24 text-center",
                 item.status === "Standard"
                   ? "bg-yellow-400 text-yellow-900 border border-yellow-500"
                   : "bg-green-400 text-green-900 border border-green-500"

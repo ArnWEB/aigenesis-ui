@@ -93,7 +93,7 @@ export function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-headline"><span className="text-primary">@i</span>orchestrate</h1>
+        <h1 className="text-3xl font-headline"><span className="text-primary">@i</span>Orchestrate</h1>
         <p className="text-on-surface-variant mt-1">Agentic workflow for Customer Service & Operation</p>
       </div>
 
@@ -102,21 +102,21 @@ export function DashboardPage() {
           title="Open Tickets"
           value1={openTickets.length}
           value2="tickets"
-          trend="+12% from last week"
+          trend="+2% from last week"
           trendDirection="up"
         />
         <MetricChip
           title="Avg Handling Time"
           value1="24"
           value2="minutes"
-          trend="-15s improved"
+          trend="-15s improved from last week"
           trendDirection="up"
         />
         <MetricChip
           title="Turn Around Time"
           value1="49"
-          value2="min"
-          trend="Top tier"
+          value2="mins"
+          trend="+4 mins from last week"
           trendDirection="up"
         />
         <MetricChip

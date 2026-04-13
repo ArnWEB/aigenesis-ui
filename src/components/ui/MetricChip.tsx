@@ -20,6 +20,9 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
   const [isPressed, setIsPressed] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
 
+  const isBOTDecision = title === "BOT Decision";
+  const valueColor = isBOTDecision && status === "good" ? "text-green-600" : isBOTDecision && status === "warning" ? "text-yellow-600" : "text-[#e86e24]";
+
   return (
     <div 
       className={cn(
@@ -56,7 +59,7 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
       {variant === "pipe" ? (
         <div className="flex flex-col items-center gap-1">
           <div className="flex items-baseline justify-center gap-2">
-            <p className={cn("text-xl lg:text-2xl font-headline font-bold text-[#e86e24]")}>
+            <p className={cn("text-xl lg:text-2xl font-headline font-bold", valueColor)}>
               {value1}
             </p>
             {value2 && (
@@ -85,7 +88,7 @@ export function MetricChip({ title, value1, value2, subtitle, trend, trendDirect
         </div>
       ) : (
         <div className="flex flex-col items-center gap-1">
-          <p className={cn("text-xl lg:text-2xl font-headline font-bold text-[#e86e24]")}>
+          <p className={cn("text-xl lg:text-2xl font-headline font-bold", valueColor)}>
             {value1}
           </p>
           {value2 && (
