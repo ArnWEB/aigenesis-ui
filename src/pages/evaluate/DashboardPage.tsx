@@ -42,9 +42,8 @@ const kpiData = [
 ];
 
 const referredData: ReferredBotItem[] = [
-  { id: "CLM-8902", name: "John D.", amount: "$45,000", status: "Standard" },
-  { id: "CLM-8903", name: "Sarah M.", amount: "$12,500", status: "Preferred" },
-  { id: "CLM-8904", name: "Mike R.", amount: "$8,200", status: "Preferred" },
+  { id: "53016828", name: "DELA CRUZ, MIA", amount: "$1,000,000", status: "Standard" },
+  { id: "58155080", name: "VELASCO REYNA", amount: "$1,500,000", status: "Preferred" },
 ];
 
 const tasks = [
@@ -53,20 +52,51 @@ const tasks = [
   "Request Additional Info",
 ];
 
+interface Address {
+  buildingNo: string;
+  street: string;
+  subdivision: string;
+  city: string;
+  province: string;
+  country: string;
+  zip: string;
+}
+
+interface Applicant {
+  name: string;
+  otherName: string;
+  placeOfBirth: string;
+  nationality: string;
+  usCitizen: string;
+  dob: string;
+  gender: string;
+  civilStatus: string;
+  residentOf: string;
+  durationMonths: string;
+  presentAddress: Address;
+  permanentAddress: Address;
+  annualIncome: string;
+  occupation: string;
+  employer: string;
+  natureOfBusiness: string;
+  mailingAddress: string;
+  primaryContactNo: string;
+  secondaryContactNo: string;
+  email: string;
+  sourceOfFunds: string;
+  basePlan: string;
+  insuredAmount: string;
+  paymentDeposit: string;
+  deductible: string;
+  commencementDate: string;
+}
+
 interface ClaimData {
   id: string;
   name: string;
   amount: string;
   status: "Standard" | "Preferred";
-  applicant: {
-    name: string;
-    placeOfBirth: string;
-    nationality: string;
-    dob: string;
-    gender: string;
-    civilStatus: string;
-    country: string;
-  };
+  applicant: Applicant;
   documentUrl: string;
   kpis: {
     title: string;
@@ -76,21 +106,56 @@ interface ClaimData {
 }
 
 const claimDataMap: Record<string, ClaimData> = {
-  "CLM-8902": {
-    id: "CLM-8902",
-    name: "John D.",
-    amount: "$45,000",
+  "53016828": {
+    id: "53016828",
+    name: "DELA CRUZ, MIA",
+    amount: "$1,000,000",
     status: "Standard",
     applicant: {
-      name: "John D.",
-      placeOfBirth: "New York, USA",
-      nationality: "American",
-      dob: "15/03/1985",
-      gender: "Male",
-      civilStatus: "Married",
-      country: "United States",
+      name: "DELA CRUZ, MIA",
+      otherName: "",
+      placeOfBirth: "CALOOCAN CITY",
+      nationality: "FILIPINO",
+      usCitizen: "NO",
+      dob: "09/04/1994",
+      gender: "Female",
+      civilStatus: "Single",
+      residentOf: "PHILLIPINES",
+      durationMonths: "372",
+      presentAddress: {
+        buildingNo: "28",
+        street: "PAYAPA STREET",
+        subdivision: "BAGONG DIWA",
+        city: "CALOOCAN CITY",
+        province: "STO. CRISTOBAL",
+        country: "PHILLIPINES",
+        zip: ""
+      },
+      permanentAddress: {
+        buildingNo: "56",
+        street: "AVENIDA LOPS",
+        subdivision: "",
+        city: "CALOOCAN CITY",
+        province: "STA. MARIA",
+        country: "PHILLIPINES",
+        zip: ""
+      },
+      annualIncome: "1000000.00",
+      occupation: "CEO",
+      employer: "RHIA CORP. PHIL",
+      natureOfBusiness: "",
+      mailingAddress: "Present",
+      primaryContactNo: "9567890873",
+      secondaryContactNo: "",
+      email: "delacruz.mia@123.com",
+      sourceOfFunds: "Salary/Commission",
+      basePlan: "ALLIANZ WELL",
+      insuredAmount: "1000000",
+      paymentDeposit: "13970",
+      deductible: "0",
+      commencementDate: "07/15/2025"
     },
-    documentUrl: "",
+    documentUrl: "/pdfs/Digital Health Application.pdf",
     kpis: [
       { title: "Health Risk Score", value: "72", status: "good" },
       { title: "Occupational Risk", value: "65", status: "neutral" },
@@ -100,21 +165,56 @@ const claimDataMap: Record<string, ClaimData> = {
       { title: "BOT Decision", value: "Approve", status: "good" },
     ],
   },
-  "CLM-8903": {
-    id: "CLM-8903",
-    name: "Sarah M.",
-    amount: "$12,500",
+  "58155080": {
+    id: "58155080",
+    name: "VELASCO REYNA",
+    amount: "$1,500,000",
     status: "Preferred",
     applicant: {
-      name: "Sarah M.",
-      placeOfBirth: "Los Angeles, USA",
-      nationality: "American",
-      dob: "22/07/1990",
+      name: "VELASCO REYNA",
+      otherName: "",
+      placeOfBirth: "QUEZON CITY",
+      nationality: "FILIPINO",
+      usCitizen: "NO",
+      dob: "10/07/1990",
       gender: "Female",
       civilStatus: "Single",
-      country: "United States",
+      residentOf: "PHILLIPINES",
+      durationMonths: "372",
+      presentAddress: {
+        buildingNo: "3462",
+        street: "FLORIDA STREET",
+        subdivision: "",
+        city: "PALANAN",
+        province: "",
+        country: "PHILLIPINES",
+        zip: ""
+      },
+      permanentAddress: {
+        buildingNo: "1234",
+        street: "NAVA STREET",
+        subdivision: "",
+        city: "PALANAN",
+        province: "",
+        country: "PHILLIPINES",
+        zip: ""
+      },
+      annualIncome: "426000.00",
+      occupation: "OFFICE WORKER",
+      employer: "ABC CORPORATION",
+      natureOfBusiness: "",
+      mailingAddress: "Present",
+      primaryContactNo: "9123456789",
+      secondaryContactNo: "",
+      email: "lasco.reyna@123.com",
+      sourceOfFunds: "Salary/Commission",
+      basePlan: "OPTIMAX GOLD",
+      insuredAmount: "1500000",
+      paymentDeposit: "",
+      deductible: "",
+      commencementDate: ""
     },
-    documentUrl: "",
+    documentUrl: "/pdfs/Handwritten Life Application.pdf",
     kpis: [
       { title: "Health Risk Score", value: "45", status: "good" },
       { title: "Occupational Risk", value: "38", status: "good" },
@@ -122,30 +222,6 @@ const claimDataMap: Record<string, ClaimData> = {
       { title: "Overall Risk Score", value: "42", status: "good" },
       { title: "Risk Category", value: "Preferred", status: "good" },
       { title: "BOT Decision", value: "Approve", status: "good" },
-    ],
-  },
-  "CLM-8904": {
-    id: "CLM-8904",
-    name: "Mike R.",
-    amount: "$8,200",
-    status: "Preferred",
-    applicant: {
-      name: "Mike R.",
-      placeOfBirth: "Chicago, USA",
-      nationality: "American",
-      dob: "10/11/1978",
-      gender: "Male",
-      civilStatus: "Married",
-      country: "United States",
-    },
-    documentUrl: "",
-    kpis: [
-      { title: "Health Risk Score", value: "58", status: "neutral" },
-      { title: "Occupational Risk", value: "70", status: "warning" },
-      { title: "Territorial Risk", value: "N/A", status: "neutral" },
-      { title: "Overall Risk Score", value: "62", status: "neutral" },
-      { title: "Risk Category", value: "Preferred", status: "good" },
-      { title: "BOT Decision", value: "Review", status: "warning" },
     ],
   },
 };
@@ -238,12 +314,31 @@ export function DashboardPage() {
               <ApplicantDetails
                 name={selectedClaimData.applicant.name}
                 details={[
+                  { label: "Other Name", value: selectedClaimData.applicant.otherName },
                   { label: "Place of Birth", value: selectedClaimData.applicant.placeOfBirth },
                   { label: "Nationality", value: selectedClaimData.applicant.nationality },
+                  { label: "US Citizen", value: selectedClaimData.applicant.usCitizen },
                   { label: "Date of Birth", value: selectedClaimData.applicant.dob },
                   { label: "Gender", value: selectedClaimData.applicant.gender },
                   { label: "Civil Status", value: selectedClaimData.applicant.civilStatus },
-                  { label: "Country", value: selectedClaimData.applicant.country },
+                  { label: "Resident Of", value: selectedClaimData.applicant.residentOf },
+                  { label: "Duration (Months)", value: selectedClaimData.applicant.durationMonths },
+                  { label: "Present Address", value: `${selectedClaimData.applicant.presentAddress.buildingNo} ${selectedClaimData.applicant.presentAddress.street}, ${selectedClaimData.applicant.presentAddress.city}, ${selectedClaimData.applicant.presentAddress.province}, ${selectedClaimData.applicant.presentAddress.country}` },
+                  { label: "Permanent Address", value: `${selectedClaimData.applicant.permanentAddress.buildingNo} ${selectedClaimData.applicant.permanentAddress.street}, ${selectedClaimData.applicant.permanentAddress.city}, ${selectedClaimData.applicant.permanentAddress.province}, ${selectedClaimData.applicant.permanentAddress.country}` },
+                  { label: "Annual Income (PHP)", value: selectedClaimData.applicant.annualIncome },
+                  { label: "Occupation", value: selectedClaimData.applicant.occupation },
+                  { label: "Employer", value: selectedClaimData.applicant.employer },
+                  { label: "Nature of Business", value: selectedClaimData.applicant.natureOfBusiness },
+                  { label: "Mailing Address", value: selectedClaimData.applicant.mailingAddress },
+                  { label: "Primary Contact", value: selectedClaimData.applicant.primaryContactNo },
+                  { label: "Secondary Contact", value: selectedClaimData.applicant.secondaryContactNo },
+                  { label: "Email", value: selectedClaimData.applicant.email },
+                  { label: "Source of Funds", value: selectedClaimData.applicant.sourceOfFunds },
+                  { label: "Base Plan", value: selectedClaimData.applicant.basePlan },
+                  { label: "Insured Amount", value: selectedClaimData.applicant.insuredAmount },
+                  { label: "Payment Deposit", value: selectedClaimData.applicant.paymentDeposit },
+                  { label: "Deductible", value: selectedClaimData.applicant.deductible },
+                  { label: "Commencement Date", value: selectedClaimData.applicant.commencementDate },
                 ]}
               />
             </div>

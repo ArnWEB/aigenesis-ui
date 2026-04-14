@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { MetricChip } from "@/components/ui/MetricChip";
 import { cn } from "@/lib/utils";
@@ -13,6 +13,20 @@ interface Ticket {
   created: string;
   description: string;
   agentResponse?: string;
+}
+
+interface ApiResponse {
+  data: {
+    email: string;
+    case_id: number;
+    message: string;
+    subject: string;
+    body: string;
+    date_time: string;
+    response: string;
+  }[];
+  count: number;
+  details: string;
 }
 
 const mockTickets: Ticket[] = [
@@ -87,8 +101,59 @@ const priorityStyles = {
 
 export function DashboardPage() {
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const openTickets = mockTickets.filter(t => t.status === "open");
+  const fetchTickets = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://aigene.tamojitray.in:6969/cases');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: ApiResponse = await response.json();
+
+      const mappedTickets: Ticket[] = data.data.map((item) => ({
+        id: String(item.case_id),
+        title: item.subject,
+        customer: item.email.split('@')[0],
+        email: item.email,
+        status: item.message === "Completed" ? "resolved" : item.message === "Processing" ? "in_progress" : "open",
+        priority: "medium" as const,
+        created: item.date_time,
+        description: item.body,
+        agentResponse: item.response
+      }));
+
+      setTickets(mappedTickets);
+    } catch (err) {
+      console.log('Using mock data - fetch failed:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTickets();
+  }, []);
+
+  const displayTickets = tickets.length > 0 ? tickets : mockTickets;
+  const openTickets = displayTickets.filter(t => t.status === "open");
+  const allTickets = displayTickets;
+
+  if (loading) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-3xl font-headline"><span className="text-primary">@i</span>Orchestrate</h1>
+          <p className="text-on-surface-variant mt-1">Agentic workflow for Customer Service & Operation</p>
+        </div>
+        <div className="flex items-center justify-center py-20">
+          <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -123,7 +188,7 @@ export function DashboardPage() {
           title="Agent Resolution"
           value1="98%"
           value2="rate"
-          trend="High performance"
+          trend="0.7% increase from last week"
           trendDirection="up"
         />
       </div>
@@ -132,40 +197,44 @@ export function DashboardPage() {
         <div className="lg:col-span-2 space-y-4">
           <GlassPanel className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-headline font-semibold text-on-surface">Recent Open Tickets</h3>
-              <span className="text-xs text-on-surface-variant">{openTickets.length} tickets</span>
+              <h3 className="text-lg font-headline font-semibold text-on-surface">Recent Tickets</h3>
+              <span className="text-xs text-on-surface-variant">{allTickets.length} tickets</span>
             </div>
-            <div className="space-y-3">
-              {openTickets.map((ticket) => (
-                <button
-                  key={ticket.id}
-                  onClick={() => setSelectedTicket(ticket)}
-                  className={cn(
-                    "w-full flex items-center justify-between p-4 rounded-lg border transition-all text-left",
-                    selectedTicket?.id === ticket.id
-                      ? "bg-primary/10 border-primary"
-                      : "bg-surface-container-low border-transparent hover:bg-surface-bright/50 hover:border-outline-variant/30"
-                  )}
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-medium text-primary">{ticket.id}</span>
-                      <span className={cn("text-[10px] font-bold uppercase px-1.5 py-0.5 rounded", priorityStyles[ticket.priority])}>
-                        {ticket.priority}
-                      </span>
+            {allTickets.length === 0 ? (
+              <p className="text-on-surface-variant text-center py-4">No tickets found</p>
+            ) : (
+              <div className="space-y-3">
+                {allTickets.map((ticket) => (
+                  <button
+                    key={ticket.id}
+                    onClick={() => setSelectedTicket(ticket)}
+                    className={cn(
+                      "w-full flex items-center justify-between p-4 rounded-lg border transition-all text-left",
+                      selectedTicket?.id === ticket.id
+                        ? "bg-primary/10 border-primary"
+                        : "bg-surface-container-low border-transparent hover:bg-surface-bright/50 hover:border-outline-variant/30"
+                    )}
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-medium text-primary">{ticket.id}</span>
+                        <span className={cn("text-[10px] font-bold uppercase px-1.5 py-0.5 rounded", priorityStyles[ticket.priority])}>
+                          {ticket.priority}
+                        </span>
+                      </div>
+                      <p className="text-sm font-medium text-on-surface truncate">{ticket.title}</p>
+                      <p className="text-xs text-on-surface-variant">{ticket.customer} • {ticket.created}</p>
                     </div>
-                    <p className="text-sm font-medium text-on-surface truncate">{ticket.title}</p>
-                    <p className="text-xs text-on-surface-variant">{ticket.customer} • {ticket.created}</p>
-                  </div>
-                  <div className={cn(
-                    "px-2 py-1 rounded-full text-[10px] font-bold uppercase border ml-3",
-                    statusStyles[ticket.status]
-                  )}>
-                    {ticket.status.replace("_", " ")}
-                  </div>
-                </button>
-              ))}
-            </div>
+                    <div className={cn(
+                      "px-2 py-1 rounded-full text-[10px] font-bold uppercase border ml-3",
+                      statusStyles[ticket.status]
+                    )}>
+                      {ticket.status.replace("_", " ")}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </GlassPanel>
         </div>
 
