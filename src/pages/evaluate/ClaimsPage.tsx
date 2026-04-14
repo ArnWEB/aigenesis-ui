@@ -40,7 +40,7 @@ export function ClaimsPage(_props?: ClaimsPageProps) {
       <section className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div className="space-y-1">
           <h1 className="text-4xl font-headline font-bold tracking-tight text-on-surface">
-            Claim History
+            Submission History
           </h1>
           <p className="text-on-surface-variant font-body">
           </p>

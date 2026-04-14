@@ -56,7 +56,7 @@ export const PRODUCT_CONFIG: Record<string, ProductConfig> = {
     name: "EVALUATE",
     items: [
       { id: "dashboard", label: "Dashboard", path: "/evaluate", icon: Icons.dashboard },
-      { id: "claims", label: "Claims", path: "/evaluate/claims", icon: Icons.claims, badge: 12 },
+      { id: "claims", label: "Submission History", path: "/evaluate/claims", icon: Icons.claims, badge: 12 },
       { id: "risk", label: "Risk", path: "/evaluate/risk", icon: Icons.risk },
     ],
   },

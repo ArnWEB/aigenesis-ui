@@ -41,6 +41,9 @@ export function DocumentViewer({ url, title = "Document", className }: DocumentV
         )}
       </div>
       <div className="bg-[#1a1a1a] px-4 py-3 flex items-center justify-end gap-3">
+        <button className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors">
+          Save
+        </button>
         <button className="px-4 py-2 rounded-lg text-sm font-medium bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors">
           Reject
         </button>

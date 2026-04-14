@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface ApplicantDetail {
@@ -15,12 +14,9 @@ interface ApplicantDetailsProps {
 }
 
 export function ApplicantDetails({ name, details, onChange, editable = true, className }: ApplicantDetailsProps) {
-  const [localDetails, setLocalDetails] = useState(details);
-
   const handleChange = (index: number, newValue: string) => {
-    const updated = [...localDetails];
+    const updated = [...details];
     updated[index] = { ...updated[index], value: newValue };
-    setLocalDetails(updated);
     onChange?.(updated);
   };
 
@@ -36,7 +32,7 @@ export function ApplicantDetails({ name, details, onChange, editable = true, cla
             <span className="text-sm font-medium text-white">{name}</span>
           </div>
         )}
-        {localDetails.map((detail, idx) => (
+        {details.map((detail, idx) => (
           <div key={idx} className="flex items-center justify-between">
             <span className="text-xs text-gray-400 uppercase tracking-wider">{detail.label}</span>
             {editable ? (

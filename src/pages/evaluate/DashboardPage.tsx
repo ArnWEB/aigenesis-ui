@@ -279,7 +279,7 @@ export function DashboardPage() {
               </button>
             ))}
           </div>
-        </GlassPanel>
+</GlassPanel>
       </div>
 
       {selectedClaim && selectedClaimData && (
@@ -311,42 +311,47 @@ export function DashboardPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-1">
-              <ApplicantDetails
-                name={selectedClaimData.applicant.name}
-                details={[
-                  { label: "Other Name", value: selectedClaimData.applicant.otherName },
-                  { label: "Place of Birth", value: selectedClaimData.applicant.placeOfBirth },
-                  { label: "Nationality", value: selectedClaimData.applicant.nationality },
-                  { label: "US Citizen", value: selectedClaimData.applicant.usCitizen },
-                  { label: "Date of Birth", value: selectedClaimData.applicant.dob },
-                  { label: "Gender", value: selectedClaimData.applicant.gender },
-                  { label: "Civil Status", value: selectedClaimData.applicant.civilStatus },
-                  { label: "Resident Of", value: selectedClaimData.applicant.residentOf },
-                  { label: "Duration (Months)", value: selectedClaimData.applicant.durationMonths },
-                  { label: "Present Address", value: `${selectedClaimData.applicant.presentAddress.buildingNo} ${selectedClaimData.applicant.presentAddress.street}, ${selectedClaimData.applicant.presentAddress.city}, ${selectedClaimData.applicant.presentAddress.province}, ${selectedClaimData.applicant.presentAddress.country}` },
-                  { label: "Permanent Address", value: `${selectedClaimData.applicant.permanentAddress.buildingNo} ${selectedClaimData.applicant.permanentAddress.street}, ${selectedClaimData.applicant.permanentAddress.city}, ${selectedClaimData.applicant.permanentAddress.province}, ${selectedClaimData.applicant.permanentAddress.country}` },
-                  { label: "Annual Income (PHP)", value: selectedClaimData.applicant.annualIncome },
-                  { label: "Occupation", value: selectedClaimData.applicant.occupation },
-                  { label: "Employer", value: selectedClaimData.applicant.employer },
-                  { label: "Nature of Business", value: selectedClaimData.applicant.natureOfBusiness },
-                  { label: "Mailing Address", value: selectedClaimData.applicant.mailingAddress },
-                  { label: "Primary Contact", value: selectedClaimData.applicant.primaryContactNo },
-                  { label: "Secondary Contact", value: selectedClaimData.applicant.secondaryContactNo },
-                  { label: "Email", value: selectedClaimData.applicant.email },
-                  { label: "Source of Funds", value: selectedClaimData.applicant.sourceOfFunds },
-                  { label: "Base Plan", value: selectedClaimData.applicant.basePlan },
-                  { label: "Insured Amount", value: selectedClaimData.applicant.insuredAmount },
-                  { label: "Payment Deposit", value: selectedClaimData.applicant.paymentDeposit },
-                  { label: "Deductible", value: selectedClaimData.applicant.deductible },
-                  { label: "Commencement Date", value: selectedClaimData.applicant.commencementDate },
-                ]}
-              />
+              <div className="overflow-y-auto" style={{ maxHeight: '500px' }}>
+                <ApplicantDetails
+                  name={selectedClaimData.applicant.name}
+                  details={[
+                    { label: "Other Name", value: selectedClaimData.applicant.otherName },
+                    { label: "Place of Birth", value: selectedClaimData.applicant.placeOfBirth },
+                    { label: "Nationality", value: selectedClaimData.applicant.nationality },
+                    { label: "US Citizen", value: selectedClaimData.applicant.usCitizen },
+                    { label: "Date of Birth", value: selectedClaimData.applicant.dob },
+                    { label: "Gender", value: selectedClaimData.applicant.gender },
+                    { label: "Civil Status", value: selectedClaimData.applicant.civilStatus },
+                    { label: "Resident Of", value: selectedClaimData.applicant.residentOf },
+                    { label: "Duration (Months)", value: selectedClaimData.applicant.durationMonths },
+                    { label: "Present Address", value: `${selectedClaimData.applicant.presentAddress.buildingNo} ${selectedClaimData.applicant.presentAddress.street}, ${selectedClaimData.applicant.presentAddress.city}, ${selectedClaimData.applicant.presentAddress.province}, ${selectedClaimData.applicant.presentAddress.country}` },
+                    { label: "Permanent Address", value: `${selectedClaimData.applicant.permanentAddress.buildingNo} ${selectedClaimData.applicant.permanentAddress.street}, ${selectedClaimData.applicant.permanentAddress.city}, ${selectedClaimData.applicant.permanentAddress.province}, ${selectedClaimData.applicant.permanentAddress.country}` },
+                    { label: "Annual Income (PHP)", value: selectedClaimData.applicant.annualIncome },
+                    { label: "Occupation", value: selectedClaimData.applicant.occupation },
+                    { label: "Employer", value: selectedClaimData.applicant.employer },
+                    { label: "Nature of Business", value: selectedClaimData.applicant.natureOfBusiness },
+                    { label: "Mailing Address", value: selectedClaimData.applicant.mailingAddress },
+                    { label: "Primary Contact", value: selectedClaimData.applicant.primaryContactNo },
+                    { label: "Secondary Contact", value: selectedClaimData.applicant.secondaryContactNo },
+                    { label: "Email", value: selectedClaimData.applicant.email },
+                    { label: "Source of Funds", value: selectedClaimData.applicant.sourceOfFunds },
+                    { label: "Base Plan", value: selectedClaimData.applicant.basePlan },
+                    { label: "Insured Amount", value: selectedClaimData.applicant.insuredAmount },
+                    { label: "Payment Deposit", value: selectedClaimData.applicant.paymentDeposit },
+                    { label: "Deductible", value: selectedClaimData.applicant.deductible },
+                    { label: "Commencement Date", value: selectedClaimData.applicant.commencementDate },
+                  ]}
+                  editable={false}
+                />
+              </div>
             </div>
             <div className="lg:col-span-2">
-              <DocumentViewer
-                url={selectedClaimData.documentUrl}
-                title={`Application - ${selectedClaimData.id}`}
-              />
+              <div className="overflow-y-auto" style={{ maxHeight: '500px' }}>
+                <DocumentViewer
+                  url={selectedClaimData.documentUrl}
+                  title={`Application - ${selectedClaimData.id}`}
+                />
+              </div>
             </div>
           </div>
         </div>
