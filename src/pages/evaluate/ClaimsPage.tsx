@@ -6,7 +6,7 @@ interface ClaimsPageProps {
   type?: "claims" | "adjudicate" | "portfolio";
 }
 
-export function ClaimsPage({ type = "claims" }: ClaimsPageProps) {
+export function ClaimsPage(_props?: ClaimsPageProps) {
   const [selectedClaim, setSelectedClaim] = useState<Claim | null>(claims[1]);
 
   const getStatusStyles = (status: Claim["status"]) => {
@@ -26,12 +26,6 @@ export function ClaimsPage({ type = "claims" }: ClaimsPageProps) {
     }
   };
 
-  const getRiskColor = (score: number) => {
-    if (score >= 70) return "bg-error shadow-[0_0_8px_#ff6e84]";
-    if (score >= 40) return "bg-secondary shadow-[0_0_8px_#dd8bfb]";
-    return "bg-tertiary shadow-[0_0_8px_#96f8ff]";
-  };
-
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -39,8 +33,6 @@ export function ClaimsPage({ type = "claims" }: ClaimsPageProps) {
       minimumFractionDigits: 0
     }).format(amount);
   };
-
-  const pageTitle = type === "adjudicate" ? "Adjudicator Command" : type === "portfolio" ? "Portfolio Overview" : "Claims Management";
 
   return (
     <div className="space-y-8">
