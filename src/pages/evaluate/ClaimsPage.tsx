@@ -70,7 +70,7 @@ export function ClaimsPage(_props?: ClaimsPageProps) {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-surface-container-high/50">
-                <th className="px-6 py-4 text-xs font-label uppercase tracking-widest text-on-surface-variant font-semibold">Claim ID</th>
+                <th className="px-6 py-4 text-xs font-label uppercase tracking-widest text-on-surface-variant font-semibold">Ticket ID</th>
                 <th className="px-6 py-4 text-xs font-label uppercase tracking-widest text-on-surface-variant font-semibold">Policyholder</th>
                 <th className="px-6 py-4 text-xs font-label uppercase tracking-widest text-on-surface-variant font-semibold">Submitted Date</th>
                 <th className="px-6 py-4 text-xs font-label uppercase tracking-widest text-on-surface-variant font-semibold">Location</th>

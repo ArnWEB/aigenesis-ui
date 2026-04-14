@@ -31,7 +31,7 @@ interface ApiResponse {
 
 const mockTickets: Ticket[] = [
   {
-    id: "TKT-1001",
+    id: "SRN0001",
     title: "Policy renewal inquiry",
     customer: "John Smith",
     email: "john.smith@email.com",
@@ -42,18 +42,18 @@ const mockTickets: Ticket[] = [
     agentResponse: "Hi John, I've reviewed your policy and can offer you a 15% renewal discount for being a loyal customer. Your new premium would be $1,250/year. Would you like to proceed with the renewal?"
   },
   {
-    id: "TKT-1002",
+    id: "SRN0002",
     title: "Claim status update request",
     customer: "Sarah Johnson",
     email: "sarah.j@email.com",
     status: "in_progress",
     priority: "medium",
     created: "2026-04-09 09:15",
-    description: "Customer is following up on claim #CLM-8923 submitted last week. Wants to know current status and expected timeline.",
+    description: "Customer is following up on claim #SRN0001 submitted last week. Wants to know current status and expected timeline.",
     agentResponse: "Hi Sarah, I've checked your claim status. It's currently under review by our claims team. You should receive an update within 3-5 business days. I'll keep you posted on any progress."
   },
   {
-    id: "TKT-1003",
+    id: "SRN0003",
     title: "Documentation submission",
     customer: "Mike Williams",
     email: "mike.w@email.com",
@@ -64,7 +64,7 @@ const mockTickets: Ticket[] = [
     agentResponse: "Thank you for submitting the documents, Mike. I've received all the materials and forwarded them to our assessment team. You'll be notified once the review is complete."
   },
   {
-    id: "TKT-1004",
+    id: "SRN0004",
     title: "Premium calculation clarification",
     customer: "Emily Davis",
     email: "emily.d@email.com",
@@ -75,7 +75,7 @@ const mockTickets: Ticket[] = [
     agentResponse: "Hi Emily, I've prepared a detailed breakdown of your commercial policy premium. The base rate is $2,500, with additional coverage options totaling $800. This gives you a comprehensive package at $3,300/year."
   },
   {
-    id: "TKT-1005",
+    id: "SRN0005",
     title: "Policy cancellation request",
     customer: "Robert Brown",
     email: "r.brown@email.com",
@@ -180,7 +180,7 @@ export function DashboardPage() {
         <MetricChip
           title="Turn Around Time"
           value1="49"
-          value2="mins"
+          value2="minutes"
           trend="+4 mins from last week"
           trendDirection="up"
         />

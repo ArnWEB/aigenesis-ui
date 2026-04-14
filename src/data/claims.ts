@@ -13,7 +13,7 @@ export interface Claim {
 
 export const claims: Claim[] = [
   {
-    id: "#CLM-7281",
+    id: "SRN0001",
     policyholder: { name: "Elena Jørgensen", initials: "EJ" },
     riskScore: 24,
     amount: 14200,
@@ -22,7 +22,7 @@ export const claims: Claim[] = [
     location: "Seattle, WA"
   },
   {
-    id: "#CLM-8902",
+    id: "SRN0002",
     policyholder: { name: "Marcus Thorne", initials: "MT" },
     riskScore: 82,
     amount: 8540,
@@ -31,7 +31,7 @@ export const claims: Claim[] = [
     location: "Chicago, IL"
   },
   {
-    id: "#CLM-1204",
+    id: "SRN0003",
     policyholder: { name: "Suki Kim", initials: "SK" },
     riskScore: 12,
     amount: 2100,
@@ -40,7 +40,7 @@ export const claims: Claim[] = [
     location: "San Francisco, CA"
   },
   {
-    id: "#CLM-4432",
+    id: "SRN0004",
     policyholder: { name: "Arthur Jenkins", initials: "AJ" },
     riskScore: 58,
     amount: 21000,
@@ -49,7 +49,7 @@ export const claims: Claim[] = [
     location: "Boston, MA"
   },
   {
-    id: "#CLM-5521",
+    id: "SRN0005",
     policyholder: { name: "Nina Patel", initials: "NP" },
     riskScore: 35,
     amount: 5500,
@@ -58,7 +58,7 @@ export const claims: Claim[] = [
     location: "Miami, FL"
   },
   {
-    id: "#CLM-6633",
+    id: "SRN0006",
     policyholder: { name: "Robert Chen", initials: "RC" },
     riskScore: 71,
     amount: 12750,
@@ -67,7 +67,7 @@ export const claims: Claim[] = [
     location: "Chicago, IL"
   },
   {
-    id: "#CLM-7744",
+    id: "SRN0007",
     policyholder: { name: "Sarah Mitchell", initials: "SM" },
     riskScore: 28,
     amount: 3800,
@@ -76,7 +76,7 @@ export const claims: Claim[] = [
     location: "Denver, CO"
   },
   {
-    id: "#CLM-8855",
+    id: "SRN0008",
     policyholder: { name: "David Williams", initials: "DW" },
     riskScore: 45,
     amount: 9200,
@@ -87,7 +87,7 @@ export const claims: Claim[] = [
 ];
 
 export const claimInsights = {
-  claimId: "#CLM-8902",
+  claimId: "SRN0002",
   title: "Anomalous Damage Pattern Detected",
   description: "AI vision analysis indicates the vehicle damage on the fender does not match the physics of the reported multi-car collision. Likely pre-existing wear.",
   confidence: 98.4,

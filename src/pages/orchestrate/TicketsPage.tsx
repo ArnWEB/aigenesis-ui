@@ -3,11 +3,11 @@ import { GlassPanel } from "@/components/ui/glass-panel";
 import { cn } from "@/lib/utils";
 
 const mockTickets = [
-  { id: "TKT-001", title: "Policy renewal inquiry", status: "open", priority: "high", created: "2026-04-05", assignee: "Alex T." },
-  { id: "TKT-002", title: "Claim status update request", status: "in_progress", priority: "medium", created: "2026-04-05", assignee: "Sarah C." },
-  { id: "TKT-003", title: "Documentation submission", status: "resolved", priority: "low", created: "2026-04-04", assignee: "Marcus T." },
-  { id: "TKT-004", title: "Premium calculation clarification", status: "open", priority: "high", created: "2026-04-04", assignee: "Unassigned" },
-  { id: "TKT-005", title: "Policy cancellation request", status: "in_progress", priority: "medium", created: "2026-04-03", assignee: "Elena J." },
+  { id: "SRN0001", title: "Policy renewal inquiry", status: "open", priority: "high", created: "2026-04-05", assignee: "Alex T." },
+  { id: "SRN0002", title: "Claim status update request", status: "in_progress", priority: "medium", created: "2026-04-05", assignee: "Sarah C." },
+  { id: "SRN0003", title: "Documentation submission", status: "resolved", priority: "low", created: "2026-04-04", assignee: "Marcus T." },
+  { id: "SRN0004", title: "Premium calculation clarification", status: "open", priority: "high", created: "2026-04-04", assignee: "Unassigned" },
+  { id: "SRN0005", title: "Policy cancellation request", status: "in_progress", priority: "medium", created: "2026-04-03", assignee: "Elena J." },
 ];
 
 const statusStyles = {

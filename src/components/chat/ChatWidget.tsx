@@ -16,7 +16,7 @@ export function ChatWidget() {
     {
       id: "1",
       role: "assistant",
-      content: "Good morning, Agent. I have prioritized #CLM-8902 due to high fraud probability markers. How can I assist with your review?",
+      content: "Good morning, Agent. I have prioritized #SRN0002 due to high fraud probability markers. How can I assist with your review?",
       timestamp: new Date()
     }
   ]);
