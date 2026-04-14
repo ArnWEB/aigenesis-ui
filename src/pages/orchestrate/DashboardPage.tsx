@@ -107,7 +107,7 @@ export function DashboardPage() {
   const fetchTickets = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://aigene.tamojitray.in:6969/cases');
+      const response = await fetch('https://aigene.tamojitray.in:6969/cases');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
